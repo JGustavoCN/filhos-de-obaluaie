@@ -18,7 +18,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Filhos de Obaluaiê — Centro Cultural de Capoeira e Expressões Afro-Brasileiras",
+  metadataBase: new URL("https://filhos-de-obaluaie.vercel.app"),
+  title:
+    "Filhos de Obaluaiê — Centro Cultural de Capoeira e Expressões Afro-Brasileiras",
   description:
     "Plataforma institucional do Centro Cultural e de Capoeira Filhos de Obaluaiê, localizado em Tobias Barreto/SE. Portfólio de projetos sociais, acervo documental e registro de expressões afro-brasileiras como capoeira, maculelê, dança afro e samba de coco.",
   keywords: [
@@ -36,7 +38,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Centro Cultural Filhos de Obaluaiê" }],
   openGraph: {
     title: "Filhos de Obaluaiê — Centro Cultural",
-    description: "Resistência, arte e ancestralidade desde 2005. Capoeira, maculelê e expressões afro-brasileiras em Tobias Barreto/SE.",
+    description:
+      "Resistência, arte e ancestralidade desde 2005. Capoeira, maculelê e expressões afro-brasileiras em Tobias Barreto/SE.",
+    url: "https://filhos-de-obaluaie.vercel.app",
+    siteName: "Filhos de Obaluaiê",
     type: "website",
     locale: "pt_BR",
   },
@@ -57,7 +62,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      className={`${syne.variable} ${dmSans.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <Script id="theme-script" strategy="beforeInteractive">
           {`
