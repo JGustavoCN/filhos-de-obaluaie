@@ -1,0 +1,409 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   DESIGN SYSTEM — FILHOS DE OBALUAIÊ
+   Tokens extraídos do DESIGN.md + Stitch "Aiyê Ancestral"
+   ============================================================ */
+
+@theme {
+  /* ── Cores do DESIGN.md ── */
+  --color-surface: #FAF6F0;
+  --color-surface-dim: #E6DBCF;
+  --color-surface-container-low: #FCF4EA;
+  --color-surface-container: #F7ECE1;
+  --color-surface-container-high: #F0E5D8;
+  --color-neutral: #EAE0D5;
+  --color-on-surface: #2D2421;
+  --color-on-surface-light: #5A4743;
+  --color-on-primary: #FFFFFF;
+  --color-primary: #7A3123;
+  --color-primary-hover: #8C3A2A;
+  --color-primary-active: #6E2416;
+  --color-secondary: #E8C58C;
+  --color-secondary-hover: #D9AE6C;
+  --color-secondary-active: #C69A52;
+  --color-tertiary: #3A5F43;
+  --color-tertiary-container: #E6F0E8;
+  --color-error: #D64545;
+  --color-outline: #8A7470;
+  --color-outline-variant: #DBC1BB;
+  --glass-bg: rgba(250, 246, 240, 0.78);
+  --glass-bg-hover: rgba(250, 246, 240, 0.96);
+  --glass-border: rgba(232, 197, 140, 0.38);
+  --glass-border-hover: rgba(232, 197, 140, 0.65);
+
+  /* ── Tipografia ── */
+  --font-headline: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+
+  /* ── Bordas ── */
+  --radius-card: 12px;
+  --radius-pill: 9999px;
+  --radius-sm: 4px;
+
+  /* ── Espaçamento (escala 8px) ── */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+  --spacing-gutter: 24px;
+}
+
+/* ============================================================
+   GLOBAL BASE STYLES
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-on-surface);
+  background-color: var(--color-surface);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   SCROLL-DRIVEN PARALLAX BACKGROUND
+   ============================================================ */
+
+@keyframes parallax-scroll {
+  from { background-position: 50% 0%; }
+  to   { background-position: 50% 100%; }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/assets/images/bg-texture-fractal-light.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.06;
+  animation: parallax-scroll linear;
+  animation-timeline: scroll();
+  animation-range: 0% 100%;
+  pointer-events: none;
+}
+
+/* ============================================================
+   NOISE / GRAIN OVERLAY
+   ============================================================ */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ============================================================
+   MODO ANCESTRAL — DARK MODE
+   "O Terreiro à noite": tons de terra profunda, Inner Glow
+   em Palha Dourada, texturas sutis.
+   Ativado pela classe .dark no <html> (gerenciada pelo ThemeToggle).
+   ============================================================ */
+
+@layer base {
+  .dark {
+    /* 🌑 BASE (Contraste expandido entre camadas) */
+    --color-surface: #1A1110;
+    --color-surface-dim: #211715;
+    --color-surface-container-low: #261B1A;
+    --color-surface-container: #2E2321;
+    --color-surface-container-high: #3A2E2B;
+    --color-neutral: #3F3432;
+
+    /* 📝 TEXT (Sofisticado e AAA) */
+    --color-on-surface: #EAD7D1;
+    --color-on-surface-light: #CDB7B1;
+    --color-on-primary: #2A0A05; 
+
+    /* 🔥 PRIMARY (Corrigido para ter peso visual como botão base) */
+    --color-primary: #E07A5F;           
+    --color-primary-hover: #FFB4A5;     
+    --color-primary-active: #C5664E;
+
+    /* 🌾 SECONDARY */
+    --color-secondary: #E4C189;
+    --color-secondary-hover: #F0D29F;
+    --color-secondary-active: #C9A468;
+
+    /* 🌿 TERTIARY (Mais quente, integrado ao conceito areia/barro) */
+    --color-tertiary: #C6A98B;
+    --color-tertiary-container: #5A4636;
+
+    /* 🔥 ACCENT (Dá vida ao dark, barro iluminado para focus/hover) */
+    --color-accent-warm: #A05C3B;
+
+    /* 🚨 FEEDBACK */
+    --color-error: #FF9B90;
+
+    /* 🧱 BORDERS */
+    --color-outline: #A38B87;
+    --color-outline-variant: #5B4743;
+
+    /* 🪞 GLASS */
+    --glass-bg: rgba(26, 17, 16, 0.85);
+    --glass-bg-hover: rgba(46, 35, 33, 0.96);
+    --glass-border: rgba(232, 197, 140, 0.18);
+    --glass-border-hover: rgba(232, 197, 140, 0.35);
+
+    /* ✨ GLOW (Simula luz de vela, separa camadas sem ofuscar) */
+    --inner-glow: rgba(232, 197, 140, 0.18);
+    --inner-glow-hover: rgba(232, 197, 140, 0.28);
+  }
+}
+
+/* Fundo parallax: textura escura */
+.dark body::before {
+  background-image: url("/assets/images/bg-texture-fractal-dark.png");
+  opacity: 0.04;
+}
+
+/* Grain overlay: soft-light funciona melhor em fundos escuros */
+.dark body::after {
+  mix-blend-mode: soft-light;
+  opacity: 0.04;
+}
+
+/* Seleção de texto no dark mode */
+.dark ::selection {
+  background-color: #5d4518;
+  color: #f0dfdb;
+}
+
+/* ============================================================
+   HERO SECTION — ORGANIC SVG MASK
+   ============================================================ */
+
+.hero-image-mask {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 50 20 Q 10 100 80 200 Q 20 320 100 380 Q 60 480 150 540 Q 250 620 400 580 Q 550 610 650 530 Q 750 470 720 350 Q 780 250 700 180 Q 750 80 650 40 Q 530 -20 400 30 Q 270 -10 180 50 Q 100 -20 50 20 Z' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 50 20 Q 10 100 80 200 Q 20 320 100 380 Q 60 480 150 540 Q 250 620 400 580 Q 550 610 650 530 Q 750 470 720 350 Q 780 250 700 180 Q 750 80 650 40 Q 530 -20 400 30 Q 270 -10 180 50 Q 100 -20 50 20 Z' fill='white'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* ============================================================
+   9-SLICE BORDER IMAGE — CARDS DE PROJETOS
+   ============================================================ */
+
+.card-9slice,
+.card-9slice-secondary {
+  border-style: solid;
+  border-width: 20px; /* Reduzido no mobile */
+  border-image-slice: 80 fill;
+  border-image-outset: 0;
+  border-image-repeat: round;
+}
+
+.card-9slice {
+  border-image-source: url("/assets/images/frame-card-primary.png");
+}
+
+.card-9slice-secondary {
+  border-image-source: url("/assets/images/frame-card-secondary.png");
+}
+
+@media (min-width: 768px) {
+  .card-9slice,
+  .card-9slice-secondary {
+    border-width: 40px; /* Restaurado no desktop */
+  }
+}
+
+/* ============================================================
+   GLASSMORPHISM ORGÂNICO
+   ============================================================ */
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 10px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-4px);
+}
+
+/* ── Glass Card — Modo Ancestral ── */
+.dark .glass-card {
+  border: none;
+  box-shadow: inset 0 0 0 1px var(--inner-glow);
+}
+
+.dark .glass-card:hover {
+  box-shadow: inset 0 0 0 1px var(--inner-glow-hover);
+}
+
+/* ============================================================
+   SPRING EASING — LINEAR() PARA HOVER
+   ============================================================ */
+
+.spring-transition {
+  transition: all 0.6s linear(
+    0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%,
+    0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163,
+    1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%,
+    0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%,
+    1.003 76.9%, 1.004 83.8%, 1
+  );
+}
+
+/* ============================================================
+   XAXARÁ DIVIDER — MIX-BLEND + SPRING HOVER
+   ============================================================ */
+
+.xaxara-divider {
+  mix-blend-mode: multiply;
+  transition: transform 0.6s linear(
+    0, 0.009, 0.035 2.1%, 0.141, 0.281 6.7%, 0.723 12.9%,
+    0.938 16.7%, 1.017, 1.077, 1.121, 1.149 24.3%, 1.159, 1.163,
+    1.161, 1.154 29.9%, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%,
+    0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%,
+    1.003 76.9%, 1.004 83.8%, 1
+  );
+}
+
+.xaxara-divider:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+/* ============================================================
+   BOGOLAN PATTERN (DECORATIVO)
+   ============================================================ */
+
+.bogolan-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23DBC1BB' stroke-width='0.5' opacity='0.25'%3E%3Crect x='10' y='10' width='15' height='15'/%3E%3Crect x='35' y='35' width='15' height='15'/%3E%3Cline x1='10' y1='35' x2='25' y2='50'/%3E%3Cline x1='35' y1='10' x2='50' y2='25'/%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 60px 60px;
+}
+
+/* ============================================================
+   SECTION REVEAL ANIMATION
+   ============================================================ */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+
+/* stagger children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-up 0.7s ease-out forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.12s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.36s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.48s; }
+
+/* ============================================================
+   UTILITY OVERRIDES
+   ============================================================ */
+
+::selection {
+  background-color: var(--color-secondary);
+  color: var(--color-on-surface);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* Smooth anchor scrolling offset for fixed navbar */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ============================================================
+   THEME TOGGLE BUTTON
+   Pill shape (9999px), transições orgânicas ease-in-out,
+   cores do DESIGN.md. Posicionado na Navbar.
+   ============================================================ */
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 9999px;
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface);
+  cursor: pointer;
+  transition: all 0.35s ease-in-out;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--color-secondary);
+  color: var(--color-on-surface);
+  transform: rotate(15deg) scale(1.08);
+}
+
+.theme-toggle-btn:active {
+  transform: rotate(15deg) scale(0.95);
+}
+
+.theme-toggle-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.35s ease-in-out;
+}
+
+/* ── Navbar — Modo Ancestral ── */
+.dark .navbar-scrolled {
+  background: rgba(26, 17, 16, 0.78) !important;
+  border-bottom-color: rgba(232, 197, 140, 0.15) !important;
+}
+
+.dark .navbar-mobile-menu {
+  background: rgba(26, 17, 16, 0.95) !important;
+}
