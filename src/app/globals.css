@@ -9,24 +9,24 @@
 
 @theme {
   /* ── Cores do DESIGN.md ── */
-  --color-surface: #FAF6F0;
-  --color-surface-dim: #E6DBCF;
-  --color-surface-container-low: #FCF4EA;
-  --color-surface-container: #F7ECE1;
-  --color-surface-container-high: #F0E5D8;
-  --color-neutral: #EAE0D5;
-  --color-on-surface: #2D2421;
-  --color-on-surface-light: #5A4743;
+  --color-surface: #FCFAF7;
+  --color-surface-dim: #F5EFEB;
+  --color-surface-container-low: #FDFBFA;
+  --color-surface-container: #F8F5F1;
+  --color-surface-container-high: #F0E8DC;
+  --color-neutral: #DCD6CC;
+  --color-on-surface: #1A1715;
+  --color-on-surface-light: #36322D;
   --color-on-primary: #FFFFFF;
-  --color-primary: #7A3123;
-  --color-primary-hover: #8C3A2A;
-  --color-primary-active: #6E2416;
-  --color-secondary: #E8C58C;
-  --color-secondary-hover: #D9AE6C;
-  --color-secondary-active: #C69A52;
-  --color-tertiary: #3A5F43;
-  --color-tertiary-container: #E6F0E8;
-  --color-error: #D64545;
+  --color-primary: #9E1B1B;
+  --color-primary-hover: #B32020;
+  --color-primary-active: #8A1515;
+  --color-secondary: #F5F1E8;
+  --color-secondary-hover: #EAE3D1;
+  --color-secondary-active: #DFD5BC;
+  --color-tertiary: #23201D;
+  --color-tertiary-container: #36322D;
+  --color-error: #C62828;
   --color-outline: #8A7470;
   --color-outline-variant: #DBC1BB;
   --glass-bg: rgba(250, 246, 240, 0.78);
@@ -134,37 +134,37 @@ body::after {
 @layer base {
   .dark {
     /* 🌑 BASE (Contraste expandido entre camadas) */
-    --color-surface: #1A1110;
-    --color-surface-dim: #211715;
-    --color-surface-container-low: #261B1A;
-    --color-surface-container: #2E2321;
-    --color-surface-container-high: #3A2E2B;
-    --color-neutral: #3F3432;
+    --color-surface: #121212;
+    --color-surface-dim: #181818;
+    --color-surface-container-low: #1A1A1A;
+    --color-surface-container: #202020;
+    --color-surface-container-high: #242424;
+    --color-neutral: #333333;
 
     /* 📝 TEXT (Sofisticado e AAA) */
-    --color-on-surface: #EAD7D1;
-    --color-on-surface-light: #CDB7B1;
-    --color-on-primary: #2A0A05; 
+    --color-on-surface: #F5F5F5;
+    --color-on-surface-light: #CCCCCC;
+    --color-on-primary: #FFFFFF; 
 
     /* 🔥 PRIMARY (Corrigido para ter peso visual como botão base) */
-    --color-primary: #E07A5F;           
-    --color-primary-hover: #FFB4A5;     
-    --color-primary-active: #C5664E;
+    --color-primary: #D64545;           
+    --color-primary-hover: #E85A5A;     
+    --color-primary-active: #C03030;
 
     /* 🌾 SECONDARY */
-    --color-secondary: #E4C189;
-    --color-secondary-hover: #F0D29F;
-    --color-secondary-active: #C9A468;
+    --color-secondary: #2A2A2A;
+    --color-secondary-hover: #3A3A3A;
+    --color-secondary-active: #1A1A1A;
 
     /* 🌿 TERTIARY (Mais quente, integrado ao conceito areia/barro) */
-    --color-tertiary: #C6A98B;
-    --color-tertiary-container: #5A4636;
+    --color-tertiary: #FFFFFF;
+    --color-tertiary-container: #E0E0E0;
 
     /* 🔥 ACCENT (Dá vida ao dark, barro iluminado para focus/hover) */
-    --color-accent-warm: #A05C3B;
+    --color-accent-warm: #F07070;
 
     /* 🚨 FEEDBACK */
-    --color-error: #FF9B90;
+    --color-error: #D32F2F;
 
     /* 🧱 BORDERS */
     --color-outline: #A38B87;
