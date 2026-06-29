@@ -3,8 +3,7 @@ import EventCard from '@/components/cards/EventCard';
 import { EventoProps } from '@/components/cards/types';
 import ThemeToggle from '@/components/ThemeToggle';
 
-export default function TestesPage() {
-  const eventosMock: EventoProps[] = [
+export const eventosMock: EventoProps[] = [
     {
       id: "1",
       tipo: "aniversario",
@@ -96,8 +95,35 @@ export default function TestesPage() {
       tamanhoArquivo: "5.1 MB",
       linkArquivo: "#",
       imagemCapa: "https://images.unsplash.com/photo-1518601794912-1af91724e528?q=80&w=764&auto=format&fit=crop"
+    },
+    {
+      id: "11",
+      tipo: "noticia",
+      titulo: "Terreiro inaugura nova biblioteca",
+      resumo: "Um novo espaço de leitura comunitária voltado para obras sobre cultura afro, romance e poesia negra.",
+      dataEvento: "12/08/2026",
+      imagemCapa: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1170&auto=format&fit=crop"
+    },
+    {
+      id: "12",
+      tipo: "noticia",
+      titulo: "Doação de Cestas Básicas",
+      resumo: "No último fim de semana, a campanha solidária arrecadou toneladas de alimentos para as famílias da comunidade.",
+      dataEvento: "05/08/2026",
+      imagemCapa: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1170&auto=format&fit=crop"
+    },
+    {
+      id: "13",
+      tipo: "aniversario",
+      titulo: "Batizado da Capoeira Angola",
+      resumo: "Dia de graduação e troca de cordões para os nossos novos capoeiristas.",
+      dataEvento: "22/10/2026",
+      imagemCapa: "https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?q=80&w=687&auto=format&fit=crop"
     }
-  ];
+];
+
+export default function TestesPage() {
+
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
