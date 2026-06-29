@@ -146,3 +146,18 @@ Example: If asked to "create a blog post schema", read `skills/sanity-best-pract
 - **Never:**
   - Hardcode API tokens (use `process.env`).
   - Use loose types (`any`) for Sanity content.
+
+# Regras de Acessibilidade e Testes (UI/UX)
+
+Este projeto segue diretrizes estritas para evitar "tom sobre tom" pobre e problemas de daltonismo.
+
+## 1. Verificação de Acessibilidade (WCAG)
+Sempre que realizar alterações na interface gráfica (`.tsx`, `.css`):
+- **Daltonismo:** Não depender exclusivamente de matiz de cor para sinalizar erro, sucesso ou estados; utilize Ícones e Texto complementar.
+- **Contraste:** A regra de ouro é **Contraste Relativo mínimo de 4.5:1** (WCAG AA). 
+
+## 2. Uso do `jest-axe` (Ferramenta de Auditoria)
+Se um teste unitário (`jest-axe`) falhar por acessibilidade (ex: *Element has insufficient color contrast*), você deve:
+1. Analisar os logs repassados.
+2. Isolar a alteração estritamente ao componente reportado e reparar a luminância do Hex/Tailwind class.
+3. Não propor "workarounds" sem testar contra as regras WCAG.

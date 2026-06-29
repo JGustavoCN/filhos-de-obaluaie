@@ -71,13 +71,13 @@ A ideia central é: **cada tipo de conteúdo recebe um "traje" visual diferente*
 
 | Propriedade | Valor |
 |---|---|
-| **Acento** | Vermelho Terra Cota intenso (`--color-primary: #9E1B1B`) sobre fundo escuro |
-| **Background** | Card com fundo `--color-tertiary` (carvão) — sempre "dark", mesmo no light mode |
-| **Frame** | Usa o `card-9slice` (frame decorativo primário) com a border-image existente |
+| **Acento** | Vermelho Terra Cota intenso (`--color-primary: #9E1B1B`) |
+| **Background** | `bg-[var(--color-surface)]` com border-radius `2xl` |
+| **Frame** | Borda sutil `border-outline/20` com `overflow-hidden` |
 | **Layout** | Card tipo "hero" — imagem grande em cima (aspect-ratio 16/9), texto embaixo |
-| **Badge** | Número da edição em destaque ("XVIII Edição") com tipografia Syne bold grande |
-| **Ícone** | Punho erguido ou símbolo Sankofa (SVG) |
-| **Hover** | Inner glow dourado (`--inner-glow`) pulsa suavemente — como brasa |
+| **Badge** | Número da edição em destaque ("XVIII Edição") sobreposta na foto com backdrop-blur |
+| **Ícone** | N/A (hero image foca na foto principal) |
+| **Hover** | `spring-transition` com `hover:-translate-y-2` e `hover:shadow-xl` |
 | **Dados exibidos** | Edição (nº), data, local, descrição, galeria de fotos |
 
 **Mockup descritivo:**
