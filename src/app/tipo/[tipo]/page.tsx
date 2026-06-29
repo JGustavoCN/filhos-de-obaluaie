@@ -35,7 +35,7 @@ export default async function CategoriaPage({
         </header>
 
         {conteudos && conteudos.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
             {conteudos.map((item: any) => (
               <EventCard key={item._id} data={item} />
             ))}

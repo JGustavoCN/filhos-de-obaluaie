@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
-const navLinks = [
+interface NavLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const defaultNavLinks: NavLink[] = [
   { label: "Sobre", href: "#sobre" },
   { label: "Projetos", href: "#projetos" },
   { label: "Acervo", href: "#acervo" },
@@ -11,9 +17,10 @@ const navLinks = [
   { label: "Estúdio", href: "https://filhos-de-obaluaie.sanity.studio", external: true },
 ];
 
-export default function Navbar() {
+export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navLinks = menuLinks && menuLinks.length > 0 ? menuLinks : defaultNavLinks;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);

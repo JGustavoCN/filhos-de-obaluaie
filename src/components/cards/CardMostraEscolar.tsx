@@ -3,19 +3,8 @@ import { EventoProps } from './types';
 import { MaskIcon, CalendarIcon, LocationIcon } from './icons';
 
 export default function CardMostraEscolar({ data }: { data: EventoProps }) {
-  // Capa principal
-  const capaUrl = data.imagemCapa || "https://images.unsplash.com/photo-1521493959102-bdd6677fdd81?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-
-  // Outras fotos para a galeria (usando as URLs fornecidas, sem repetir a capa)
-  const fallbackGaleria = [
-    "https://plus.unsplash.com/premium_photo-1710380789847-c76ce5427347?q=80&w=687&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1777375430966-c028cf6e3293?q=80&w=1123&auto=format&fit=crop",
-    "https://plus.unsplash.com/premium_photo-1679692887205-a2accc2dec6a?q=80&w=687&auto=format&fit=crop"
-  ];
-  
-  const fotosMock = data.galeria && data.galeria.length >= 3 
-    ? data.galeria.slice(0, 3) 
-    : fallbackGaleria;
+  const capaUrl = data.imagemCapa || "";
+  const fotosMock = data.galeria ? data.galeria.slice(0, 3) : [];
 
   // Rotações para as "polaroids"
   const rotations = ["-rotate-6", "rotate-2", "-rotate-3"];

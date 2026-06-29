@@ -76,3 +76,18 @@ export const CONTEUDO_POR_SLUG_QUERY = defineQuery(`
     "arquivo": arquivo.asset->url
   }
 `);
+
+// 4. Query para Configurações do Site (Singleton)
+export const SITE_SETTINGS_QUERY = defineQuery(`
+  *[_type == "siteSettings"][0] {
+    sobreTexto,
+    sobreCitacao,
+    pilares,
+    instagram,
+    facebook,
+    telefone,
+    email,
+    endereco,
+    menuLinks
+  }
+`);

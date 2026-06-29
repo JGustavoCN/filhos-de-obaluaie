@@ -8,10 +8,11 @@ import Footer from "@/components/Footer";
 import EventCard from "@/components/cards/EventCard";
 import Link from 'next/link';
 import { client } from "@/sanity/client";
-import { HOME_HERO_QUERY, HOME_NOTICIAS_QUERY, HOME_AGENDA_QUERY, CONTEUDO_POR_TIPO_QUERY } from "@/sanity/queries";
+import { HOME_HERO_QUERY, HOME_NOTICIAS_QUERY, HOME_AGENDA_QUERY, CONTEUDO_POR_TIPO_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/queries";
 
 export default async function Home() {
   // Buscar blocos separados da API (agora conectados no dataset development)
+  const siteSettings = await client.fetch(SITE_SETTINGS_QUERY);
   const heroEvent = await client.fetch(HOME_HERO_QUERY);
   const noticias = await client.fetch(HOME_NOTICIAS_QUERY);
   const agenda = await client.fetch(HOME_AGENDA_QUERY, { heroId: heroEvent?._id || '' });
@@ -21,7 +22,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar menuLinks={siteSettings?.menuLinks} />
       <main>
         <HeroSection />
         

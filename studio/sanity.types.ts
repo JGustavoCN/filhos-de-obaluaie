@@ -474,6 +474,22 @@ export type Slug = {
   source?: string
 }
 
+export type SiteSettings = {
+  _id: string
+  _type: 'siteSettings'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  sobreTexto?: string
+  sobreCitacao?: string
+  pilares?: Array<string>
+  instagram?: string
+  facebook?: string
+  telefone?: string
+  email?: string
+  endereco?: string
+}
+
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch'
   background?: string
@@ -586,6 +602,7 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
