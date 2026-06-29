@@ -50,7 +50,7 @@ export default function TestesPage() {
       dataEvento: "Segundas e Quartas, 18h",
       local: "Crianças de 8 a 14 anos",
       subtipoOficina: "percussao",
-      imagemCapa: "https://images.unsplash.com/photo-1777375430966-c028cf6e3293?q=80&w=1123&auto=format&fit=crop"
+      imagemCapa: "https://images.unsplash.com/photo-1440451185281-11ff5853ce0a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "6",
@@ -60,7 +60,7 @@ export default function TestesPage() {
       dataEvento: "Terças e Quintas, 19h",
       local: "Jovens e Adultos",
       subtipoOficina: "capoeira",
-      imagemCapa: "https://images.unsplash.com/photo-1777375430922-1e01edd81762?q=80&w=1203&auto=format&fit=crop"
+      imagemCapa: "https://images.unsplash.com/photo-1515657834497-26509e295154?q=80&w=723&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "7",
@@ -69,7 +69,7 @@ export default function TestesPage() {
       resumo: "Apresentação Musical",
       dataEvento: "10/08/2026",
       local: "Praça do Cruzeiro",
-      imagemCapa: "https://images.unsplash.com/photo-1552710307-537199cd41c0?q=80&w=1170&auto=format&fit=crop"
+      imagemCapa: "https://images.unsplash.com/photo-1571417800906-5a5058dbd45d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "8",
@@ -77,7 +77,7 @@ export default function TestesPage() {
       titulo: "Inscrições abertas para as oficinas de 2027",
       resumo: "Não perca o prazo para garantir sua vaga nas oficinas de percussão, capoeira e teatro. Vagas limitadas para novos alunos.",
       dataEvento: "01/12/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1509099863731-ef4bff19e808?q=80&w=1172&auto=format&fit=crop"
+      imagemCapa: "https://images.unsplash.com/photo-1665400808116-f0e6339b7e9a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "9",

@@ -327,7 +327,8 @@ Documents:
 ```
 
 > [!IMPORTANT]
-> **Decisão necessária:** Qual abordagem de schema adotar? Isso impacta diretamente como os cards são renderizados no frontend. A recomendação é a **Opção C (Híbrida)**. Irei fazer a opção C.
+> **Decisão (29/06/2026): Aprovada a OPÇÃO B (Document Types Separados).**
+> **Motivo:** O projeto frontend evoluiu e exigiu muitos campos únicos para cada formato (ex: `aniversariantes` só para Aniversário, `escolasParticipantes` só para Mostra, `mestreConvidado` só para Roda). Forçar a Opção C (Híbrida) resultaria em um schema "monolítico" cheio de campos condicionais ocultos no Sanity (`hidden: () => ...`), prejudicando a UX dos editores. Com a Opção B, o Sanity espelha perfeitamente a tipagem estrita do Frontend, e cada formulário no Painel carrega exclusivamente os dados que o Card precisa.
 
 ---
 

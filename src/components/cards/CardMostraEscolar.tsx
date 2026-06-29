@@ -9,7 +9,7 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
   // Outras fotos para a galeria (usando as URLs fornecidas, sem repetir a capa)
   const fallbackGaleria = [
     "https://plus.unsplash.com/premium_photo-1710380789847-c76ce5427347?q=80&w=687&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1440451185281-11ff5853ce0a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1777375430966-c028cf6e3293?q=80&w=1123&auto=format&fit=crop",
     "https://plus.unsplash.com/premium_photo-1679692887205-a2accc2dec6a?q=80&w=687&auto=format&fit=crop"
   ];
   
