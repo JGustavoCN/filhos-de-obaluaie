@@ -14,7 +14,7 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
       {/* Content Area - Respiro entre tags e título */}
       <div className="flex-1 min-w-0 flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="badge-tipo bg-[var(--color-secondary)] text-[var(--color-on-surface)] text-xs px-3 py-1.5 shadow-sm border border-[var(--color-outline-variant)] flex items-center gap-1.5 font-bold">
+          <span className="badge-tipo badge-secondary">
              Participação Externa
           </span>
           {data.resumo && (

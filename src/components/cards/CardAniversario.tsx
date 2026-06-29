@@ -9,10 +9,10 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
   return (
     <div className="glass-card card-aniversario flex flex-col items-center relative overflow-hidden group border-t-4 border-t-[var(--color-primary)] h-full">
       
-      {/* Fundo Animado Festivo (Sutil para respeitar os 4 estados do glass-card) */}
-      <div className="absolute inset-0 bg-aniversario-gradient opacity-30 dark:opacity-15 pointer-events-none z-0 transition-opacity duration-300 group-hover:opacity-40 dark:group-hover:opacity-25"></div>
+      {/* Fundo Animado Festivo via classe utilitária do globals.css */}
+      <div className="absolute inset-0 animate-gradient-festivo opacity-30 dark:opacity-15 pointer-events-none z-0 transition-opacity duration-300 group-hover:opacity-40 dark:group-hover:opacity-25"></div>
 
-      {/* Marca d'água de Bolo - Usando cor primária com opacidade para aparecer bem no Light e Dark mode */}
+      {/* Marca d'água de Bolo */}
       <div className="absolute -right-4 -top-4 text-[var(--color-primary)] opacity-10 dark:opacity-20 z-0 rotate-12 transition-all duration-1000 group-hover:rotate-0 group-hover:scale-125 group-hover:opacity-20 dark:group-hover:opacity-30">
         <CakeIcon className="w-48 h-48 drop-shadow-sm" />
       </div>
@@ -24,7 +24,8 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
           <img src={imgCapa} alt={data.titulo} className="w-full h-full object-cover" />
         </div>
 
-        <span className="badge-tipo bg-[var(--color-secondary)] text-[var(--color-on-surface)] mb-3 shadow-md flex items-center gap-2">
+        {/* Badge Desacoplado */}
+        <span className="badge-tipo badge-secondary mb-3">
           <PartyIcon className="w-4 h-4 text-[var(--color-primary)]" /> Celebração do Mês
         </span>
         
@@ -32,7 +33,7 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
           {data.titulo}
         </h3>
         
-        {/* Lista COMPLETA de Aniversariantes */}
+        {/* Lista COMPLETA de Aniversariantes com a classe global .custom-scrollbar */}
         {aniversariantes.length > 0 && (
           <div className="w-full bg-white/60 dark:bg-black/40 backdrop-blur-sm rounded-lg p-3.5 mb-5 shadow-inner border border-[var(--color-outline-variant)]/50">
             <h4 className="text-xs font-bold text-[var(--color-on-surface-light)] uppercase tracking-wider mb-3 flex items-center justify-center gap-1.5 border-b border-[var(--color-outline-variant)]/50 pb-2">
@@ -48,7 +49,6 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
           </div>
         )}
 
-        {/* Resumo com max-w-full para não quebrar no grid */}
         {data.resumo && (
           <p className="text-[var(--color-on-surface-light)] text-sm mb-6 leading-relaxed text-center w-full">
             {data.resumo}
@@ -57,40 +57,12 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
         
         <div className="mt-auto w-full flex justify-center">
           {data.dataEvento && (
-            <p className="inline-flex text-sm font-bold text-[var(--color-primary)] items-center gap-1.5 bg-[var(--color-secondary)] px-4 py-2 rounded-full shadow-md">
+            <p className="meta-date">
               <CalendarIcon className="w-4 h-4" /> {data.dataEvento}
             </p>
           )}
         </div>
       </div>
-      
-      {/* CSS Injetado para Animação e Scroll */}
-      <style>{`
-        .bg-aniversario-gradient {
-          background: linear-gradient(-45deg, var(--color-surface), var(--color-secondary-container), var(--color-surface), var(--color-primary-container));
-          background-size: 400% 400%;
-          animation: gradientBG 8s ease infinite;
-        }
-        @keyframes gradientBG {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: var(--color-outline-variant);
-          border-radius: 5px;
-        }
-        .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-          background-color: var(--color-primary);
-        }
-      `}</style>
     </div>
   );
 }

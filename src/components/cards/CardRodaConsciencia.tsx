@@ -22,7 +22,7 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
         
         {/* Infos do Mestre */}
         <div className="flex flex-col justify-center">
-          <span className="badge-tipo bg-[var(--color-primary)] text-white shadow-sm flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider w-fit mb-3">
+          <span className="badge-tipo badge-primary mb-3">
             <BerimbauIcon className="w-3.5 h-3.5" /> Roda da Consciência
           </span>
           <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)]">
@@ -49,11 +49,11 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
           </div>
         )}
 
-        <div className="mt-auto pt-4 pb-6 border-t border-[var(--color-outline-variant)]/50 flex justify-between items-center text-sm font-bold">
-          <span className="flex items-center gap-1.5 text-[var(--color-primary)] bg-[var(--color-primary-container)]/80 px-3 py-1.5 rounded-full shadow-sm">
+        <div className="mt-auto pt-4 pb-6 border-t border-[var(--color-outline-variant)]/50 flex justify-between items-center">
+          <span className="meta-date">
             <CalendarIcon className="w-4 h-4" /> {data.dataEvento}
           </span>
-          <span className="text-[10px] uppercase tracking-widest text-[var(--color-on-surface-light)] font-bold px-2 py-1.5 bg-[var(--color-surface)] border border-[var(--color-outline-variant)] rounded-md shadow-sm">
+          <span className="meta-tag">
             Aberto
           </span>
         </div>

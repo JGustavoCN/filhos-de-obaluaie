@@ -12,7 +12,7 @@ export default function TestesPage() {
       resumo: "Vamos celebrar a vida de nossa comunidade com muita roda, bolo e alegria. Traga sua família!",
       dataEvento: "25/07/2026",
       imagemCapa: "https://images.unsplash.com/photo-1583166614297-a97b68d5cead?q=80&w=1315&auto=format&fit=crop",
-      aniversariantes: ["Mestre Zé", "João Pedro", "Maria Eduarda", "Aline Santos", "Roberto Carlos", "Juliana Silva", "José", "Mario", "Ana", "Carlos"]
+      aniversariantes: ["Mestre Zé", "João Pedro", "Maria Eduarda", "Aline Santos", "Roberto Carlos", "Juliana Silva", "José", "Mario", "Ana", "Carlos", "Edward", "Rodrigo", "Fernando", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus"]
     },
     {
       id: "2",

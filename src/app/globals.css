@@ -244,6 +244,33 @@ body::after {
 }
 
 /* ============================================================
+   COMPONENTES DOS CARDS (DESACOPLAMENTO)
+   ============================================================ */
+@layer components {
+  /* Badges de Categoria */
+  .badge-tipo {
+    @apply flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider w-fit shadow-sm transition-colors;
+  }
+  .badge-primary {
+    @apply bg-[var(--color-primary)] text-white;
+  }
+  .badge-secondary {
+    @apply bg-[var(--color-secondary)] text-[var(--color-on-surface)] border border-[var(--color-outline-variant)];
+  }
+  .badge-surface {
+    @apply bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] border border-[var(--color-outline-variant)] group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)];
+  }
+
+  /* Metadados (Data e Tags) */
+  .meta-date {
+    @apply flex items-center gap-1.5 text-[var(--color-primary)] bg-[var(--color-primary-container)] px-3 py-1.5 rounded-full shadow-sm text-sm font-bold w-fit;
+  }
+  .meta-tag {
+    @apply text-[10px] uppercase tracking-widest text-[var(--color-on-surface-light)] font-bold px-2 py-1.5 bg-[var(--color-surface)] border border-[var(--color-outline-variant)] rounded-md shadow-sm w-fit;
+  }
+}
+
+/* ============================================================
    GLASSMORPHISM ORGÂNICO
    ============================================================ */
 
@@ -344,6 +371,43 @@ body::after {
 .stagger-children > *:nth-child(3) { animation-delay: 0.24s; }
 .stagger-children > *:nth-child(4) { animation-delay: 0.36s; }
 .stagger-children > *:nth-child(5) { animation-delay: 0.48s; }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Gradiente Animado para Cards Festivos */
+  .animate-gradient-festivo {
+    background: linear-gradient(-45deg, var(--color-surface), var(--color-secondary-container), var(--color-surface), var(--color-primary-container));
+    background-size: 400% 400%;
+    animation: gradientBG 8s ease infinite;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Scrollbar Customizada Delgada */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-outline-variant);
+    border-radius: 5px;
+  }
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+  }
+}
 
 /* ============================================================
    UTILITY OVERRIDES

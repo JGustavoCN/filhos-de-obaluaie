@@ -338,7 +338,7 @@ A lógica no frontend segue o padrão de **"adapter visual"**: um componente wra
 ### 4.1 Componente Dispatcher
 
 ```tsx
-// Pseudocódigo ilustrativo
+// Pseudocódigo ilustrativo do Dispatcher
 
 function EventCard({ evento }) {
   switch (evento.tipo) {
@@ -350,85 +350,37 @@ function EventCard({ evento }) {
       return <CardRodaConsciencia data={evento} />
     case "mostra-escolar":
       return <CardMostraEscolar data={evento} />
+    case "oficina":
+      return <CardOficina data={evento} />
     case "evento-externo":
       return <CardEventoExterno data={evento} />
+    case "documento":
+      return <CardDocumento data={evento} />
+    case "noticia":
     default:
       return <CardNoticia data={evento} />
   }
 }
 ```
 
-### 4.2 Classes CSS por Variante
+### 4.2 Arquitetura Visual por Variante
 
-Cada variante recebe classes utilitárias compostas a partir do design system existente:
+Cada variante adota padrões específicos de layout em conjunto com as abstrações globais do Tailwind (`.badge-tipo`, etc):
 
-| Variante | Classes Base | Modificadores |
+| Variante | Classes Base | Composição e Modificadores |
 |---|---|---|
-| `aniversario` | `glass-card` | `border-dashed border-secondary-hover` + badge dourada |
-| `consciencia-negra` | `card-9slice` | Fundo `bg-tertiary`, texto `text-on-primary` |
-| `roda-consciencia` | `glass-card` | `border-l-4 border-primary` |
-| `mostra-escolar` | `glass-card bogolan-pattern` | Grid de thumbnails |
-| `oficina` | `card-9slice` / `card-9slice-secondary` | Frame varia por subtipo |
-| `evento-externo` | `glass-card` | Compacto, pill `bg-tertiary-container` |
-| `documento` | `glass-card` | Lista horizontal (existente) |
-| `noticia` | `glass-card` | Card vertical padrão |
+| `aniversario` | `glass-card` | Gradiente animado `.animate-gradient-festivo`, marca d'água grande de bolo e scroll `.custom-scrollbar` para os nomes. |
+| `consciencia-negra` | `card-9slice` | Fundo `bg-[var(--color-tertiary)]`, texto `text-on-primary`. |
+| `roda-consciencia` | `glass-card` | Borda lateral forte `border-l-[6px]`, Avatar arredondado (`rounded-3xl`) à esquerda e marca d'água de Berimbau. |
+| `mostra-escolar` | `glass-card bogolan-pattern` | Grid de thumbnails arredondados que fazem scale no hover e fundo étnico suave. |
+| `oficina` | `card-9slice` / `card-9slice-secondary` | Frame visual com SVG decorativo em posições absolutas nos cantos. |
+| `evento-externo` | `glass-card` | Layout horizontal (`flex-row`), padding generoso e ícone circular escalável à esquerda. |
+| `documento` | `glass-card` | Ícone grande e layout direto de acesso ao documento. |
+| `noticia` | `glass-card` | Card vertical padrão, leitura limpa (`text-balance`). |
 
 ---
 
-## 5. Novas Classes CSS Necessárias
-
-Adições ao [globals.css](file:///c:/Projetos/react/filhos-de-obaluaie/src/app/globals.css):
-
-```css
-/* Card Aniversariantes — Borda festiva pontilhada */
-.card-aniversario {
-  border: 2px dashed rgba(232, 197, 140, 0.65);
-  border-radius: var(--radius-card);
-}
-
-/* Card Consciência Negra — sempre "dark" */
-.card-consciencia-negra {
-  background: var(--color-tertiary);
-  color: var(--color-on-primary);
-  border-radius: var(--radius-card);
-}
-
-/* Card Roda da Consciência — borda-citação */
-.card-roda-consciencia {
-  border-left: 4px solid var(--color-primary);
-}
-
-/* Card Mostra Escolar — mosaico de fotos */
-.card-mostra-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-}
-
-/* Sparkle animation para Aniversariantes */
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-  50% { opacity: 1; transform: scale(1) rotate(180deg); }
-}
-
-/* Badge pill por tipo */
-.badge-tipo {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-```
-
----
-
-## 6. Fluxo Completo — Do Sanity ao Card
+## 5. Fluxo Completo — Do Sanity ao Card
 
 ```mermaid
 graph LR
@@ -439,45 +391,56 @@ graph LR
     E --> F["EventCard dispatcher"]
     F --> G{"switch(tipo)"}
     G -->|aniversario| H["CardAniversario"]
-    G -->|consciencia-negra| I["CardConscienciaNegra"]
     G -->|roda-consciencia| J["CardRodaConsciencia"]
     G -->|mostra-escolar| K["CardMostraEscolar"]
     G -->|oficina| L["CardOficina"]
     G -->|evento-externo| M["CardEventoExterno"]
-    G -->|noticia| N["CardNoticia"]
+    G -->|outros...| N["Demais Cards"]
 ```
 
 ---
 
-## 7. Resumo Visual — Identidade de Cada Card
+
+## 6. Resumo Visual — Identidade de Cada Card
 
 | Tipo | Emoji | Cor Dominante | Elemento Marcante | Sensação |
 |---|---|---|---|---|
-| Aniversário | 🎂 | Dourado/Palha | Borda pontilhada, imagem circular | Festa, calor |
+| Aniversário | 🎂 | Dourado/Palha | Gradiente animado, bolo gigante | Festa, calor |
 | Consciência Negra | ✊🏿 | Vermelho + Carvão | Frame 9-slice, fundo escuro, nº edição | Poder, ancestralidade |
-| Roda da Consciência | 🥋 | Barro terroso | Borda-citação, avatar de mestre | Sabedoria, troca |
-| Mostra Escolar | 🎭 | Multicor intercalado | Mosaico de fotos, tags de escolas | Energia jovem |
-| Oficina | 🥁 | Primary/Secondary | Frame 9-slice, ícones de modalidade | Ritmo, formação |
-| Evento Externo | 📡 | Carvão | Compacto, pin de localização | Rede, parceria |
+| Roda da Consciência | 🥋 | Barro terroso | Avatar arredondado à esquerda, Berimbau | Sabedoria, troca |
+| Mostra Escolar | 🎭 | Multicor intercalado | Mosaico de fotos que pulam | Energia jovem |
+| Oficina | 🥁 | Primary/Secondary | Frame 9-slice | Ritmo, formação |
+| Evento Externo | 📡 | Carvão | Compacto horizontal, pad generoso | Rede, parceria |
 | Documento | 📄 | Neutro | Lista horizontal, ícone de arquivo | Transparência |
 | Notícia | 📰 | Sutil | Card vertical, imagem 4:3 | Informação leve |
 
 ---
 
-## 8. Próximos Passos Sugeridos
+## 7. Boas Práticas e Guidelines de Implementação
 
-1. **Decisão sobre abordagem de schema** (Opção A, B ou C) — precisa da sua escolha
-2. **Criar/refatorar schemas no Sanity** com os campos específicos por tipo
-3. **Deploy do schema** (`deploy_schema`) para que o MCP reconheça os novos tipos
-4. **Criar os componentes de Card** no Next.js (`src/components/cards/`)
-5. **Adicionar as classes CSS** ao `globals.css`
-6. **Criar queries GROQ** com `defineQuery` para buscar eventos por tipo
-7. **Integrar nas seções** existentes (substituir dados hardcoded por dados dinâmicos)
-8. **Gerar assets visuais** (ícones SVG para cada tipo, frames decorativos adicionais se necessário)
+### 7.1 Composição Espacial e Hierarquia Visual
+A forma como as imagens de capa (`imagemCapa`) são renderizadas deve ser decidida com base na densidade de conteúdo do card, já que todos usam `h-full` no grid:
+- **Hero Image (Topo):** Usar um bloco largo (`w-full h-48`) no topo do card quando o conteúdo for curto (ex: *Mostra Escolar*, *Roda da Consciência* sem muita descrição). Isso evita o "vazio" central e estica visualmente o card de forma atraente (estilo poster).
+- **Avatar de Perfil (Lado Esquerdo):** Usar bloco arredondado à esquerda (ex: `w-32 h-32 rounded-3xl`) quando a imagem for um rosto (Mestre) ou a informação do título for pesada e precisar dividir espaço lateralmente. Impede o corte de rostos ("fatiar a testa") comum em Hero Images horizontais.
+- **Watermarks no Fundo:** Ícones gigantes (`w-56 h-56`) em posição absolute no canto inferior direito com baixíssima opacidade (5-20%) ajudam a reforçar a temática sem adicionar ruído textual.
+
+### 7.2 Desacoplamento e CSS Global (Utilities)
+Para manter o DRY (Don't Repeat Yourself), abstraímos componentes comuns da UI para classes utilitárias no `globals.css` (camada `@layer components`):
+- **`.badge-tipo`**: Classe base para as "pílulas" de categoria.
+  - Variações: `.badge-primary`, `.badge-secondary`, `.badge-surface`.
+- **Metadados**: `.meta-date` e `.meta-tag` para formatar os rodapés (calendário e badges de 'Aberto').
+- **Animações e Scroll**: 
+  - `.animate-gradient-festivo` para fundos vibrantes (ex: Aniversário).
+  - `.custom-scrollbar` para permitir o scroll de longas listas (ex: lista de aniversariantes) sem invadir o visual do card.
+
+### 7.3 Acessibilidade Visual (Glassmorphism e Dark Mode)
+- **Modo Claro vs Escuro:** Transparências (opacidades) usadas em elementos de fundo (`bg-` ou ícones absolutos) devem ser ajustadas dinamicamente (`opacity-30 dark:opacity-15`). No modo Ancestral, as cores de opacidade devem ser leves para não cobrir o sombreamento (Inner Glow) nativo do `glass-card`.
+- **Contraste:** Ícones de fundo escuros no Light Mode devem ser testados contra visibilidade no Dark Mode (frequentemente usando `--color-primary` que mantém o peso, ou forçando um outline claro).
+- **Sem Emojis:** Todos os sentimentos e temáticas devem ser representados via ícones SVG (`CakeIcon`, `PartyIcon`, `BerimbauIcon`) com cores baseadas no Design System. Uso de emojis (`✨`, `🎉`) é expressamente proibido para manter o tom profissional/cultural.
 
 ---
 
-## 9. Considerações do Design System
+## 8. Considerações do Design System
 
 Todas as variantes **respeitam rigorosamente** o [DESIGN.md](file:///c:/Projetos/react/filhos-de-obaluaie/DESIGN.md):
 
