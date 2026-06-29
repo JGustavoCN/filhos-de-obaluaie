@@ -28,7 +28,13 @@ export default function Footer() {
         </div>
         <div className="pt-8 border-t border-surface/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-surface/40 text-xs">&copy; 2025 Filhos de Obaluaiê. Ancestral Contemporary Heritage.</p>
-          <p className="text-surface/30 text-xs">Desenvolvido com respeito à ancestralidade.</p>
+          <div className="flex items-center gap-4 text-surface/30 text-xs">
+            <span>Desenvolvido com respeito à ancestralidade.</span>
+            <span>•</span>
+            <a href="https://filhos-de-obaluaie.sanity.studio" target="_blank" rel="noopener noreferrer" className="hover:text-surface/70 transition-colors" title="Acessar Painel Administrativo">
+              Estúdio
+            </a>
+          </div>
         </div>
       </div>
     </footer>
