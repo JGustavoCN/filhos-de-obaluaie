@@ -9,31 +9,15 @@ import EventCard from "@/components/cards/EventCard";
 import Link from 'next/link';
 import { client } from "@/sanity/client";
 import { HOME_HERO_QUERY, HOME_NOTICIAS_QUERY, HOME_AGENDA_QUERY, CONTEUDO_POR_TIPO_QUERY } from "@/sanity/queries";
-import { eventosMock } from "@/app/testes/page";
 
 export default async function Home() {
-  // Buscar blocos separados da API
-  let heroEvent = await client.fetch(HOME_HERO_QUERY);
-  let noticias = await client.fetch(HOME_NOTICIAS_QUERY);
-  let agenda = await client.fetch(HOME_AGENDA_QUERY);
-  let documentos = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "documento" }).then(res => res.slice(0, 4));
-
-  // ==========================================
-  // FALLBACK VISUAL (Para o ambiente de Dev)
-  // ==========================================
-  if (!heroEvent) {
-    heroEvent = eventosMock.find(e => e.tipo === 'consciencia-negra');
-  }
-  if (!noticias || noticias.length === 0) {
-    noticias = eventosMock.filter(e => e.tipo === 'noticia').slice(0, 3);
-  }
-  if (!agenda || agenda.length === 0) {
-    agenda = [eventosMock.find(e => e.tipo === 'aniversario'), eventosMock.find(e => e.tipo === 'roda-consciencia')].filter(Boolean);
-  }
-  if (!documentos || documentos.length === 0) {
-    documentos = eventosMock.filter(e => e.tipo === 'documento').slice(0, 4);
-  }
-  // ==========================================
+  // Buscar blocos separados da API (agora conectados no dataset development)
+  const heroEvent = await client.fetch(HOME_HERO_QUERY);
+  const noticias = await client.fetch(HOME_NOTICIAS_QUERY);
+  const agenda = await client.fetch(HOME_AGENDA_QUERY, { heroId: heroEvent?._id || '' });
+  const oficinas = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "oficina" }).then(res => res.slice(0, 4));
+  const documentos = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "documento" }).then(res => res.slice(0, 4));
+  const externos = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "eventoExterno" }).then(res => res.slice(0, 2));
 
   return (
     <>
@@ -51,7 +35,7 @@ export default async function Home() {
         <AboutSection />
         <XaxaraDivider />
         
-        <ProjectsSection />
+        <ProjectsSection oficinas={oficinas} />
         <XaxaraDivider />
 
         {/* BENTO GRID: NOTÍCIAS */}
@@ -95,7 +79,7 @@ export default async function Home() {
         </section>
         <XaxaraDivider />
 
-        <ArchiveSection documentos={documentos} />
+        <ArchiveSection documentos={documentos} externos={externos} />
       </main>
       <Footer />
     </>

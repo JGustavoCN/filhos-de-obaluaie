@@ -23,10 +23,21 @@ export const HOME_NOTICIAS_QUERY = defineQuery(`
   }
 `);
 
-// 3. Query para os cards de Agenda (Limite 2 horizontais)
+// 3. Query para os cards de Agenda (Limite 4 no Grid)
 export const HOME_AGENDA_QUERY = defineQuery(`
-  *[_type in ["aniversario", "rodaConsciencia"]] | order(dataEvento desc)[0...2] {
-    _id, _type, titulo, "slug": slug.current, resumo, dataEvento, "imagemCapa": imagemCapa.asset->url, aniversariantes, mestreConvidado
+  *[_type in ["aniversario", "rodaConsciencia", "mostraEscolar", "eventoExterno", "conscienciaNegra"] && (!defined($heroId) || _id != $heroId)] | order(dataEvento desc)[0...4] {
+    _id, 
+    _type, 
+    titulo, 
+    "slug": slug.current, 
+    resumo, 
+    dataEvento, 
+    "imagemCapa": imagemCapa.asset->url,
+    "galeria": galeria[0...3].asset->url,
+    aniversariantes, 
+    mestreConvidado,
+    local,
+    escolasParticipantes
   }
 `);
 

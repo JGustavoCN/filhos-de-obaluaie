@@ -2,31 +2,9 @@ import Link from 'next/link';
 import EventCard from '@/components/cards/EventCard';
 import { EventoProps } from '@/components/cards/types';
 
-// Utilizamos o sistema de cards tipados que construímos para padronizar o layout
-const projetosSociaisMock: EventoProps[] = [
-  {
-    id: "capoeira",
-    tipo: "oficina",
-    titulo: "Capoeira",
-    resumo: "A arte marcial que é dança, jogo e resistência histórica. Turmas abertas para todas as idades.",
-    subtipoOficina: "capoeira",
-    dataEvento: "Terças e Quintas, 19h",
-    local: "Sede do Grupo",
-    imagemCapa: "https://images.unsplash.com/photo-1515657834497-26509e295154?q=80&w=723&auto=format&fit=crop"
-  },
-  {
-    id: "maculele",
-    tipo: "oficina",
-    titulo: "Maculelê e Percussão",
-    resumo: "O ritmo dos bastões que celebra a colheita e a valentia, unido aos toques de atabaque.",
-    subtipoOficina: "percussao",
-    dataEvento: "Sábados, 15h",
-    local: "Praça Central",
-    imagemCapa: "https://images.unsplash.com/photo-1440451185281-11ff5853ce0a?q=80&w=1074&auto=format&fit=crop"
-  }
-];
+export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoProps[] }) {
+  if (!oficinas || oficinas.length === 0) return null;
 
-export default function ProjectsSection() {
   return (
     <section id="projetos" className="relative py-20 md:py-28" aria-labelledby="projects-heading">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
@@ -48,8 +26,8 @@ export default function ProjectsSection() {
         
         {/* Grid de Cards utilizando o EventCard Tipado */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 stagger-children">
-          {projetosSociaisMock.map((project) => (
-            <div key={project.id} className="h-full">
+          {oficinas.map((project) => (
+            <div key={project.id || (project as any)._id} className="h-full">
               <EventCard data={project} />
             </div>
           ))}

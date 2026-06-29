@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link';
 import { EventoProps } from './types';
 
 import CardAniversario from './CardAniversario';
@@ -17,16 +18,28 @@ export default function EventCard({ data }: { data: EventoProps }) {
   // Normalização
   const normalizado = tipoSanity.replace(/-([a-z])/g, (g: string) => g[1].toUpperCase());
 
+  if (normalizado === "documento") {
+    return <CardDocumento data={data} />;
+  }
+
+  const href = data.slug ? `/conteudo/${data.slug}` : "#";
+  let CardComponent;
+
   switch (normalizado) {
-    case "aniversario": return <CardAniversario data={data} />;
-    case "conscienciaNegra": return <CardConscienciaNegra data={data} />;
-    case "rodaConsciencia": return <CardRodaConsciencia data={data} />;
-    case "mostraEscolar": return <CardMostraEscolar data={data} />;
-    case "oficina": return <CardOficina data={data} />;
-    case "eventoExterno": return <CardEventoExterno data={data} />;
-    case "documento": return <CardDocumento data={data} />;
+    case "aniversario": CardComponent = <CardAniversario data={data} />; break;
+    case "conscienciaNegra": CardComponent = <CardConscienciaNegra data={data} />; break;
+    case "rodaConsciencia": CardComponent = <CardRodaConsciencia data={data} />; break;
+    case "mostraEscolar": CardComponent = <CardMostraEscolar data={data} />; break;
+    case "oficina": CardComponent = <CardOficina data={data} />; break;
+    case "eventoExterno": CardComponent = <CardEventoExterno data={data} />; break;
     case "noticia":
     default:
-      return <CardNoticia data={data} />;
+      CardComponent = <CardNoticia data={data} />; break;
   }
+
+  return (
+    <Link href={href} className="block h-full cursor-pointer transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-[var(--radius-card)]">
+      {CardComponent}
+    </Link>
+  );
 }
