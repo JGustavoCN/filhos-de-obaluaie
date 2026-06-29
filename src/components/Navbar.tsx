@@ -3,16 +3,24 @@
 import { useState, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 
-const navLinks = [
+interface NavLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const defaultNavLinks: NavLink[] = [
   { label: "Sobre", href: "#sobre" },
   { label: "Projetos", href: "#projetos" },
   { label: "Acervo", href: "#acervo" },
   { label: "Contato", href: "#contato" },
+  { label: "Estúdio", href: "https://filhos-de-obaluaie.sanity.studio", external: true },
 ];
 
-export default function Navbar() {
+export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navLinks = menuLinks && menuLinks.length > 0 ? menuLinks : defaultNavLinks;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -52,9 +60,18 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="px-5 py-2 text-sm font-medium text-on-surface/80 hover:text-primary transition-colors rounded-pill"
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              className={`px-5 py-2 text-sm font-medium transition-colors rounded-pill flex items-center gap-1.5 ${
+                link.external 
+                  ? "text-primary/90 hover:text-primary bg-primary/5 hover:bg-primary/10 border border-primary/20" 
+                  : "text-on-surface/80 hover:text-primary"
+              }`}
             >
               {link.label}
+              {link.external && (
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M12 8.5V12a2 2 0 01-2 2H4a2 2 0 01-2-2V4a2 2 0 012-2h3.5m5.5 0v3.5m0-3.5L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              )}
             </a>
           ))}
           <a
@@ -99,25 +116,32 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ${
-          menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-        } navbar-mobile-menu bg-[rgba(250,246,240,0.95)] backdrop-blur-2xl`}
+        className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        } navbar-mobile-menu bg-surface/95 dark:bg-surface/95 backdrop-blur-2xl shadow-2xl border-b border-outline-variant/30`}
       >
-        <div className="px-6 pb-6 flex flex-col gap-1">
+        <div className="px-6 pb-8 pt-2 flex flex-col gap-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="py-3 text-on-surface/80 hover:text-primary border-b border-outline-variant/20 transition-colors"
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              onClick={() => !link.external && setMenuOpen(false)}
+              className={`py-4 border-b border-outline-variant/20 transition-colors flex items-center justify-between text-base ${
+                link.external ? "text-primary font-bold" : "text-on-surface/90 hover:text-primary font-medium"
+              }`}
             >
               {link.label}
+              {link.external && (
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M12 8.5V12a2 2 0 01-2 2H4a2 2 0 01-2-2V4a2 2 0 012-2h3.5m5.5 0v3.5m0-3.5L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              )}
             </a>
           ))}
           <a
             href="#acervo"
             onClick={() => setMenuOpen(false)}
-            className="mt-3 px-6 py-3 bg-primary text-on-primary text-center font-semibold rounded-pill hover:bg-primary-hover transition-colors"
+            className="mt-6 px-6 py-4 bg-primary text-on-primary text-center font-bold text-base rounded-pill hover:bg-primary-hover transition-colors shadow-lg active:scale-95"
           >
             Acesse o Acervo
           </a>

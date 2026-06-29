@@ -74,12 +74,21 @@ A paleta foi otimizada para atingir conformidade rigorosa com as diretrizes de a
 
 ### Paleta Claro (Light Mode)
 
-- **Primary (#9E1B1B)**: Vermelho barro/ritual. Ajustado para garantir contraste AAA com texto branco. Hover: #B32020, Active: #8A1515.
-- **Secondary (#F5F1E8)**: Branco palha. Uso seguro apenas com texto escuro em fundo claro. Hover: #EAE3D1, Active: #DFD5BC.
-- **Tertiary (#23201D)**: Carvão. Base para complementos menores. Container: #36322D.
-- **Surface (#FCFAF7)**: Branco orgânico. Superfícies sempre recebem texto escuro. Progressão de profundidade através de `surface-dim` e `surface-container` até `#F0E8DC` (high).
-- **On-surface (#1A1715)**: Preto suave. AAA garantido sobre superfícies claras.
-- **Error (#C62828)**: Alertas e ações destrutivas.
+- **Primary:** `#8C1616` (Vermelho terra - representa a argila, sangue, vitalidade, Obaluaê/Xangô/Ogum)
+  - On-Primary: `#FFFFFF`
+- **Secondary:** `#F5F1E8` (Bege claro - areia, juta, palha de costa)
+  - On-Secondary: `#2B2520`
+- **Tertiary:** `#23201D` (Carvão/Preto - cinzas, o luto e o renascimento, ancestralidade profunda)
+  - On-Tertiary: `#F5F1E8`
+
+**1.2 Neutras (Tons de fundo e texto)**
+- **Surface (Background):** `#FCFAF7` (Palha muito clara, quase branco-sujo)
+- **Surface Container:** `#F5EFE6` (Variação de palha)
+- **Surface Container High:** `#F0E8DC`
+- **On-Surface (Texto Principal):** `#1A1715` (Preto quase marrom)
+- **On-Surface Light (Texto Secundário):** `#524B49` (Ajustado para WCAG AA)
+- **Outline:** `#6E5B58` (Ajustado para WCAG AA)
+- **Outline Variant:** `#C6B8B2`
 
 ## Typography
 
