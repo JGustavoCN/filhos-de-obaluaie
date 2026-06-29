@@ -6,6 +6,38 @@ export const siteSettings = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'imagemHeroDesktop',
+      title: 'Imagem Principal do Header (Desktop)',
+      type: 'image',
+      description: 'Imagem principal exibida na primeira tela do site para computadores.',
+      options: { hotspot: true }
+    }),
+    defineField({
+      name: 'imagemHeroMobile',
+      title: 'Imagem Principal do Header (Celular)',
+      type: 'image',
+      description: 'Imagem principal exibida na primeira tela do site para celulares. (Opcional - usa a de desktop se vazio)',
+      options: { hotspot: true }
+    }),
+    defineField({
+      name: 'heroLabel',
+      title: 'Label do Hero',
+      type: 'string',
+      description: 'Pequeno texto acima do título (ex: Desde 2005 · Tobias Barreto/SE)',
+    }),
+    defineField({
+      name: 'heroTitulo',
+      title: 'Título Principal do Hero',
+      type: 'string',
+      description: 'Título principal da primeira dobra (ex: Filhos de Obaluaiê)',
+    }),
+    defineField({
+      name: 'heroSubtitulo',
+      title: 'Subtítulo do Hero',
+      type: 'text',
+      description: 'Texto descritivo abaixo do título',
+    }),
+    defineField({
       name: 'sobreTexto',
       title: 'Texto Sobre o Centro (Nossa Raiz)',
       type: 'text',

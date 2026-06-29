@@ -80,6 +80,11 @@ export const CONTEUDO_POR_SLUG_QUERY = defineQuery(`
 // 4. Query para Configurações do Site (Singleton)
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings"][0] {
+    "imagemHeroDesktop": imagemHeroDesktop.asset->url,
+    "imagemHeroMobile": imagemHeroMobile.asset->url,
+    heroLabel,
+    heroTitulo,
+    heroSubtitulo,
     sobreTexto,
     sobreCitacao,
     pilares,
