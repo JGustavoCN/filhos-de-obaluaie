@@ -2,13 +2,13 @@
 version: alpha
 name: Filhos de Obaluaiê
 colors:
-  primary: "#8C3A2A"
-  secondary: "#E8C58C"
-  tertiary: "#3A5F43"
-  neutral: "#EAE0D5"
-  surface: "#FAF6F0"
-  on-surface: "#2D2421"
-  error: "#D32F2F"
+  primary: "#9E1B1B"
+  secondary: "#F5F1E8"
+  tertiary: "#23201D"
+  neutral: "#DCD6CC"
+  surface: "#FCFAF7"
+  on-surface: "#1A1715"
+  error: "#C62828"
 typography:
   headline-lg:
     fontFamily: Syne
@@ -74,12 +74,21 @@ A paleta foi otimizada para atingir conformidade rigorosa com as diretrizes de a
 
 ### Paleta Claro (Light Mode)
 
-- **Primary (#7A3123)**: Terra Cota. Ajustado para garantir contraste AAA com texto branco. Hover: #8C3A2A, Active: #6E2416.
-- **Secondary (#E8C58C)**: Amarelo Palha da Costa. Uso seguro apenas com texto escuro em fundo claro. Hover: #D9AE6C, Active: #C69A52.
-- **Tertiary (#3A5F43)**: Verde Folha. Base para complementos menores. Container: #E6F0E8.
-- **Surface (#FAF6F0)**: Bege Cru. Superfícies sempre recebem texto escuro. Progressão de profundidade através de `surface-dim` e `surface-container` até `#F0E5D8` (high).
-- **On-surface (#2D2421)**: Café Torrado. AAA garantido sobre superfícies claras.
-- **Error (#D64545)**: Alertas e ações destrutivas.
+- **Primary:** `#8C1616` (Vermelho terra - representa a argila, sangue, vitalidade, Obaluaê/Xangô/Ogum)
+  - On-Primary: `#FFFFFF`
+- **Secondary:** `#F5F1E8` (Bege claro - areia, juta, palha de costa)
+  - On-Secondary: `#2B2520`
+- **Tertiary:** `#23201D` (Carvão/Preto - cinzas, o luto e o renascimento, ancestralidade profunda)
+  - On-Tertiary: `#F5F1E8`
+
+**1.2 Neutras (Tons de fundo e texto)**
+- **Surface (Background):** `#FCFAF7` (Palha muito clara, quase branco-sujo)
+- **Surface Container:** `#F5EFE6` (Variação de palha)
+- **Surface Container High:** `#F0E8DC`
+- **On-Surface (Texto Principal):** `#1A1715` (Preto quase marrom)
+- **On-Surface Light (Texto Secundário):** `#524B49` (Ajustado para WCAG AA)
+- **Outline:** `#6E5B58` (Ajustado para WCAG AA)
+- **Outline Variant:** `#C6B8B2`
 
 ## Typography
 
@@ -122,11 +131,11 @@ O "Modo Ancestral" evoca uma atmosfera noturna — o "Terreiro à noite" — ond
 
 ### Paleta Escura & Diretrizes
 
-1. **Temperatura e Coesão:** O Modo Ancestral rejeita tons frios/neutros; usa paleta 100% quente ("Deep Earth" `#1A1110` e "Barro Iluminado" `#A05C3B`).
-2. **Base (Terra Profunda):** Superfície base `#1A1110`, com progressão tonal expandida até `#3A2E2B` (surface-container-high).
-3. **Texto (AAA):** Uso de `On-surface` (#EAD7D1) para leitura limpa e sofisticada. A cor `On-primary` é forçada para `#2A0A05` garantindo contraste AAA sobre botões primários `#E07A5F`.
-4. **Primary (Peso Visual):** A cor Primary (`#E07A5F`) foi corrigida para ter peso visual ideal de botão base no escuro, com hover iluminado (`#FFB4A5`).
-5. **Tertiary & Accent:** O Tertiary (`#C6A98B`) é mais quente e integrado à areia/barro, enquanto a nova cor de Accent (`#A05C3B`) atua como barro iluminado para focos e interações ativas.
+1. **Temperatura e Coesão:** O Modo Ancestral utiliza uma abordagem forte e contrastante, mantendo acessibilidade e força.
+2. **Base:** Superfície base `#121212`, garantindo conforto na leitura.
+3. **Texto (AAA):** Uso de `On-surface` (#F5F5F5) para leitura limpa e sofisticada. A cor `On-primary` permanece branca ou com alto contraste.
+4. **Primary (Peso Visual):** A cor Primary (`#D64545`) atua como botão e destaque visual no escuro.
+5. **Secondary & Tertiary:** O Secondary atua com `#2A2A2A` e Tertiary com `#FFFFFF` para composições auxiliares.
 
 ### Glow vs Sombras no Glassmorphism
 

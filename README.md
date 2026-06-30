@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="./public/logo.svg" alt="Logo Filhos de Obaluaiê" width="200" />
+  <h1>Centro Cultural Filhos de Obaluaiê</h1>
+  <p><strong>Plataforma Digital e Acervo Memória — Tobias Barreto (SE)</strong></p>
+</div>
 
-## Getting Started
+> **Contexto Acadêmico:** Este projeto é fruto do **Projeto Integrador II** do curso de Bacharelado em Sistemas de Informação do **Instituto Federal de Sergipe (IFS) - Campus Lagarto**.  
+> **Autores:** José Fabrício Santos Gregório e José Gustavo Correia Nascimento  
+> **Orientador:** Prof. Danilo Ferreira Neves
 
-First, run the development server:
+---
+
+## 🌿 Sobre o Projeto
+
+Este repositório contém o código-fonte da plataforma digital oficial do **Centro Cultural Filhos de Obaluaiê**, um equipamento cultural e associação comunitária sem fins lucrativos localizado no Bairro Santa Rita, em Tobias Barreto (Sergipe).
+
+O espaço é dedicado à promoção da cultura afro-brasileira, formação cultural e inclusão social de jovens e adolescentes da periferia, atuando desde 2005 sob a liderança do Mestre Bahia. O projeto abrange diversas linguagens:
+
+- **Capoeira Contemporânea**
+- **Musicalidade e Percussão**
+- **Expressões Cênicas Tradicionais** (Dança Afro, Maculelê, Samba de Coco)
+
+Esta plataforma foi concebida com um design **Mobile-First** premium, focado em alta acessibilidade para a comunidade local (maioria acessa via smartphone) e utiliza uma arquitetura moderna e escalável baseada em Headless CMS.
+
+---
+
+## 🚀 Tecnologias e Arquitetura
+
+O projeto foi construído utilizando a stack moderna de React e infraestrutura serverless:
+
+- **[Next.js (App Router)](https://nextjs.org/)** - Framework React para renderização híbrida (SSG/SSR) e roteamento de alta performance.
+- **[Tailwind CSS (v4)](https://tailwindcss.com/)** - Estilização utilitária com design system fortemente customizado para as cores e identidade visual afro-brasileira.
+- **[Sanity CMS](https://www.sanity.io/)** - Headless CMS configurado no diretório `/studio` para gestão autônoma de todo o conteúdo da plataforma (editais, eventos, galerias, notícias).
+- **TypeScript** - Tipagem estática em toda a aplicação para segurança e manutenção a longo prazo.
+
+---
+
+## 🎨 Design System e UI/UX
+
+A interface foi inteiramente pensada para refletir a herança afro-brasileira.
+O design inclui tons terrosos, vermelhos de destaque (em homenagem a Obaluaiê), tipografia imponente e padrões visuais orgânicos (como máscaras SVG para imagens no desktop).
+
+- **Cards Tipados:** Diferentes formatos visuais dependendo da natureza do conteúdo (ex: Rodas de Aniversariante recebem design mais festivo, Editais recebem design institucional).
+- **Glassmorphism:** Uso estratégico de desfoque e transparência para criar profundidade e sofisticação sobre texturas de padrões Bogolan.
+- **Micro-animações:** Transições suaves (`spring-transition`) e efeitos de *fade-up* garantem uma navegação viva e dinâmica.
+
+---
+
+## ⚙️ Como Executar Localmente
+
+### Pré-requisitos
+
+- Node.js (versão 18+ recomendada)
+- NPM, Yarn, pnpm ou bun
+
+### 1. Clonar e Instalar
+
+```bash
+git clone https://github.com/JGustavoCN/filhos-de-obaluaie.git
+cd filhos-de-obaluaie
+npm install
+```
+
+### 2. Rodar a Aplicação Web (Next.js)
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Rodar o Sanity Studio (Painel de Gestão)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O painel administrativo do CMS está embarcado (ou em pasta separada). Para rodá-lo:
 
-## Learn More
+```bash
+cd studio
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+O painel ficará disponível em `http://localhost:3333` (ou integrado na rota `/studio` caso configurado).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📚 Documentação Adicional
 
-## Deploy on Vercel
+A pasta `/docs` contém toda a documentação de planejamento, requisitos, arquitetura visual e desenvolvimento que guiou a criação desta plataforma:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Documentos de Desenvolvimento (História e Requisitos)](./docs/Documentos%20de%20desenv.%20Centro%20Cultural%20Filhos%20de%20Obaluai%C3%AA.md)
+- [Planejamento de Arquitetura Visual (Cards Tipados)](./docs/planejamento-cards-tipados.md)
+- [Setup do Sanity MCP](./docs/sanity-mcp-setup.md)
+- [Design System (Cores e Espaçamentos)](./DESIGN.md)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+> *"O corpo fala, a alma canta, o pé risca a terra que nos sustenta."*
+> — Filosofia do Centro Cultural Filhos de Obaluaiê
