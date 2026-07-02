@@ -26,8 +26,8 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
         </div>
 
         {/* Badge Desacoplado */}
-        <span className="badge-tipo badge-secondary mb-3">
-          <PartyIcon className="w-4 h-4 text-[var(--color-primary)]" /> Celebração do Mês
+        <span className="badge-tipo badge-celebracao mb-3">
+          <PartyIcon className="w-4 h-4" /> Celebração do Mês
         </span>
         
         <h3 className="text-2xl font-headline font-bold text-[var(--color-on-surface)] mb-4 text-center">
@@ -56,16 +56,16 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
           </p>
         )}
         
-        <div className="mt-auto w-full flex flex-col gap-2 items-center">
+        <div className="meta-row mt-auto w-full justify-center">
           {(data.mesReferencia || data.anoReferencia) && (
-            <p className="text-xs text-[var(--color-on-surface-light)] font-semibold">
+            <span className="meta-tag">
               {formatMonthYear(data.mesReferencia, data.anoReferencia)}
-            </p>
+            </span>
           )}
           {(data.dataCard ?? data.dataEvento) && (
-            <p className="meta-date">
+            <span className="meta-date">
               <CalendarIcon className="w-4 h-4" /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
-            </p>
+            </span>
           )}
         </div>
       </div>

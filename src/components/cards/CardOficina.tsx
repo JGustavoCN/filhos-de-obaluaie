@@ -32,11 +32,11 @@ export default function CardOficina({ data }: { data: EventoProps }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
           {/* Badge de modalidade */}
-          <div className="absolute bottom-4 left-5 z-10 flex items-center gap-3">
+          <div className="glass-card absolute bottom-4 left-5 z-10 flex max-w-[calc(100%-2.5rem)] items-center gap-3 p-2 pr-3">
             <div className="w-11 h-11 flex items-center justify-center bg-[var(--color-primary)] text-white rounded-full shadow-lg">
               <Icone className="w-5 h-5" />
             </div>
-            <span className="text-white font-headline font-bold text-sm uppercase tracking-wider drop-shadow-md">
+            <span className="badge-tipo badge-oficina">
               {isPercussao ? 'Percussão' : data.subtipoOficina === 'danca-teatro' ? 'Dança & Teatro' : 'Capoeira'}
             </span>
           </div>
@@ -54,21 +54,32 @@ export default function CardOficina({ data }: { data: EventoProps }) {
             </p>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
+          <div className="meta-row mt-auto border-t border-[var(--color-outline-variant)] pt-4">
             {data.oficineiro && (
-              <span className="flex items-center gap-1.5">
-                <span className="text-[var(--color-primary)] uppercase tracking-wider text-[10px]">Oficineiro</span>
-                <span className="text-[var(--color-on-surface)]">{data.oficineiro}</span>
+              <span className="flex min-w-0 flex-col gap-1">
+                <span className="meta-label">Oficineiro</span>
+                <span className="meta-value">{data.oficineiro}</span>
               </span>
             )}
             {data.horarios && (
-              <span className="flex items-center gap-1.5 text-right">
-                <span className="text-[var(--color-on-surface)] font-medium">{data.horarios}</span>
+              <span className="flex min-w-0 flex-col gap-1">
+                <span className="meta-label">Horários</span>
+                <span className="meta-value">{data.horarios}</span>
+              </span>
+            )}
+            {data.faixaEtaria && (
+              <span className="meta-tag">
+                {data.faixaEtaria}
+              </span>
+            )}
+            {data.vagas && (
+              <span className="meta-tag">
+                {data.vagas} vagas
               </span>
             )}
             {data.inscricoesAbertas && (
-              <span className="badge-tipo badge-primary text-[10px] animate-pulse">
-                Inscrições Abertas
+              <span className="badge-tipo badge-oficina">
+                Inscrições abertas
               </span>
             )}
           </div>

@@ -37,6 +37,10 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
         </div>
 
         <div className="p-6 pt-2 flex flex-col flex-1">
+          <span className="badge-tipo badge-evento mb-4 mx-auto">
+            Mostra cultural
+          </span>
+
           {/* Título perfeitamente legível (WCAG garantido) logo abaixo das fotos */}
           <h3 className="text-2xl font-headline font-bold text-[var(--color-primary)] mb-6 text-center flex flex-col items-center justify-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[var(--color-primary-container)] flex items-center justify-center text-[var(--color-primary)] shadow-sm">
@@ -66,14 +70,19 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
+          <div className="meta-row justify-between mt-auto border-t border-[var(--color-outline-variant)] pt-4">
             {(data.dataCard ?? data.dataEvento) && (
-              <span className="flex items-center gap-1.5">
-                <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" />
-                <span className="text-[var(--color-on-surface)]">{formatDateShort(data.dataCard ?? data.dataEvento ?? '')}</span>
+              <span className="meta-date">
+                <CalendarIcon />
+                {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
               </span>
-            )}{data.quantidadeAlunos && <span className="font-bold text-[var(--color-primary)]">{data.quantidadeAlunos} alunos</span>}
-            {data.local && <span className="flex items-center gap-1 text-right truncate"><LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.local}</span>}
+            )}
+            {data.quantidadeAlunos && <span className="meta-tag">{data.quantidadeAlunos} alunos</span>}
+            {data.local && (
+              <span className="meta-value text-right">
+                <LocationIcon className="text-[var(--color-primary)]" /> {data.local}
+              </span>
+            )}
           </div>
         </div>
       </div>

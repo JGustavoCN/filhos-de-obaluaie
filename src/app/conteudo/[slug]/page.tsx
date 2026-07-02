@@ -3,6 +3,75 @@ import { client } from '@/sanity/client';
 import { CONTEUDO_POR_SLUG_QUERY } from '@/sanity/queries';
 import { notFound } from 'next/navigation';
 import { PortableText } from 'next-sanity';
+import { CalendarIcon, LocationIcon } from '@/components/cards/icons';
+import { formatDate } from '@/lib/formatDate';
+
+type ImageField = string | { url?: string | null; alt?: string | null } | null | undefined
+type PortableTextValue = React.ComponentProps<typeof PortableText>['value']
+
+type ConteudoDetalhe = {
+  _type?: string
+  titulo: string
+  resumo?: string
+  imagemCapa?: ImageField
+  galeria?: ImageField[]
+  body?: PortableTextValue
+  dataCard?: string
+  dataEvento?: string
+  dataInicio?: string
+  dataFim?: string
+  dataPublicacao?: string
+  horarios?: string
+  local?: string
+  mestreConvidado?: string
+  oficineiro?: string
+  faixaEtaria?: string
+  edicao?: number
+  tamanhoArquivo?: string
+  tipoParticipacao?: string
+  arquivo?: string
+  escolasParticipantes?: string[]
+  aniversariantes?: string[]
+}
+
+const badgeClassByType: Record<string, string> = {
+  rodaAniversariantes: 'badge-celebracao',
+  encontroConscienciaNegra: 'badge-evento',
+  rodaConsciencia: 'badge-evento',
+  mostraCultural: 'badge-evento',
+  eventoExterno: 'badge-evento',
+  oficina: 'badge-oficina',
+  documento: 'badge-documento',
+  noticia: 'badge-noticia',
+}
+
+const labelByType: Record<string, string> = {
+  rodaAniversariantes: 'Celebração',
+  encontroConscienciaNegra: 'Evento',
+  rodaConsciencia: 'Evento',
+  mostraCultural: 'Evento',
+  eventoExterno: 'Evento',
+  oficina: 'Oficina',
+  documento: 'Documento',
+  noticia: 'Notícia',
+}
+
+function imageUrl(image: ImageField) {
+  return typeof image === 'string' ? image : image?.url ?? ''
+}
+
+function imageAlt(image: ImageField, fallback: string) {
+  return typeof image === 'object' && image?.alt ? image.alt : fallback
+}
+
+function DetailItem({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="meta-label">{label}</span>
+      <span className="meta-value text-lg">{children}</span>
+    </div>
+  )
+}
 
 export default async function DetalhePage({
   params,
@@ -10,43 +79,58 @@ export default async function DetalhePage({
   params: Promise<{ slug: string }>
 }) {
   const resolvedParams = await params;
-  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug });
+  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug }) as ConteudoDetalhe | null;
   
   if (!conteudo) {
     notFound();
   }
 
+  const imagemCapaUrl = imageUrl(conteudo.imagemCapa)
+  const dataPrincipal = conteudo.dataCard ?? conteudo.dataEvento ?? conteudo.dataInicio ?? conteudo.dataPublicacao
+  const tipoLabel = labelByType[conteudo._type ?? ''] ?? conteudo._type ?? 'Registro'
+  const tipoBadgeClass = badgeClassByType[conteudo._type ?? ''] ?? 'badge-memoria'
+  const galeriaFotos = (conteudo.galeria ?? [])
+    .map((foto, idx) => ({
+      url: imageUrl(foto),
+      alt: imageAlt(foto, `Registro ${idx + 1}`),
+    }))
+    .filter((foto) => foto.url)
+
   return (
     <main className="min-h-screen bg-surface text-on-surface">
       {/* CABEÇALHO HERO - COM A IMAGEM DE CAPA DE FUNDO */}
       <section className="relative w-full h-[50vh] min-h-[400px] flex items-end">
-        {conteudo.imagemCapa && (
-          <div 
-            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${conteudo.imagemCapa})` }}
+        {imagemCapaUrl && (
+          <img
+            src={imagemCapaUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 z-0 h-full w-full object-cover"
           />
         )}
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-surface via-surface/90 to-transparent" />
         
         <div className="relative z-20 max-w-4xl mx-auto w-full px-6 pb-12">
-          <div className="flex flex-wrap gap-2 mb-4">
-            <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider border border-primary/20">
-              {conteudo._type}
-            </span>
-            {conteudo.dataEvento && (
-              <span className="px-3 py-1 bg-on-surface/10 rounded-full text-xs font-semibold text-on-surface">
-                {conteudo.dataEvento}
+          <div className={imagemCapaUrl ? 'glass-card p-5 md:p-8' : ''}>
+            <div className="meta-row mb-4">
+              <span className={`badge-tipo ${tipoBadgeClass}`}>
+                {tipoLabel}
               </span>
+              {dataPrincipal && (
+                <span className="meta-date">
+                  <CalendarIcon /> {formatDate(dataPrincipal)}
+                </span>
+              )}
+            </div>
+            <h1 className="text-4xl md:text-5xl font-[var(--font-headline)] font-bold mb-4 leading-tight text-on-surface">
+              {conteudo.titulo}
+            </h1>
+            {conteudo.resumo && (
+              <p className="text-xl text-on-surface/80 max-w-2xl">
+                {conteudo.resumo}
+              </p>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl font-[var(--font-headline)] font-bold mb-4 leading-tight text-on-surface">
-            {conteudo.titulo}
-          </h1>
-          {conteudo.resumo && (
-            <p className="text-xl text-on-surface/80 max-w-2xl">
-              {conteudo.resumo}
-            </p>
-          )}
         </div>
       </section>
 
@@ -60,54 +144,70 @@ export default async function DetalhePage({
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6">
             
+            {dataPrincipal && (
+              <DetailItem label="Data">
+                <span className="inline-flex items-center gap-2">
+                  <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" /> {formatDate(dataPrincipal)}
+                </span>
+              </DetailItem>
+            )}
+
+            {conteudo.horarios && (
+              <DetailItem label="Horário">
+                {conteudo.horarios}
+              </DetailItem>
+            )}
+
             {conteudo.local && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Local</span>
-                <span className="text-lg font-medium text-on-surface">{conteudo.local}</span>
-              </div>
+              <DetailItem label="Local">
+                <span className="inline-flex items-center gap-2">
+                  <LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {conteudo.local}
+                </span>
+              </DetailItem>
             )}
 
             {conteudo.mestreConvidado && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Mestre Convidado</span>
-                <span className="text-lg font-bold text-primary">{conteudo.mestreConvidado}</span>
-              </div>
+              <DetailItem label="Mestre Convidado">
+                {conteudo.mestreConvidado}
+              </DetailItem>
             )}
 
             {conteudo.oficineiro && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Instrutor / Oficineiro</span>
-                <span className="text-lg font-medium text-on-surface">{conteudo.oficineiro}</span>
-              </div>
+              <DetailItem label="Instrutor / Oficineiro">
+                {conteudo.oficineiro}
+              </DetailItem>
             )}
 
             {conteudo.faixaEtaria && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Público-Alvo</span>
-                <span className="text-lg font-medium text-on-surface">{conteudo.faixaEtaria}</span>
-              </div>
+              <DetailItem label="Público-Alvo">
+                {conteudo.faixaEtaria}
+              </DetailItem>
+            )}
+
+            {conteudo.tipoParticipacao && (
+              <DetailItem label="Participação">
+                {conteudo.tipoParticipacao.replace('-', ' ')}
+              </DetailItem>
             )}
 
             {conteudo.edicao && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Edição</span>
-                <span className="text-lg font-medium text-on-surface">{conteudo.edicao}ª Edição</span>
-              </div>
+              <DetailItem label="Edição">
+                {conteudo.edicao}ª Edição
+              </DetailItem>
             )}
 
             {conteudo.tamanhoArquivo && (
-              <div className="flex flex-col gap-1.5">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Tamanho do Arquivo</span>
-                <span className="text-lg font-medium text-on-surface">{conteudo.tamanhoArquivo}</span>
-              </div>
+              <DetailItem label="Tamanho do Arquivo">
+                {conteudo.tamanhoArquivo}
+              </DetailItem>
             )}
             
             {conteudo.escolasParticipantes && conteudo.escolasParticipantes.length > 0 && (
               <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-3 mt-2">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Escolas Participantes</span>
-                <div className="flex flex-wrap gap-2">
+                <span className="meta-label">Escolas Participantes</span>
+                <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
                   {conteudo.escolasParticipantes.map((escola: string) => (
-                    <span key={escola} className="px-4 py-2 bg-surface-container-high text-on-surface text-sm font-medium rounded-pill border border-outline-variant/50">
+                    <span key={escola} className="badge-tipo badge-memoria">
                       {escola}
                     </span>
                   ))}
@@ -117,10 +217,10 @@ export default async function DetalhePage({
             
             {conteudo.aniversariantes && conteudo.aniversariantes.length > 0 && (
               <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-3 mt-2">
-                <span className="text-on-surface/60 text-xs font-bold uppercase tracking-wider">Aniversariantes Homenageados</span>
-                <div className="flex flex-wrap gap-2">
+                <span className="meta-label">Aniversariantes Homenageados</span>
+                <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
                   {conteudo.aniversariantes.map((nome: string) => (
-                    <span key={nome} className="px-4 py-2 bg-primary/5 text-primary text-sm font-bold rounded-pill border border-primary/20">
+                    <span key={nome} className="badge-tipo badge-celebracao">
                       {nome}
                     </span>
                   ))}
@@ -144,7 +244,7 @@ export default async function DetalhePage({
       </section>
 
       {/* CORPO DO TEXTO */}
-      <article className="max-w-3xl mx-auto w-full px-6 py-12 prose max-w-none text-on-surface [&_p]:text-on-surface/80 [&_h1]:text-primary [&_h2]:text-primary [&_h3]:text-primary [&_strong]:text-primary">
+      <article className="max-w-3xl mx-auto w-full px-6 py-12 prose max-w-none text-on-surface overflow-x-auto custom-scrollbar [&_p]:text-on-surface/80 [&_h1]:text-primary [&_h2]:text-primary [&_h3]:text-primary [&_strong]:text-primary">
         {conteudo.body ? (
           <PortableText value={conteudo.body} />
         ) : (
@@ -153,7 +253,7 @@ export default async function DetalhePage({
       </article>
 
       {/* GALERIA DE FOTOS COMPLETAS (MEMÓRIA) */}
-      {conteudo.galeria && conteudo.galeria.length > 0 && (
+      {galeriaFotos.length > 0 && (
         <section className="max-w-7xl mx-auto w-full px-6 py-16 border-t border-outline-variant/30">
           <header className="mb-10 text-center">
             <h2 className="text-3xl font-[var(--font-headline)] font-bold mb-3 text-on-surface">Galeria e Memória</h2>
@@ -161,14 +261,14 @@ export default async function DetalhePage({
           </header>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {conteudo.galeria.map((fotoUrl: string, idx: number) => (
+            {galeriaFotos.map((foto, idx: number) => (
               <div 
                 key={idx} 
                 className="aspect-square bg-surface-container rounded-[12px] overflow-hidden group cursor-pointer border border-outline/10 hover:border-primary transition-colors shadow-sm"
               >
-                <img 
-                  src={fotoUrl} 
-                  alt={`Registro ${idx + 1}`} 
+                <img
+                  src={foto.url}
+                  alt={foto.alt}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                 />
               </div>

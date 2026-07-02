@@ -14,13 +14,16 @@ export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
         {/* Overlay gradient apenas sutil embaixo para sustentar a badge, sem sujar a foto toda */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
         
-        {data.edicao && (
-          <div className="absolute bottom-4 left-5 z-10">
-            <span className="text-white font-headline font-bold tracking-widest uppercase text-xs bg-[var(--color-primary)] px-3 py-1.5 rounded shadow-lg backdrop-blur-sm">
+        <div className="absolute bottom-4 left-5 z-10 flex flex-wrap items-center gap-2">
+          <span className="badge-tipo badge-evento">
+            Encontro
+          </span>
+          {data.edicao && (
+            <span className="badge-tipo badge-memoria">
               {data.edicaoRomano || toRoman(data.edicao)} Edição
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="p-6 flex flex-col flex-1 relative">
@@ -30,9 +33,17 @@ export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
         
         {data.resumo && <p className="text-[var(--color-on-surface-light)] text-sm mb-6 flex-1 line-clamp-3 leading-relaxed opacity-90">{data.resumo}</p>}
         
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline)]/20 pt-4">
-          <span className="flex items-center gap-1.5"><CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" /> {formatDateShort(data.dataCard ?? data.dataInicio ?? data.dataEvento)}</span>
-          <span className="flex items-center gap-1.5"><LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.local}</span>
+        <div className="meta-row justify-between mt-auto border-t border-[var(--color-outline)]/20 pt-4">
+          {(data.dataCard ?? data.dataInicio ?? data.dataEvento) && (
+            <span className="meta-date">
+              <CalendarIcon /> {formatDateShort(data.dataCard ?? data.dataInicio ?? data.dataEvento)}
+            </span>
+          )}
+          {data.local && (
+            <span className="meta-value">
+              <LocationIcon className="text-[var(--color-primary)]" /> {data.local}
+            </span>
+          )}
         </div>
       </div>
     </div>

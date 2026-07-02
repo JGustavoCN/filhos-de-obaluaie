@@ -23,10 +23,10 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
         
         {/* Infos do Mestre */}
         <div className="flex flex-col justify-center">
-          <span className="badge-tipo badge-primary mb-3">
+          <span className="badge-tipo badge-evento mb-3">
             <BerimbauIcon className="w-3.5 h-3.5" /> Roda da Consciência
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-primary)]">
+          <span className="meta-label">
             Mestre Convidado
           </span>
           <h4 className="font-headline font-bold text-xl sm:text-2xl leading-tight text-[var(--color-on-surface)] mt-1 drop-shadow-sm">
@@ -50,13 +50,14 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
-            {(data.dataCard ?? data.dataEvento) && (
-              <span className="flex items-center gap-1.5">
-                <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" />
-                <span className="text-[var(--color-on-surface)]">{formatDateShort(data.dataCard ?? data.dataEvento ?? '')}</span>
-              </span>
-            )}<span className="meta-tag">
+        <div className="meta-row justify-between mt-auto border-t border-[var(--color-outline-variant)] pt-4">
+          {(data.dataCard ?? data.dataEvento) && (
+            <span className="meta-date">
+              <CalendarIcon />
+              {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
+            </span>
+          )}
+          <span className="meta-tag">
             {data.abertoAoPublico !== false ? 'Entrada livre' : 'Restrito'}
           </span>
         </div>
