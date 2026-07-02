@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { PartyIcon, CalendarIcon, CakeIcon } from './icons';
+import { formatDateShort, formatMonthYear } from '@/lib/formatDate';
 
 export default function CardAniversario({ data }: { data: EventoProps }) {
   const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=400&q=80";
@@ -55,10 +56,15 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
           </p>
         )}
         
-        <div className="mt-auto w-full flex justify-center">
-          {data.dataEvento && (
+        <div className="mt-auto w-full flex flex-col gap-2 items-center">
+          {(data.mesReferencia || data.anoReferencia) && (
+            <p className="text-xs text-[var(--color-on-surface-light)] font-semibold">
+              {formatMonthYear(data.mesReferencia, data.anoReferencia)}
+            </p>
+          )}
+          {(data.dataCard ?? data.dataEvento) && (
             <p className="meta-date">
-              <CalendarIcon className="w-4 h-4" /> {data.dataEvento}
+              <CalendarIcon className="w-4 h-4" /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
             </p>
           )}
         </div>

@@ -37,7 +37,7 @@ export default function ArchiveSection({ documentos = [], externos = [] }: Archi
             </h3>
             <div className="flex flex-col gap-4">
               {externos.map((ext, i) => (
-                <div key={ext.id || (ext as any)._id || `ext-${i}`}>
+                <div key={ext.id ?? ext._id ?? `ext-${i}`}>
                   <EventCard data={ext} />
                 </div>
               ))}
@@ -55,7 +55,7 @@ export default function ArchiveSection({ documentos = [], externos = [] }: Archi
             </h3>
             <div className="flex flex-col gap-3">
               {documentos.map((doc, i) => (
-                <CardDocumento key={doc.id || (doc as any)._id || i} data={doc} />
+                <CardDocumento key={doc.id ?? doc._id ?? i} data={doc} />
               ))}
             </div>
           </div>

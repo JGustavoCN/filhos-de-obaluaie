@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { BerimbauIcon, CalendarIcon } from './icons';
+import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
   const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1506869640319-fea1a2ab8e9c?auto=format&fit=crop&w=400&q=80";
@@ -42,19 +43,21 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
         {/* Quote/Resumo - Estilizado como citação oral */}
         {data.resumo && (
           <div className="relative mt-1 mb-6 flex-1">
-            <span className="absolute -left-2 -top-3 text-5xl text-[var(--color-primary)] opacity-20 font-serif leading-none select-none">"</span>
+            <span className="absolute -left-2 -top-3 text-5xl text-[var(--color-primary)] opacity-20 font-serif leading-none select-none">&ldquo;</span>
             <p className="text-[var(--color-on-surface-light)] text-sm sm:text-base italic pl-6 leading-relaxed z-10 relative">
               {data.resumo}
             </p>
           </div>
         )}
 
-        <div className="mt-auto pt-4 pb-6 border-t border-[var(--color-outline-variant)]/50 flex justify-between items-center">
-          <span className="meta-date">
-            <CalendarIcon className="w-4 h-4" /> {data.dataEvento}
-          </span>
-          <span className="meta-tag">
-            Aberto
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
+            {(data.dataCard ?? data.dataEvento) && (
+              <span className="flex items-center gap-1.5">
+                <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" />
+                <span className="text-[var(--color-on-surface)]">{formatDateShort(data.dataCard ?? data.dataEvento ?? '')}</span>
+              </span>
+            )}<span className="meta-tag">
+            {data.abertoAoPublico !== false ? 'Entrada livre' : 'Restrito'}
           </span>
         </div>
       </div>

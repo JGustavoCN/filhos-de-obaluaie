@@ -27,7 +27,7 @@ export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoPr
         {/* Grid de Cards utilizando o EventCard Tipado */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 stagger-children">
           {oficinas.map((project) => (
-            <div key={project.id || (project as any)._id} className="h-full">
+            <div key={project.id ?? project._id} className="h-full">
               <EventCard data={project} />
             </div>
           ))}

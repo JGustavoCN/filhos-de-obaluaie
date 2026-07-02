@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { NewsIcon, CalendarIcon } from './icons';
+import { formatDate } from '@/lib/formatDate';
 
 export default function CardNoticia({ data }: { data: EventoProps }) {
   const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=400&q=80";
@@ -18,7 +19,10 @@ export default function CardNoticia({ data }: { data: EventoProps }) {
       <div className="p-5 flex flex-col flex-1">
         <div className="mb-3">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-secondary)] px-2 py-1 rounded flex items-center gap-1 w-fit">
-            <NewsIcon className="w-3 h-3" /> Comunicado
+            <NewsIcon className="w-3 h-3" />
+            {data.categoriaNoticia
+              ? data.categoriaNoticia.charAt(0).toUpperCase() + data.categoriaNoticia.slice(1).replace('-', '/')
+              : 'Comunicado'}
           </span>
         </div>
         
@@ -33,7 +37,7 @@ export default function CardNoticia({ data }: { data: EventoProps }) {
         )}
         
         <div className="mt-auto text-xs font-bold text-[var(--color-outline)] border-t border-[var(--color-outline-variant)] pt-3 flex items-center gap-1">
-          {data.dataEvento && <><CalendarIcon className="w-3 h-3" /> Publicado em {data.dataEvento}</>}
+          {(data.dataCard ?? data.dataPublicacao ?? data.dataEvento) && <><CalendarIcon className="w-3 h-3" /> Publicado em {formatDate(data.dataCard ?? data.dataPublicacao ?? data.dataEvento ?? '')}</>}
         </div>
       </div>
     </div>
