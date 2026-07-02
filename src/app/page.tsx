@@ -81,9 +81,9 @@ export default async function Home() {
             <span className="w-10 h-px bg-primary" />
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">Mural da Comunidade</span>
           </div>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12">
             <h2 className="font-[var(--font-headline)] text-4xl md:text-5xl font-bold text-on-surface">
-              Últimas <span className="text-primary">Notícias</span>
+              Últimas <span className="text-primary block sm:inline">Notícias</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -105,13 +105,13 @@ export default async function Home() {
         <XaxaraDivider />
 
         {/* Agenda e Eventos */}
-        <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10 bg-surface-container-low rounded-[3rem] my-10">
+        <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex items-center gap-3 mb-10">
             <span className="w-10 h-px bg-primary" />
             <span className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">Programação Cultural</span>
           </div>
           <h2 className="font-[var(--font-headline)] text-4xl md:text-5xl font-bold text-on-surface mb-12">
-            Agenda & <span className="text-primary">Eventos</span>
+            Agenda & <span className="text-primary block sm:inline">Eventos</span>
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {agendaNormalizada.map((item: EventoProps) => (

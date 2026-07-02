@@ -103,7 +103,7 @@ const themes: { value: Theme; label: string; Icon: typeof SunIcon }[] = [
   { value: "system", label: "Seguir Sistema", Icon: MonitorIcon },
 ];
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ id = "theme-toggle" }: { id?: string } = {}) {
   const [theme, setTheme] = useState<Theme>("system");
   const [mounted, setMounted] = useState(false);
 
@@ -153,7 +153,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      id="theme-toggle"
+      id={id}
       type="button"
       onClick={cycleTheme}
       style={{

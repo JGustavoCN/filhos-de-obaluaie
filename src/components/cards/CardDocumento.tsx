@@ -1,6 +1,6 @@
 import React from 'react';
 import { EventoProps } from './types';
-import { DocumentIcon } from './icons';
+import { CalendarIcon, DocumentIcon } from './icons';
 import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardDocumento({ data }: { data: EventoProps }) {
@@ -16,6 +16,9 @@ export default function CardDocumento({ data }: { data: EventoProps }) {
     'plano-trabalho': 'Plano de Trabalho',
     'prestacao-contas': 'Prestação de Contas',
   }
+  const documentoLabel = data.subtipoDocumento
+    ? subtipoLabel[data.subtipoDocumento] ?? data.subtipoDocumento
+    : 'Documento'
 
   return (
     <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="glass-card p-4 flex items-center gap-4 group hover:bg-[var(--glass-bg-hover)] hover:border-[var(--color-primary)] transition-all w-full cursor-pointer">
@@ -26,14 +29,18 @@ export default function CardDocumento({ data }: { data: EventoProps }) {
         <h4 className="font-bold text-[var(--color-on-surface)] truncate group-hover:text-[var(--color-primary)] transition-colors">
           {data.titulo}
         </h4>
-        <div className="flex gap-2 text-xs font-bold text-[var(--color-outline)] mt-1 flex-wrap">
-          {data.subtipoDocumento && <span className="text-[var(--color-primary)] font-bold">{subtipoLabel[data.subtipoDocumento] ?? data.subtipoDocumento}</span>}
-          {dataDisplay && <><span>•</span><span>{dataDisplay}</span></>}
-          {data.tamanhoArquivo && <><span>•</span><span>{data.tamanhoArquivo}</span></>}
+        <div className="meta-row mt-2">
+          <span className="badge-tipo badge-documento">{documentoLabel}</span>
+          {dataDisplay && (
+            <span className="meta-date">
+              <CalendarIcon /> {dataDisplay}
+            </span>
+          )}
+          {data.tamanhoArquivo && <span className="meta-tag">{data.tamanhoArquivo}</span>}
         </div>
       </div>
       <div className="shrink-0 hidden sm:block">
-        <span className="badge-tipo bg-[var(--color-surface-container-high)] text-[var(--color-on-surface)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors border border-[var(--color-outline-variant)] group-hover:border-[var(--color-primary)]">
+        <span className="badge-tipo badge-surface group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)]">
           Baixar ↓
         </span>
       </div>

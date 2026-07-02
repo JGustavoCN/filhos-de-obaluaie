@@ -18,7 +18,7 @@ export default function CardNoticia({ data }: { data: EventoProps }) {
       
       <div className="p-5 flex flex-col flex-1">
         <div className="mb-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-secondary)] px-2 py-1 rounded flex items-center gap-1 w-fit">
+          <span className="badge-tipo badge-noticia">
             <NewsIcon className="w-3 h-3" />
             {data.categoriaNoticia
               ? data.categoriaNoticia.charAt(0).toUpperCase() + data.categoriaNoticia.slice(1).replace('-', '/')
@@ -36,8 +36,12 @@ export default function CardNoticia({ data }: { data: EventoProps }) {
           </p>
         )}
         
-        <div className="mt-auto text-xs font-bold text-[var(--color-outline)] border-t border-[var(--color-outline-variant)] pt-3 flex items-center gap-1">
-          {(data.dataCard ?? data.dataPublicacao ?? data.dataEvento) && <><CalendarIcon className="w-3 h-3" /> Publicado em {formatDate(data.dataCard ?? data.dataPublicacao ?? data.dataEvento ?? '')}</>}
+        <div className="meta-row mt-auto border-t border-[var(--color-outline-variant)] pt-3">
+          {(data.dataCard ?? data.dataPublicacao ?? data.dataEvento) && (
+            <span className="meta-date">
+              <CalendarIcon /> Publicado em {formatDate(data.dataCard ?? data.dataPublicacao ?? data.dataEvento ?? '')}
+            </span>
+          )}
         </div>
       </div>
     </div>
