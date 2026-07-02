@@ -20,8 +20,8 @@ const defaultNavLinks: NavLink[] = [
 export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navLinks = menuLinks && menuLinks.length > 0 ? menuLinks : defaultNavLinks;
-
+  const validSanityLinks = menuLinks?.filter((link) => link?.label && link?.href) || [];
+  const navLinks = validSanityLinks.length > 0 ? validSanityLinks : defaultNavLinks;
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
