@@ -1,9 +1,10 @@
 import React from 'react';
 import EventCard from './cards/EventCard';
 import Link from 'next/link';
+import { EventoProps } from './cards/types';
 
 interface RecentUpdatesSectionProps {
-  updates: any[];
+  updates: EventoProps[];
 }
 
 export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionProps) {

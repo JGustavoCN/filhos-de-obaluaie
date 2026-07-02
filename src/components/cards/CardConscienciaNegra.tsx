@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { CalendarIcon, LocationIcon } from './icons';
+import { formatDateShort, toRoman } from '@/lib/formatDate';
 
 export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
   const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1531123897727-8f129e1bfd8c?auto=format&fit=crop&w=800&q=80";
@@ -16,7 +17,7 @@ export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
         {data.edicao && (
           <div className="absolute bottom-4 left-5 z-10">
             <span className="text-white font-headline font-bold tracking-widest uppercase text-xs bg-[var(--color-primary)] px-3 py-1.5 rounded shadow-lg backdrop-blur-sm">
-              {data.edicao}ª Edição
+              {data.edicaoRomano || toRoman(data.edicao)} Edição
             </span>
           </div>
         )}
@@ -30,7 +31,7 @@ export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
         {data.resumo && <p className="text-[var(--color-on-surface-light)] text-sm mb-6 flex-1 line-clamp-3 leading-relaxed opacity-90">{data.resumo}</p>}
         
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline)]/20 pt-4">
-          <span className="flex items-center gap-1.5"><CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.dataEvento}</span>
+          <span className="flex items-center gap-1.5"><CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" /> {formatDateShort(data.dataCard ?? data.dataInicio ?? data.dataEvento)}</span>
           <span className="flex items-center gap-1.5"><LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.local}</span>
         </div>
       </div>

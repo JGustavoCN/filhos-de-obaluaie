@@ -84,7 +84,7 @@ export const eventosMock: EventoProps[] = [
       titulo: "Edital de Seleção Cultural 2026",
       dataEvento: "15/01/2026",
       tamanhoArquivo: "2.4 MB",
-      linkArquivo: "#",
+      arquivo: "#",
       imagemCapa: "https://images.unsplash.com/photo-1519635451045-a41d4361d495?q=80&w=675&auto=format&fit=crop"
     },
     {
@@ -93,7 +93,7 @@ export const eventosMock: EventoProps[] = [
       titulo: "Relatório Anual de Atividades 2025",
       dataEvento: "10/02/2026",
       tamanhoArquivo: "5.1 MB",
-      linkArquivo: "#",
+      arquivo: "#",
       imagemCapa: "https://images.unsplash.com/photo-1518601794912-1af91724e528?q=80&w=764&auto=format&fit=crop"
     },
     {

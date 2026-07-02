@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { MaskIcon, CalendarIcon, LocationIcon } from './icons';
+import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardMostraEscolar({ data }: { data: EventoProps }) {
   const capaUrl = data.imagemCapa || "";
@@ -65,9 +66,14 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
             </div>
           )}
 
-          <div className="flex justify-between items-center text-xs font-bold mt-auto pt-4 border-t border-[var(--color-outline-variant)] text-[var(--color-on-surface-light)]">
-            {data.dataEvento && <span className="flex items-center gap-1 text-[var(--color-primary)]"><CalendarIcon className="w-4 h-4" /> {data.dataEvento}</span>}
-            {data.local && <span className="flex items-center gap-1 text-right truncate ml-2"><LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.local}</span>}
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
+            {(data.dataCard ?? data.dataEvento) && (
+              <span className="flex items-center gap-1.5">
+                <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" />
+                <span className="text-[var(--color-on-surface)]">{formatDateShort(data.dataCard ?? data.dataEvento ?? '')}</span>
+              </span>
+            )}{data.quantidadeAlunos && <span className="font-bold text-[var(--color-primary)]">{data.quantidadeAlunos} alunos</span>}
+            {data.local && <span className="flex items-center gap-1 text-right truncate"><LocationIcon className="w-4 h-4 text-[var(--color-primary)]" /> {data.local}</span>}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventoProps } from './types';
 import { NetworkIcon, CalendarIcon, LocationIcon } from './icons';
+import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardEventoExterno({ data }: { data: EventoProps }) {
   return (
@@ -15,11 +16,13 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
       <div className="flex-1 min-w-0 flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
           <span className="badge-tipo badge-secondary">
-             Participação Externa
+             {data.tipoParticipacao
+               ? data.tipoParticipacao.charAt(0).toUpperCase() + data.tipoParticipacao.slice(1).replace('-', ' ')
+               : 'Participação Externa'}
           </span>
-          {data.resumo && (
+          {data.organizador && (
             <span className="text-sm font-bold text-[var(--color-primary)] tracking-wide bg-[var(--color-primary-container)]/30 dark:bg-black/20 px-3 py-1 rounded-md">
-              {data.resumo}
+              {data.organizador}
             </span>
           )}
         </div>
@@ -33,7 +36,7 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
       <div className="shrink-0 flex flex-col sm:items-end gap-3 text-sm text-[var(--color-on-surface)] border-t sm:border-t-0 sm:border-l border-[var(--color-outline-variant)]/60 pt-5 sm:pt-0 sm:pl-6 md:pl-8 mt-2 sm:mt-0 w-full sm:w-auto">
         
         <div className="flex items-center sm:justify-end gap-2 bg-[var(--color-surface-container)] px-4 py-2 rounded-lg border border-[var(--color-outline-variant)]/50 shadow-sm font-bold text-[var(--color-primary)] w-fit sm:w-auto">
-          <CalendarIcon className="w-4 h-4" /> {data.dataEvento}
+          <CalendarIcon className="w-4 h-4" /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
         </div>
         
         {data.local && (

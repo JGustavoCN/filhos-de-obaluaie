@@ -1,6 +1,6 @@
 import React from 'react';
 import { EventoProps } from './types';
-import { AtabaqueIcon, MaskIcon, BerimbauIcon, CalendarIcon } from './icons';
+import { AtabaqueIcon, MaskIcon, BerimbauIcon } from './icons';
 
 export default function CardOficina({ data }: { data: EventoProps }) {
   const isPercussao = data.subtipoOficina === 'percussao';
@@ -55,16 +55,20 @@ export default function CardOficina({ data }: { data: EventoProps }) {
           )}
 
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mt-auto text-xs font-bold text-[var(--color-on-surface-light)] border-t border-[var(--color-outline-variant)] pt-4">
-            {data.local && (
+            {data.oficineiro && (
               <span className="flex items-center gap-1.5">
-                <span className="text-[var(--color-primary)] uppercase tracking-wider text-[10px]">Público</span>
-                <span className="text-[var(--color-on-surface)]">{data.local}</span>
+                <span className="text-[var(--color-primary)] uppercase tracking-wider text-[10px]">Oficineiro</span>
+                <span className="text-[var(--color-on-surface)]">{data.oficineiro}</span>
               </span>
             )}
-            {data.dataEvento && (
-              <span className="flex items-center gap-1.5">
-                <CalendarIcon className="w-4 h-4 text-[var(--color-primary)]" />
-                <span className="text-[var(--color-on-surface)]">{data.dataEvento}</span>
+            {data.horarios && (
+              <span className="flex items-center gap-1.5 text-right">
+                <span className="text-[var(--color-on-surface)] font-medium">{data.horarios}</span>
+              </span>
+            )}
+            {data.inscricoesAbertas && (
+              <span className="badge-tipo badge-primary text-[10px] animate-pulse">
+                Inscrições Abertas
               </span>
             )}
           </div>
