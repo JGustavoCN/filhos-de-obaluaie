@@ -1,8 +1,14 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
+import {presentationTool} from 'sanity/presentation'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './src/structure'
+import {theme} from './src/theme'
+import {Logo} from './src/components/Logo'
+import {Icon} from './src/components/Icon'
+
+import {dashboard} from './src/dashboard'
 
 export default defineConfig([
   {
@@ -11,7 +17,21 @@ export default defineConfig([
     projectId: '1lha6jrn',
     dataset: 'production',
     basePath: '/production',
-    plugins: [structureTool({ structure }), visionTool()],
+    theme,
+    icon: Icon,
+    studio: {
+      components: {
+        logo: Logo
+      }
+    },
+    plugins: [
+      dashboard,
+      presentationTool({
+        previewUrl: 'https://filhos-de-obaluaie.vercel.app/',
+      }),
+      structureTool({ structure }),
+      visionTool(),
+    ],
     schema: {
       types: schemaTypes,
     },
@@ -22,7 +42,21 @@ export default defineConfig([
     projectId: '1lha6jrn',
     dataset: 'development',
     basePath: '/development',
-    plugins: [structureTool({ structure }), visionTool()],
+    theme,
+    icon: Icon,
+    studio: {
+      components: {
+        logo: Logo
+      }
+    },
+    plugins: [
+      dashboard,
+      presentationTool({
+        previewUrl: 'https://filhos-de-obaluaie.vercel.app/',
+      }),
+      structureTool({ structure }),
+      visionTool(),
+    ],
     schema: {
       types: schemaTypes,
     },

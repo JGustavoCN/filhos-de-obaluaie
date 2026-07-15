@@ -106,9 +106,11 @@ export const mediaExternaFields = [
     description:
       'Cole o link do YouTube (ex: https://www.youtube.com/watch?v=...). Será incorporado na página de detalhe.',
     validation: (Rule) =>
-      Rule.uri({ scheme: ['http', 'https'] }).warning(
-        'Use uma URL válida do YouTube ou Vimeo.'
-      ),
+      Rule.uri({ scheme: ['http', 'https'] }).custom((url) => {
+        if (!url) return true // Pode ser vazio se não for obrigatório
+        const isYouTube = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/.test(url)
+        return isYouTube ? true : 'A URL fornecida não parece ser do YouTube. Verifique o link.'
+      }),
   }),
   defineField({
     name: 'driveUrl',

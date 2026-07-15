@@ -9,30 +9,97 @@ import { formatDate } from '@/lib/formatDate';
 type ImageField = string | { url?: string | null; alt?: string | null } | null | undefined
 type PortableTextValue = React.ComponentProps<typeof PortableText>['value']
 
-type ConteudoDetalhe = {
-  _type?: string
-  titulo: string
-  resumo?: string
-  imagemCapa?: ImageField
-  galeria?: ImageField[]
-  body?: PortableTextValue
-  dataCard?: string
-  dataEvento?: string
-  dataInicio?: string
-  dataFim?: string
-  dataPublicacao?: string
-  horarios?: string
-  local?: string
-  mestreConvidado?: string
-  oficineiro?: string
-  faixaEtaria?: string
-  edicao?: number
-  tamanhoArquivo?: string
-  tipoParticipacao?: string
-  arquivo?: string
-  escolasParticipantes?: string[]
-  aniversariantes?: string[]
+type BaseConteudo = {
+  _id: string;
+  titulo: string;
+  resumo?: string;
+  local?: string;
+  imagemCapa?: ImageField;
+  galeria?: ImageField[];
+  body?: PortableTextValue;
+  dataCard?: string;
 }
+
+type OficinaDetalhe = BaseConteudo & {
+  _type: 'oficina';
+  subtipoOficina?: string;
+  oficineiro?: string;
+  horarios?: string;
+  faixaEtaria?: string;
+  vagas?: number;
+  inscricoesAbertas?: boolean;
+}
+
+type RodaAniversariantesDetalhe = BaseConteudo & {
+  _type: 'rodaAniversariantes';
+  dataEvento?: string;
+  mesReferencia?: string;
+  anoReferencia?: number;
+  aniversariantes?: string[];
+}
+
+type RodaConscienciaDetalhe = BaseConteudo & {
+  _type: 'rodaConsciencia';
+  dataEvento?: string;
+  mestreConvidado?: string;
+  fotoMestre?: ImageField;
+  origemMestre?: string;
+  temaRoda?: string;
+  abertoAoPublico?: boolean;
+}
+
+type EncontroConscienciaNegraDetalhe = BaseConteudo & {
+  _type: 'encontroConscienciaNegra';
+  dataInicio?: string;
+  dataFim?: string;
+  edicao?: number;
+  edicaoRomano?: string;
+  subtemaPrincipal?: string;
+  mestresConvidados?: string[];
+  gruposConvidados?: string[];
+  parceiros?: string[];
+}
+
+type MostraCulturalDetalhe = BaseConteudo & {
+  _type: 'mostraCultural';
+  dataEvento?: string;
+  escolasParticipantes?: string[];
+  quantidadeAlunos?: number;
+}
+
+type EventoExternoDetalhe = BaseConteudo & {
+  _type: 'eventoExterno';
+  dataEvento?: string;
+  organizador?: string;
+  tipoParticipacao?: string;
+  linkEvento?: string;
+}
+
+type DocumentoDetalhe = BaseConteudo & {
+  _type: 'documento';
+  subtipoDocumento?: string;
+  dataPublicacao?: string;
+  dataVigencia?: string;
+  tamanhoArquivo?: string;
+  arquivo?: string;
+  linkExterno?: string;
+}
+
+type NoticiaDetalhe = BaseConteudo & {
+  _type: 'noticia';
+  categoriaNoticia?: string;
+  dataPublicacao?: string;
+}
+
+type ConteudoDetalhe = 
+  | OficinaDetalhe 
+  | RodaAniversariantesDetalhe 
+  | RodaConscienciaDetalhe 
+  | EncontroConscienciaNegraDetalhe 
+  | MostraCulturalDetalhe 
+  | EventoExternoDetalhe 
+  | DocumentoDetalhe 
+  | NoticiaDetalhe;
 
 const badgeClassByType: Record<string, string> = {
   rodaAniversariantes: 'badge-celebracao',
@@ -73,6 +140,13 @@ function DetailItem({ label, children }: { label: string; children: React.ReactN
   )
 }
 
+function getDataPrincipal(conteudo: ConteudoDetalhe): string | undefined {
+  if ('dataInicio' in conteudo && conteudo.dataInicio) return conteudo.dataInicio;
+  if ('dataEvento' in conteudo && conteudo.dataEvento) return conteudo.dataEvento;
+  if ('dataPublicacao' in conteudo && conteudo.dataPublicacao) return conteudo.dataPublicacao;
+  return undefined;
+}
+
 export default async function DetalhePage({
   params,
 }: {
@@ -86,9 +160,9 @@ export default async function DetalhePage({
   }
 
   const imagemCapaUrl = imageUrl(conteudo.imagemCapa)
-  const dataPrincipal = conteudo.dataCard ?? conteudo.dataEvento ?? conteudo.dataInicio ?? conteudo.dataPublicacao
-  const tipoLabel = labelByType[conteudo._type ?? ''] ?? conteudo._type ?? 'Registro'
-  const tipoBadgeClass = badgeClassByType[conteudo._type ?? ''] ?? 'badge-memoria'
+  const dataPrincipal = getDataPrincipal(conteudo)
+  const tipoLabel = labelByType[conteudo._type] ?? conteudo._type ?? 'Registro'
+  const tipoBadgeClass = badgeClassByType[conteudo._type] ?? 'badge-memoria'
   const galeriaFotos = (conteudo.galeria ?? [])
     .map((foto, idx) => ({
       url: imageUrl(foto),
@@ -152,12 +226,6 @@ export default async function DetalhePage({
               </DetailItem>
             )}
 
-            {conteudo.horarios && (
-              <DetailItem label="Horário">
-                {conteudo.horarios}
-              </DetailItem>
-            )}
-
             {conteudo.local && (
               <DetailItem label="Local">
                 <span className="inline-flex items-center gap-2">
@@ -166,43 +234,69 @@ export default async function DetalhePage({
               </DetailItem>
             )}
 
-            {conteudo.mestreConvidado && (
-              <DetailItem label="Mestre Convidado">
-                {conteudo.mestreConvidado}
-              </DetailItem>
-            )}
-
-            {conteudo.oficineiro && (
-              <DetailItem label="Instrutor / Oficineiro">
-                {conteudo.oficineiro}
-              </DetailItem>
-            )}
-
-            {conteudo.faixaEtaria && (
-              <DetailItem label="Público-Alvo">
-                {conteudo.faixaEtaria}
-              </DetailItem>
-            )}
-
-            {conteudo.tipoParticipacao && (
-              <DetailItem label="Participação">
-                {conteudo.tipoParticipacao.replace('-', ' ')}
-              </DetailItem>
-            )}
-
-            {conteudo.edicao && (
-              <DetailItem label="Edição">
-                {conteudo.edicao}ª Edição
-              </DetailItem>
-            )}
-
-            {conteudo.tamanhoArquivo && (
-              <DetailItem label="Tamanho do Arquivo">
-                {conteudo.tamanhoArquivo}
-              </DetailItem>
-            )}
+            {/* RENDERIZAÇÃO CONDICIONAL BASEADA NO _TYPE */}
             
-            {conteudo.escolasParticipantes && conteudo.escolasParticipantes.length > 0 && (
+            {conteudo._type === 'oficina' && (
+              <>
+                {conteudo.horarios && <DetailItem label="Horários">{conteudo.horarios}</DetailItem>}
+                {conteudo.oficineiro && <DetailItem label="Instrutor / Mestre">{conteudo.oficineiro}</DetailItem>}
+                {conteudo.faixaEtaria && <DetailItem label="Público-Alvo">{conteudo.faixaEtaria}</DetailItem>}
+                {conteudo.vagas && <DetailItem label="Vagas Ofertadas">{conteudo.vagas}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'rodaAniversariantes' && (
+              <>
+                {conteudo.mesReferencia && <DetailItem label="Mês de Celebração">{conteudo.mesReferencia}</DetailItem>}
+                {conteudo.anoReferencia && <DetailItem label="Ano">{conteudo.anoReferencia}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'rodaConsciencia' && (
+              <>
+                {conteudo.mestreConvidado && <DetailItem label="Mestre Convidado">{conteudo.mestreConvidado}</DetailItem>}
+                {conteudo.origemMestre && <DetailItem label="Origem / Grupo">{conteudo.origemMestre}</DetailItem>}
+                {conteudo.temaRoda && <DetailItem label="Tema da Roda">{conteudo.temaRoda}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'encontroConscienciaNegra' && (
+              <>
+                {conteudo.edicao && <DetailItem label="Edição">{conteudo.edicao}ª Edição {conteudo.edicaoRomano ? `(${conteudo.edicaoRomano})` : ''}</DetailItem>}
+                {conteudo.subtemaPrincipal && <DetailItem label="Subtema">{conteudo.subtemaPrincipal}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'mostraCultural' && (
+              <>
+                {conteudo.quantidadeAlunos && <DetailItem label="Nº de Participantes Estimado">{conteudo.quantidadeAlunos}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'eventoExterno' && (
+              <>
+                {conteudo.organizador && <DetailItem label="Organizador">{conteudo.organizador}</DetailItem>}
+                {conteudo.tipoParticipacao && <DetailItem label="Participação">{conteudo.tipoParticipacao.replace('-', ' ')}</DetailItem>}
+                {conteudo.linkEvento && <DetailItem label="Link do Evento"><a href={conteudo.linkEvento} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Acessar</a></DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'documento' && (
+              <>
+                {conteudo.tamanhoArquivo && <DetailItem label="Tamanho do Arquivo">{conteudo.tamanhoArquivo}</DetailItem>}
+                {conteudo.dataVigencia && <DetailItem label="Vigência até">{formatDate(conteudo.dataVigencia)}</DetailItem>}
+              </>
+            )}
+
+            {conteudo._type === 'noticia' && (
+              <>
+                {conteudo.categoriaNoticia && <DetailItem label="Categoria">{conteudo.categoriaNoticia.replace('-', ' ')}</DetailItem>}
+              </>
+            )}
+
+            {/* LISTAS EXTENSAS (Ocupam linha inteira dependendo do tipo) */}
+
+            {conteudo._type === 'mostraCultural' && conteudo.escolasParticipantes && conteudo.escolasParticipantes.length > 0 && (
               <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-3 mt-2">
                 <span className="meta-label">Escolas Participantes</span>
                 <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
@@ -215,7 +309,7 @@ export default async function DetalhePage({
               </div>
             )}
             
-            {conteudo.aniversariantes && conteudo.aniversariantes.length > 0 && (
+            {conteudo._type === 'rodaAniversariantes' && conteudo.aniversariantes && conteudo.aniversariantes.length > 0 && (
               <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-3 mt-2">
                 <span className="meta-label">Aniversariantes Homenageados</span>
                 <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
@@ -227,9 +321,22 @@ export default async function DetalhePage({
                 </div>
               </div>
             )}
+
+            {conteudo._type === 'encontroConscienciaNegra' && conteudo.mestresConvidados && conteudo.mestresConvidados.length > 0 && (
+              <div className="flex flex-col gap-3 md:col-span-2 lg:col-span-3 mt-2">
+                <span className="meta-label">Mestres Convidados</span>
+                <div className="flex flex-wrap gap-2">
+                  {conteudo.mestresConvidados.map((nome: string) => (
+                    <span key={nome} className="badge-tipo badge-oficina">
+                      {nome}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {conteudo.arquivo && (
+          {conteudo._type === 'documento' && 'arquivo' in conteudo && conteudo.arquivo && (
              <div className="mt-8 pt-8 border-t border-outline-variant/30 flex justify-start">
                <a 
                  href={`${conteudo.arquivo}?dl=`} 
