@@ -4,7 +4,7 @@ import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 
 export default async function HeroSection() {
   const settings = await client.fetch(SITE_SETTINGS_QUERY);
-  
+
   // Fallbacks para as imagens
   const desktopImage = settings?.imagemHeroDesktop || "/assets/images/hero-banner-main.png";
   const mobileImage = settings?.imagemHeroMobile || "/assets/images/hero-banner-mobile.png";

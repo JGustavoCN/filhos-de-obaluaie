@@ -20,7 +20,9 @@ const defaultNavLinks: NavLink[] = [
 export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const validSanityLinks = menuLinks?.filter((link) => link?.label && link?.href) || [];
+  const validSanityLinks = Array.isArray(menuLinks)
+    ? menuLinks.filter((link) => Boolean(link?.label?.trim() && link?.href?.trim()))
+    : [];
   const navLinks = validSanityLinks.length > 0 ? validSanityLinks : defaultNavLinks;
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,7 +33,7 @@ export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
   return (
     <nav
       id="main-navigation"
-      className={`fixed top-0 left-0 right-0 z-[9990] transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-[9990] min-h-[72px] transition-all duration-500 ${
         scrolled
           ? "navbar-scrolled bg-[rgba(250,246,240,0.78)] backdrop-blur-2xl border-b border-[rgba(232,197,140,0.25)]"
           : "bg-transparent"
@@ -55,14 +57,14 @@ export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
         </a>
 
         {/* Desktop links + Theme Toggle */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-1 xl:gap-2 min-w-0">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className={`px-5 py-2 text-sm font-medium transition-colors rounded-pill flex items-center gap-1.5 ${
+              className={`px-3 xl:px-5 py-2 text-sm font-medium transition-colors rounded-pill flex items-center gap-1.5 whitespace-nowrap ${
                 link.external 
                   ? "text-primary/90 hover:text-primary bg-primary/5 hover:bg-primary/10 border border-primary/20" 
                   : "text-on-surface/80 hover:text-primary"
@@ -76,22 +78,22 @@ export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
           ))}
           <a
             href="#acervo"
-            className="ml-4 px-6 py-2.5 bg-primary text-on-primary text-sm font-semibold rounded-pill hover:bg-primary-hover transition-colors"
+            className="hidden 2xl:inline-flex ml-4 px-6 py-2.5 bg-primary text-on-primary text-sm font-semibold rounded-pill hover:bg-primary-hover transition-colors"
           >
             Acesse o Acervo
           </a>
-          <div className="ml-2">
-            <ThemeToggle />
+          <div className="ml-1 xl:ml-2">
+            <ThemeToggle id="theme-toggle-desktop" />
           </div>
         </div>
 
         {/* Mobile: Theme Toggle + burger */}
-        <div className="md:hidden flex items-center gap-2">
-          <ThemeToggle />
+        <div className="lg:hidden flex items-center gap-2">
+          <ThemeToggle id="theme-toggle-mobile" />
           <button
             id="mobile-menu-toggle"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col gap-1.5 p-2"
+            className="flex flex-col justify-center items-center gap-1.5 p-2 min-w-[40px] min-h-[40px]"
             aria-label="Abrir menu de navegação"
             aria-expanded={menuOpen}
           >
@@ -116,7 +118,7 @@ export default function Navbar({ menuLinks }: { menuLinks?: NavLink[] }) {
 
       {/* Mobile menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+        className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
           menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         } navbar-mobile-menu bg-surface/95 dark:bg-surface/95 backdrop-blur-2xl shadow-2xl border-b border-outline-variant/30`}
       >

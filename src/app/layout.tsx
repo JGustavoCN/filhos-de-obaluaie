@@ -56,11 +56,17 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+import { SanityLive } from '@/sanity/live'
+import { VisualEditing } from 'next-sanity/visual-editing'
+import { draftMode } from 'next/headers'
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isDraftMode = (await draftMode()).isEnabled
+
   return (
     <html
       lang="pt-BR"
@@ -81,7 +87,11 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SanityLive />
+        {isDraftMode && <VisualEditing />}
+      </body>
     </html>
   );
 }

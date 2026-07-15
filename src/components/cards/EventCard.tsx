@@ -42,14 +42,14 @@ export default function EventCard({ data }: { data: EventoProps }) {
   const href = slugValue ? `/conteudo/${slugValue}` : '#'
 
   const cardMap: Record<SanityDocumentType, React.ReactElement> = {
-    rodaAniversariantes:      <CardAniversario data={data} />,
+    rodaAniversariantes: <CardAniversario data={data} />,
     encontroConscienciaNegra: <CardConscienciaNegra data={data} />,
-    rodaConsciencia:          <CardRodaConsciencia data={data} />,
-    mostraCultural:           <CardMostraEscolar data={data} />,
-    oficina:                  <CardOficina data={data} />,
-    eventoExterno:            <CardEventoExterno data={data} />,
-    documento:                <CardDocumento data={data} />,
-    noticia:                  <CardNoticia data={data} />,
+    rodaConsciencia: <CardRodaConsciencia data={data} />,
+    mostraCultural: <CardMostraEscolar data={data} />,
+    oficina: <CardOficina data={data} />,
+    eventoExterno: <CardEventoExterno data={data} />,
+    documento: <CardDocumento data={data} />,
+    noticia: <CardNoticia data={data} />,
   }
 
   const CardComponent = cardMap[sanityType as SanityDocumentType] ?? <CardNoticia data={data} />

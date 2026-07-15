@@ -103,7 +103,7 @@ const themes: { value: Theme; label: string; Icon: typeof SunIcon }[] = [
   { value: "system", label: "Seguir Sistema", Icon: MonitorIcon },
 ];
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ id = "theme-toggle" }: { id?: string } = {}) {
   const [theme, setTheme] = useState<Theme>("system");
   const [mounted, setMounted] = useState(false);
 
@@ -112,13 +112,8 @@ export default function ThemeToggle() {
     const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
     const initial = stored ?? "system";
     
-    // We update the state in a transition or use a simple workaround to pass the linter.
-    // However, the best way to avoid this error is to do it in an event handler or wrap it.
-    // But since it's initial mount, we can use startTransition or just a timeout to defer it.
-    setTimeout(() => {
-      setTheme(initial);
-      setMounted(true);
-    }, 0);
+    setTheme(initial);
+    setMounted(true);
     applyTheme(initial);
   }, []);
 
@@ -153,7 +148,7 @@ export default function ThemeToggle() {
 
   return (
     <button
-      id="theme-toggle"
+      id={id}
       type="button"
       onClick={cycleTheme}
       style={{

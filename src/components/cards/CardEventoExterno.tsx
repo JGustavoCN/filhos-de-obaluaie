@@ -15,7 +15,7 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
       {/* Content Area - Respiro entre tags e título */}
       <div className="flex-1 min-w-0 flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="badge-tipo badge-secondary">
+          <span className="badge-tipo badge-evento">
              {data.tipoParticipacao
                ? data.tipoParticipacao.charAt(0).toUpperCase() + data.tipoParticipacao.slice(1).replace('-', ' ')
                : 'Participação Externa'}
@@ -33,16 +33,16 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
       </div>
       
       {/* Metadata Area - Separação mais clara e estilizada */}
-      <div className="shrink-0 flex flex-col sm:items-end gap-3 text-sm text-[var(--color-on-surface)] border-t sm:border-t-0 sm:border-l border-[var(--color-outline-variant)]/60 pt-5 sm:pt-0 sm:pl-6 md:pl-8 mt-2 sm:mt-0 w-full sm:w-auto">
+      <div className="meta-row shrink-0 flex-col sm:items-end border-t sm:border-t-0 sm:border-l border-[var(--color-outline-variant)]/60 pt-5 sm:pt-0 sm:pl-6 md:pl-8 mt-2 sm:mt-0 w-full sm:w-auto">
         
-        <div className="flex items-center sm:justify-end gap-2 bg-[var(--color-surface-container)] px-4 py-2 rounded-lg border border-[var(--color-outline-variant)]/50 shadow-sm font-bold text-[var(--color-primary)] w-fit sm:w-auto">
-          <CalendarIcon className="w-4 h-4" /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
-        </div>
+        <span className="meta-date">
+          <CalendarIcon /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
+        </span>
         
         {data.local && (
-          <div className="text-[var(--color-on-surface-light)] font-bold text-xs flex items-center sm:justify-end gap-1.5 px-2">
-            <LocationIcon className="w-4 h-4 text-[var(--color-outline)]" /> {data.local}
-          </div>
+          <span className="meta-value sm:justify-end px-2">
+            <LocationIcon className="text-[var(--color-primary)]" /> {data.local}
+          </span>
         )}
       </div>
     </div>

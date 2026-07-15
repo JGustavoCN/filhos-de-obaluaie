@@ -17,12 +17,12 @@ export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionPr
           <span className="w-10 h-px bg-primary" />
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">Notícias & Destaques</span>
         </div>
-        
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 md:mb-16">
+
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12 md:mb-16">
           <h2 id="updates-heading" className="font-[var(--font-headline)] text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface">
-            Acontece no <span className="text-primary">Terreiro</span>
+            Acontece no <span className="text-primary block sm:inline">Terreiro</span>
           </h2>
-          <p className="text-on-surface-light w-full max-w-2xl text-sm md:text-base md:text-right mt-4 md:mt-0">
+          <p className="text-on-surface-light w-full max-w-2xl text-sm md:text-base lg:text-right mt-4 lg:mt-0">
             Fique por dentro das últimas rodas, oficinas, documentos e manifestações culturais.
           </p>
         </div>
@@ -32,14 +32,14 @@ export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionPr
             <EventCard key={item._id} data={item} />
           ))}
         </div>
-        
+
         <div className="mt-12 text-center">
-          <Link 
+          <Link
             href="/tipo/noticia"
             className="inline-flex items-center gap-2 bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-on-primary transition-colors"
           >
             Ver todas as atualizações
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </Link>
         </div>
       </div>
