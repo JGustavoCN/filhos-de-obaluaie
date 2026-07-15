@@ -54,6 +54,67 @@ export const HOME_HERO_QUERY = defineQuery(`
   }
 `)
 
+// ── 1b. Feed do Terreiro (Últimas Atualizações Mistas) ──────────────────────
+// Mistura os 4 conteúdos mais recentes de QUALQUER tipo, ordenados por data.
+// Usado pelo RecentUpdatesSection para dar ao visitante um panorama geral.
+export const RECENT_UPDATES_QUERY = defineQuery(`
+  *[_type in [
+    "noticia",
+    "oficina",
+    "rodaAniversariantes",
+    "rodaConsciencia",
+    "mostraCultural",
+    "eventoExterno",
+    "encontroConscienciaNegra",
+    "documento"
+  ]] | order(
+    coalesce(dataEvento, dataInicio, dataPublicacao, _createdAt) desc
+  )[0...4] {
+    _id,
+    _type,
+    titulo,
+    "slug": slug.current,
+    resumo,
+    local,
+    dataEvento,
+    dataInicio,
+    dataPublicacao,
+    "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),
+    "imagemCapa": imagemCapa{ "url": asset->url, alt },
+    "galeria": galeria[0...3]{ "url": asset->url, alt },
+    // Campos específicos para os cards renderizarem corretamente
+    aniversariantes,
+    mesReferencia,
+    anoReferencia,
+    mestreConvidado,
+    "fotoMestre": fotoMestre{ "url": asset->url, alt },
+    origemMestre,
+    temaRoda,
+    abertoAoPublico,
+    edicao,
+    edicaoRomano,
+    subtemaPrincipal,
+    mestresConvidados,
+    escolasParticipantes,
+    quantidadeAlunos,
+    organizador,
+    tipoParticipacao,
+    subtipoOficina,
+    oficineiro,
+    horarios,
+    faixaEtaria,
+    vagas,
+    inscricoesAbertas,
+    subtipoDocumento,
+    "arquivo": arquivo.asset->url,
+    tamanhoArquivo,
+    linkExterno,
+    categoriaNoticia,
+    videoUrl,
+    driveUrl
+  }
+`)
+
 // ── 2. Notícias Recentes ────────────────────────────────────────────────────
 export const HOME_NOTICIAS_QUERY = defineQuery(`
   *[_type == "noticia"] | order(dataPublicacao desc)[0...3] {

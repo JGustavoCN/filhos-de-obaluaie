@@ -4,6 +4,7 @@ import XaxaraDivider from "@/components/XaxaraDivider";
 import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ArchiveSection from "@/components/ArchiveSection";
+import RecentUpdatesSection from "@/components/RecentUpdatesSection";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/cards/EventCard";
 import Link from 'next/link';
@@ -12,6 +13,7 @@ import type { EventoProps } from "@/components/cards/types";
 import {
   HOME_HERO_QUERY,
   HOME_NOTICIAS_QUERY,
+  RECENT_UPDATES_QUERY,
   SITE_SETTINGS_QUERY,
   OFICINAS_QUERY,
   DOCUMENTOS_QUERY,
@@ -43,6 +45,7 @@ export default async function Home() {
   const [
     siteSettings,
     heroEvent,
+    recentUpdates,
     noticias,
     oficinas,
     documentos,
@@ -54,6 +57,7 @@ export default async function Home() {
   ] = await Promise.all([
       client.fetch(SITE_SETTINGS_QUERY),
       client.fetch(HOME_HERO_QUERY),
+      client.fetch(RECENT_UPDATES_QUERY),
       client.fetch(HOME_NOTICIAS_QUERY),
       client.fetch(OFICINAS_QUERY),
       client.fetch(DOCUMENTOS_QUERY),
@@ -79,6 +83,7 @@ export default async function Home() {
   // Aplica normalização e remove duplicata do hero se estiver nas listas
   const norm = (arr: any[]) => (arr || []).filter(item => item._id !== heroId).map(normalizeItem);
 
+  const recentUpdatesNormalizados = norm(recentUpdates);
   const noticiasNormalizadas = norm(noticias);
   const oficinasNormalizadas = norm(oficinas);
   const documentosNormalizados = norm(documentos);
@@ -108,6 +113,10 @@ export default async function Home() {
         )}
 
         <AboutSection />
+        <XaxaraDivider />
+
+        {/* Feed do Terreiro — Últimas atualizações de TODOS os tipos */}
+        <RecentUpdatesSection updates={recentUpdatesNormalizados} />
         <XaxaraDivider />
 
         <ProjectsSection oficinas={oficinasNormalizadas} />
