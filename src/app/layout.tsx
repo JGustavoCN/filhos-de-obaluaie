@@ -90,7 +90,7 @@ export default async function RootLayout({
       <body>
         {children}
         <SanityLive />
-        <VisualEditing />
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );

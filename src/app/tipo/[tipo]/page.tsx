@@ -3,7 +3,8 @@ import { client } from '@/sanity/client';
 import { CONTEUDO_POR_TIPO_QUERY } from '@/sanity/queries';
 import EventCard from '@/components/cards/EventCard';
 import Navbar from '@/components/Navbar';
-import type { EventoProps, SanityDocumentType } from '@/components/cards/types';
+import type { SanityDocumentType } from '@/components/cards/types';
+import { normalizeSanityEvento } from '@/sanity/normalizeEvento';
 
 /**
  * Mapeamento de slug de URL para _type do Sanity.
@@ -58,13 +59,7 @@ export default async function CategoriaPage({
 
   const conteudos = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: tipoSanity });
 
-  // Normaliza imagemCapa de objeto para string
-  const normalizados: EventoProps[] = (conteudos ?? []).map((item: Record<string, unknown>) => ({
-    ...item as unknown as EventoProps,
-    imagemCapa: typeof item?.imagemCapa === 'object' && item?.imagemCapa !== null ? (item.imagemCapa as { url?: string }).url ?? undefined : item?.imagemCapa as string ?? undefined,
-    galeria: Array.isArray(item?.galeria) ? item.galeria.map((g) => typeof g === 'object' && g !== null ? (g as { url?: string }).url ?? '' : g as string) : [],
-    fotoMestre: typeof item?.fotoMestre === 'object' && item?.fotoMestre !== null ? (item.fotoMestre as { url?: string }).url ?? undefined : item?.fotoMestre as string ?? undefined,
-  }));
+  const normalizados = (conteudos ?? []).map(normalizeSanityEvento);
 
   const tituloPagina =
     TITULO_POR_TIPO[tipoSanity as SanityDocumentType] ??
@@ -86,7 +81,7 @@ export default async function CategoriaPage({
 
         {normalizados.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
-            {normalizados.map((item: EventoProps) => (
+            {normalizados.map((item) => (
               <EventCard key={item._id} data={item} />
             ))}
           </div>

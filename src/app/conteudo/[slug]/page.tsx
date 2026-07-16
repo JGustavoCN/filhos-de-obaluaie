@@ -7,101 +7,10 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CalendarIcon, LocationIcon } from '@/components/cards/icons';
 import { formatDate } from '@/lib/formatDate';
+import type { CONTEUDO_POR_SLUG_QUERY_RESULT } from '@/sanity/sanity.types';
 
-type ImageField = string | { url?: string | null; alt?: string | null } | null | undefined
-type PortableTextValue = React.ComponentProps<typeof PortableText>['value']
-
-type BaseConteudo = {
-  _id: string;
-  titulo: string;
-  resumo?: string;
-  local?: string;
-  imagemCapa?: ImageField;
-  galeria?: ImageField[];
-  body?: PortableTextValue;
-  dataCard?: string;
-}
-
-type OficinaDetalhe = BaseConteudo & {
-  _type: 'oficina';
-  subtipoOficina?: string;
-  oficineiro?: string;
-  horarios?: string;
-  faixaEtaria?: string;
-  vagas?: number;
-  inscricoesAbertas?: boolean;
-}
-
-type RodaAniversariantesDetalhe = BaseConteudo & {
-  _type: 'rodaAniversariantes';
-  dataEvento?: string;
-  mesReferencia?: string;
-  anoReferencia?: number;
-  aniversariantes?: string[];
-}
-
-type RodaConscienciaDetalhe = BaseConteudo & {
-  _type: 'rodaConsciencia';
-  dataEvento?: string;
-  mestreConvidado?: string;
-  fotoMestre?: ImageField;
-  origemMestre?: string;
-  temaRoda?: string;
-  abertoAoPublico?: boolean;
-}
-
-type EncontroConscienciaNegraDetalhe = BaseConteudo & {
-  _type: 'encontroConscienciaNegra';
-  dataInicio?: string;
-  dataFim?: string;
-  edicao?: number;
-  edicaoRomano?: string;
-  subtemaPrincipal?: string;
-  mestresConvidados?: string[];
-  gruposConvidados?: string[];
-  parceiros?: string[];
-}
-
-type MostraCulturalDetalhe = BaseConteudo & {
-  _type: 'mostraCultural';
-  dataEvento?: string;
-  escolasParticipantes?: string[];
-  quantidadeAlunos?: number;
-}
-
-type EventoExternoDetalhe = BaseConteudo & {
-  _type: 'eventoExterno';
-  dataEvento?: string;
-  organizador?: string;
-  tipoParticipacao?: string;
-  linkEvento?: string;
-}
-
-type DocumentoDetalhe = BaseConteudo & {
-  _type: 'documento';
-  subtipoDocumento?: string;
-  dataPublicacao?: string;
-  dataVigencia?: string;
-  tamanhoArquivo?: string;
-  arquivo?: string;
-  linkExterno?: string;
-}
-
-type NoticiaDetalhe = BaseConteudo & {
-  _type: 'noticia';
-  categoriaNoticia?: string;
-  dataPublicacao?: string;
-}
-
-type ConteudoDetalhe = 
-  | OficinaDetalhe 
-  | RodaAniversariantesDetalhe 
-  | RodaConscienciaDetalhe 
-  | EncontroConscienciaNegraDetalhe 
-  | MostraCulturalDetalhe 
-  | EventoExternoDetalhe 
-  | DocumentoDetalhe 
-  | NoticiaDetalhe;
+type ConteudoDetalhe = NonNullable<CONTEUDO_POR_SLUG_QUERY_RESULT>
+type ImageField = ConteudoDetalhe['imagemCapa']
 
 const badgeClassByType: Record<string, string> = {
   rodaAniversariantes: 'badge-celebracao',
@@ -155,7 +64,7 @@ export default async function DetalhePage({
   params: Promise<{ slug: string }>
 }) {
   const resolvedParams = await params;
-  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug }) as ConteudoDetalhe | null;
+  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug });
   
   if (!conteudo) {
     notFound();
