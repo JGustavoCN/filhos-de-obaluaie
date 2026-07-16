@@ -92,3 +92,27 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     "seoImage": seoImage.asset->url
   }
 `);
+
+export const SITEMAP_QUERY = defineQuery(`
+  *[
+    _type in [
+      "noticia",
+      "documento",
+      "rodaAniversariantes",
+      "encontroConscienciaNegra",
+      "rodaConsciencia",
+      "mostraCultural",
+      "oficina",
+      "eventoExterno"
+    ] && defined(slug.current) && slug.current != ""
+  ] {
+    _type,
+    "slug": slug.current,
+    "lastModified": select(
+      _type == "encontroConscienciaNegra" => coalesce(dataInicio, _updatedAt),
+      _type in ["documento", "noticia"] => coalesce(dataPublicacao, _updatedAt),
+      _type == "oficina" => _updatedAt,
+      coalesce(dataEvento, _updatedAt)
+    )
+  }
+`);

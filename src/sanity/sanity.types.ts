@@ -2860,6 +2860,52 @@ export type SITE_SETTINGS_QUERY_RESULT = {
   seoImage: string | null;
 } | null;
 
+// Source: ../src/sanity/queries.ts
+// Variable: SITEMAP_QUERY
+// Query: *[    _type in [      "noticia",      "documento",      "rodaAniversariantes",      "encontroConscienciaNegra",      "rodaConsciencia",      "mostraCultural",      "oficina",      "eventoExterno"    ] && defined(slug.current) && slug.current != ""  ] {    _type,    "slug": slug.current,    "lastModified": select(      _type == "encontroConscienciaNegra" => coalesce(dataInicio, _updatedAt),      _type in ["documento", "noticia"] => coalesce(dataPublicacao, _updatedAt),      _type == "oficina" => _updatedAt,      coalesce(dataEvento, _updatedAt)    )  }
+export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      _type: "documento";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "encontroConscienciaNegra";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "eventoExterno";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "mostraCultural";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "noticia";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "oficina";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "rodaAniversariantes";
+      slug: string | null;
+      lastModified: string;
+    }
+  | {
+      _type: "rodaConsciencia";
+      slug: string | null;
+      lastModified: string;
+    }
+>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -2868,5 +2914,6 @@ declare module "@sanity/client" {
     '\n  *[_type == $tipo] | order(coalesce(dataEvento, dataInicio, dataPublicacao, _createdAt) desc) {\n      _id, _type, titulo, "slug": slug.current, resumo, local,\n      dataEvento, dataInicio, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),\n      "imagemCapa": imagemCapa{ "url": asset->url, alt },\n      "galeria": galeria[0...3]{ "url": asset->url, alt },\n      aniversariantes, mesReferencia, anoReferencia, mestreConvidado, "fotoMestre": fotoMestre{ "url": asset->url, alt },\n      origemMestre, temaRoda, abertoAoPublico, edicao, edicaoRomano, subtemaPrincipal, mestresConvidados, escolasParticipantes, parceiros, gruposConvidados,\n      quantidadeAlunos, organizador, tipoParticipacao, subtipoOficina, oficineiro, horarios, faixaEtaria, vagas, inscricoesAbertas,\n      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, linkExterno, categoriaNoticia, videoUrl, driveUrl\n  }\n': CONTEUDO_POR_TIPO_QUERY_RESULT;
     '\n  *[_type in ["noticia", "oficina", "rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno", "encontroConscienciaNegra", "documento"] && slug.current == $slug][0] {\n      _id, _type, titulo, "slug": slug.current, resumo, local,\n      dataEvento, dataInicio, dataFim, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),\n      "imagemCapa": imagemCapa{ "url": asset->url, alt },\n      body, "galeria": galeria[]{ "url": asset->url, alt },\n      aniversariantes, mesReferencia, anoReferencia, mestreConvidado, "fotoMestre": fotoMestre{ "url": asset->url, alt },\n      origemMestre, temaRoda, abertoAoPublico, edicao, edicaoRomano, subtemaPrincipal, mestresConvidados, escolasParticipantes, parceiros, gruposConvidados,\n      quantidadeAlunos, organizador, tipoParticipacao, subtipoOficina, oficineiro, horarios, faixaEtaria, vagas, inscricoesAbertas,\n      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, dataVigencia, linkExterno,\n      linkEvento, categoriaNoticia, videoUrl, driveUrl\n  }\n': CONTEUDO_POR_SLUG_QUERY_RESULT;
     '\n  *[_type == "siteSettings"][0] {\n    telefone,\n    instagram,\n    endereco,\n    seoDescription,\n    "seoImage": seoImage.asset->url\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[\n    _type in [\n      "noticia",\n      "documento",\n      "rodaAniversariantes",\n      "encontroConscienciaNegra",\n      "rodaConsciencia",\n      "mostraCultural",\n      "oficina",\n      "eventoExterno"\n    ] && defined(slug.current) && slug.current != ""\n  ] {\n    _type,\n    "slug": slug.current,\n    "lastModified": select(\n      _type == "encontroConscienciaNegra" => coalesce(dataInicio, _updatedAt),\n      _type in ["documento", "noticia"] => coalesce(dataPublicacao, _updatedAt),\n      _type == "oficina" => _updatedAt,\n      coalesce(dataEvento, _updatedAt)\n    )\n  }\n': SITEMAP_QUERY_RESULT;
   }
 }

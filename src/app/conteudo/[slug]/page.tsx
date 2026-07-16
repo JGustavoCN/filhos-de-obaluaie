@@ -1,15 +1,25 @@
 import React from 'react';
-import { client } from '@/sanity/client';
-import { CONTEUDO_POR_SLUG_QUERY } from '@/sanity/queries';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PortableText } from 'next-sanity';
 import Navbar from '@/components/Navbar';
 import { CalendarIcon, LocationIcon } from '@/components/cards/icons';
 import { formatDate } from '@/lib/formatDate';
+import {
+  absoluteUrl,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OPEN_GRAPH_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+} from '@/lib/seo';
+import { getContentBySlug, getSiteSettings } from '@/sanity/seo';
 import type { CONTEUDO_POR_SLUG_QUERY_RESULT } from '@/sanity/sanity.types';
 
 type ConteudoDetalhe = NonNullable<CONTEUDO_POR_SLUG_QUERY_RESULT>
 type ImageField = ConteudoDetalhe['imagemCapa']
+type DetalhePageProps = {
+  params: Promise<{ slug: string }>
+}
 
 const badgeClassByType: Record<string, string> = {
   rodaAniversariantes: 'badge-celebracao',
@@ -57,13 +67,67 @@ function getDataPrincipal(conteudo: ConteudoDetalhe): string | undefined {
   return undefined;
 }
 
+export async function generateMetadata({
+  params,
+}: DetalhePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const [conteudo, siteSettings] = await Promise.all([
+    getContentBySlug(slug),
+    getSiteSettings(),
+  ]);
+  const fallbackDescription =
+    siteSettings?.seoDescription?.trim() || DEFAULT_DESCRIPTION;
+  const canonical = absoluteUrl(`/conteudo/${encodeURIComponent(slug)}`);
+
+  if (!conteudo) {
+    return {
+      title: DEFAULT_TITLE,
+      description: fallbackDescription,
+      alternates: { canonical },
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const contentTitle = conteudo.titulo?.trim() ||
+    labelByType[conteudo._type] || SITE_NAME;
+  const title = conteudo.titulo?.trim()
+    ? `${contentTitle} | ${SITE_NAME}`
+    : DEFAULT_TITLE;
+  const description = conteudo.resumo?.trim() || fallbackDescription;
+  const image = absoluteUrl(
+    conteudo.imagemCapa?.url ||
+      siteSettings?.seoImage ||
+      DEFAULT_OPEN_GRAPH_IMAGE,
+  );
+  const imageAlt = conteudo.imagemCapa?.alt || contentTitle;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: SITE_NAME,
+      locale: 'pt_BR',
+      type: conteudo._type === 'noticia' ? 'article' : 'website',
+      images: [{ url: image, alt: imageAlt }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
+
 export default async function DetalhePage({
   params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+}: DetalhePageProps) {
   const resolvedParams = await params;
-  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug });
+  const conteudo = await getContentBySlug(resolvedParams.slug);
   
   if (!conteudo) {
     notFound();
