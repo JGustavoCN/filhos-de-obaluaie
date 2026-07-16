@@ -29,7 +29,6 @@ export default async function Home() {
   const oficinasNormalizadas = data.oficinas.map(normalizeSanityEvento);
   const agendaNormalizada = data.agenda.map(normalizeSanityEvento);
   const documentosNormalizados = data.documentos.map(normalizeSanityEvento);
-  const externosNormalizados = data.externos.map(normalizeSanityEvento);
   const recentUpdatesNormalizados = data.recentUpdates.map(normalizeSanityEvento);
   const noticiasNormalizadas = data.noticias.map(normalizeSanityEvento);
 

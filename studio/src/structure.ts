@@ -1,9 +1,6 @@
 import type { StructureResolver } from 'sanity/structure'
 import { CalendarIcon, UsersIcon, ControlsIcon, EarthGlobeIcon, HomeIcon } from '@sanity/icons'
 
-// Deixamos preparado para futuros singletons
-const SINGLETONS = ['siteSettings', 'homePage']
-
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Painel de Controle')

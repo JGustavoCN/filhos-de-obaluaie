@@ -3,7 +3,6 @@ import { client } from '@/sanity/client';
 import { CONTEUDO_POR_SLUG_QUERY } from '@/sanity/queries';
 import { notFound } from 'next/navigation';
 import { PortableText } from 'next-sanity';
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { CalendarIcon, LocationIcon } from '@/components/cards/icons';
 import { formatDate } from '@/lib/formatDate';
