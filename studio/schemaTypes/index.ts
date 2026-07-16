@@ -10,6 +10,7 @@
 
 // ── Singleton: Configurações do Site ────────────────────────
 import { siteSettings } from './documentos/siteSettings'
+import { homePage } from './documentos/homePage'
 
 // ── Eventos e Atividades ─────────────────────────────────────
 import { rodaAniversariantes } from './documentos/rodaAniversariantes'
@@ -26,6 +27,7 @@ import { noticia } from './documentos/noticia'
 export const schemaTypes = [
   // Singleton primeiro (Sanity Studio convention)
   siteSettings,
+  homePage,
 
   // Eventos e atividades do Centro Cultural
   rodaAniversariantes,

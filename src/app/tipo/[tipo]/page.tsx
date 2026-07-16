@@ -2,6 +2,7 @@ import React from 'react';
 import { client } from '@/sanity/client';
 import { CONTEUDO_POR_TIPO_QUERY } from '@/sanity/queries';
 import EventCard from '@/components/cards/EventCard';
+import Navbar from '@/components/Navbar';
 import type { EventoProps, SanityDocumentType } from '@/components/cards/types';
 
 /**
@@ -70,8 +71,10 @@ export default async function CategoriaPage({
     slugTipo.replace(/-/g, ' ')
 
   return (
-    <main className="min-h-screen bg-neutral-900 p-8 pt-24 text-white">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-neutral-900 p-8 pt-24 text-white">
+        <div className="max-w-7xl mx-auto">
         <header className="mb-12 border-b border-neutral-800 pb-8">
           <h1 className="text-4xl font-bold mb-4 capitalize">
             {tituloPagina}
@@ -96,6 +99,7 @@ export default async function CategoriaPage({
           </div>
         )}
       </div>
-    </main>
+      </main>
+    </>
   );
 }

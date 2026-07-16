@@ -22,6 +22,15 @@ export const oficina = defineType({
   fields: [
     ...baseFields,
 
+    // ── Configurações da Home ──────────────────────────────────
+    defineField({
+      name: 'ordemExibicao',
+      title: 'Ordem de Exibição na Home',
+      type: 'number',
+      description: 'Menor número aparece primeiro. Use para posicionar oficinas (ex: 1 para Capoeira).',
+      initialValue: 999,
+    }),
+
     // ── Modalidade ───────────────────────────────────────────────
     defineField({
       name: 'subtipoOficina',

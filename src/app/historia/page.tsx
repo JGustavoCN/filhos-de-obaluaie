@@ -5,10 +5,12 @@ import HistoriaMestres from "@/components/HistoriaMestres";
 import HistoriaEixos from "@/components/HistoriaEixos";
 import HistoriaEstrutura from "@/components/HistoriaEstrutura";
 import HistoriaEventos from "@/components/HistoriaEventos";
+import Navbar from "@/components/Navbar";
 
 export default function HistoriaPage() {
   return (
     <main className="min-h-screen bg-surface pb-0">
+      <Navbar />
       {/* Hero Section */}
       <section className="relative min-h-[90vh] md:min-h-screen pt-24 md:pt-32 pb-24 md:pb-36 overflow-hidden flex flex-col items-center text-center px-6">
         

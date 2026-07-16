@@ -1,17 +1,20 @@
 import Image from "next/image";
-import { client } from "@/sanity/client";
-import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
 
-export default async function HeroSection() {
-  const settings = await client.fetch(SITE_SETTINGS_QUERY);
+export interface HeroProps {
+  heroTitulo?: string;
+  heroSubtitulo?: string;
+  imagemHeroDesktop?: string;
+  imagemHeroMobile?: string;
+}
 
+export default function HeroSection({ data }: { data?: HeroProps }) {
   // Fallbacks para as imagens
-  const desktopImage = settings?.imagemHeroDesktop || "/assets/images/hero-banner-main.png";
-  const mobileImage = settings?.imagemHeroMobile || "/assets/images/hero-banner-mobile.png";
+  const desktopImage = data?.imagemHeroDesktop || "/assets/images/hero-banner-main.png";
+  const mobileImage = data?.imagemHeroMobile || "/assets/images/hero-banner-mobile.png";
   // Fallbacks para textos do Hero
-  const heroLabel = settings?.heroLabel || "Desde 2005 · Tobias Barreto/SE";
-  const heroTitulo = settings?.heroTitulo || "Filhos de\nObaluaiê";
-  const heroSubtitulo = settings?.heroSubtitulo || "Centro Cultural de Capoeira e Expressões Afro-Brasileiras.\nUm solo sagrado de resistência, arte e ancestralidade.";
+  const heroLabel = "Desde 2005 · Tobias Barreto/SE";
+  const heroTitulo = data?.heroTitulo || "Filhos de\nObaluaiê";
+  const heroSubtitulo = data?.heroSubtitulo || "Centro Cultural de Capoeira e Expressões Afro-Brasileiras.\nUm solo sagrado de resistência, arte e ancestralidade.";
 
   return (
     <section
