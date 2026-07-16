@@ -20,7 +20,7 @@ export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionPr
 
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12 md:mb-16">
           <h2 id="updates-heading" className="font-[var(--font-headline)] text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface">
-            Acontece no <span className="text-primary block sm:inline">Terreiro</span>
+            Acontece no <span className="underline decoration-primary decoration-4 underline-offset-8 block sm:inline">Terreiro</span>
           </h2>
           <p className="text-on-surface-light w-full max-w-2xl text-sm md:text-base lg:text-right mt-4 lg:mt-0">
             Fique por dentro das últimas rodas, oficinas, documentos e manifestações culturais.
@@ -36,7 +36,7 @@ export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionPr
         <div className="mt-12 text-center">
           <Link
             href="/tipo/noticia"
-            className="inline-flex items-center gap-2 bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-on-primary transition-colors"
+            className="inline-flex items-center gap-2 bg-secondary text-on-surface border border-outline/20 px-8 py-3 rounded-full font-medium hover:bg-secondary-hover transition-colors shadow-sm"
           >
             Ver todas as atualizações
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>

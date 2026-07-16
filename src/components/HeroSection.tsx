@@ -52,7 +52,7 @@ export default async function HeroSection() {
 
           <h1 className="font-[var(--font-headline)] min-w-0 text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold text-on-surface leading-[1.05] md:leading-[0.95] tracking-tight text-shadow-sm">
             {heroTitulo.split('\n').map((linha: string, idx: number, arr: string[]) => (
-              <span key={idx} className={idx === arr.length - 1 && arr.length > 1 ? "text-primary sm:ml-0 ml-2" : ""}>
+              <span key={idx} className={idx === arr.length - 1 && arr.length > 1 ? "underline decoration-primary decoration-4 underline-offset-8 sm:ml-0 ml-2" : ""}>
                 {linha}
                 {idx < arr.length - 1 && <br className="hidden sm:block" />}
               </span>
@@ -89,7 +89,7 @@ export default async function HeroSection() {
               { number: "4", label: "Expressões" },
             ].map((stat) => (
               <div key={stat.label} className="flex-1 sm:flex-none">
-                <span className="font-[var(--font-headline)] text-2xl sm:text-3xl font-bold text-primary">
+                <span className="font-[var(--font-headline)] text-2xl sm:text-3xl font-bold text-on-surface underline decoration-primary decoration-4 underline-offset-8">
                   {stat.number}
                 </span>
                 <p className="text-[10px] sm:text-xs text-on-surface-light mt-1 font-medium">{stat.label}</p>

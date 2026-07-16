@@ -17,7 +17,7 @@ export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoPr
 
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12 md:mb-16">
           <h2 id="projects-heading" className="font-[var(--font-headline)] text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface">
-            Projetos <span className="text-primary block sm:inline">Sociais</span>
+            Projetos <span className="underline decoration-primary decoration-4 underline-offset-8 block sm:inline">Sociais</span>
           </h2>
           <p className="text-on-surface-light w-full max-w-2xl text-sm md:text-base lg:text-right mt-4 lg:mt-0">
             Mantemos viva a chama de tradições que pulsam em nosso sangue e em nossa comunidade através das oficinas.
@@ -35,7 +35,7 @@ export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoPr
 
         {/* Botão Inferior */}
         <div className="mt-12 flex justify-center">
-          <Link href="/tipo/oficina" className="inline-flex items-center gap-2 bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-on-primary transition-colors">
+          <Link href="/tipo/oficina" className="inline-flex items-center gap-2 bg-secondary text-on-surface border border-outline/20 px-8 py-3 rounded-full font-medium hover:bg-secondary-hover transition-colors shadow-sm">
             Acompanhar registros das Oficinas
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </Link>

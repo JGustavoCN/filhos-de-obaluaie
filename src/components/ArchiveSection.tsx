@@ -20,7 +20,7 @@ export default function ArchiveSection({ documentos = [], externos = [] }: Archi
         </div>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12 md:mb-16">
           <h2 id="archive-heading" className="font-[var(--font-headline)] text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface">
-            Acervo & <span className="text-primary block sm:inline">Parcerias</span>
+            Acervo & <span className="underline decoration-primary decoration-4 underline-offset-8 block sm:inline">Parcerias</span>
           </h2>
           <p className="text-on-surface-light w-full max-w-2xl text-sm md:text-base lg:text-right mt-4 lg:mt-0">
             Acompanhe nossas atuações externas e parcerias. Acesse também nossos editais e documentos institucionais.
