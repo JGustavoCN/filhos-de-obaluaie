@@ -31,10 +31,15 @@ export default function RecentUpdatesSection({ updates = [] }: RecentUpdatesSect
             <p className="text-on-surface-light text-lg">Nenhuma atualização recente no momento.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {updates.map((item) => (
-              <EventCard key={item.id ?? item._id} data={item} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 grid-flow-row-dense">
+            {updates.map((item) => {
+              const isFeatureCard = item._type === 'oficina' || item._type === 'encontroConscienciaNegra' || item._type === 'rodaConsciencia' || item._type === 'eventoExterno';
+              return (
+                <div key={item.id ?? item._id} className={isFeatureCard ? 'md:col-span-2' : ''}>
+                  <EventCard data={item} />
+                </div>
+              );
+            })}
           </div>
         )}
 

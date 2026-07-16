@@ -16,7 +16,7 @@ export default function CardOficina({ data }: { data: EventoProps }) {
   const imgSrc = data.imagemCapa || fallbackImg;
 
   return (
-    <div className={`${frameClass} relative overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl h-full`}>
+    <div className={`${frameClass} relative overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl h-full min-h-[420px]`}>
       {/* Foto de fundo — fica ATRÁS da moldura 9-slice */}
       <img
         src={imgSrc}

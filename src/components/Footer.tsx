@@ -1,5 +1,6 @@
 import { client } from "@/sanity/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries";
+import Link from "next/link";
 
 export default async function Footer() {
   const settings = await client.fetch(SITE_SETTINGS_QUERY);
@@ -9,6 +10,14 @@ export default async function Footer() {
   const instagram = settings?.instagram || "https://instagram.com/filhosdeobaluaie";
   const telefone = settings?.telefone || "(79) 99999-9999";
   const facebook = settings?.facebook;
+
+  const navLinks = [
+    { label: "Sobre", href: "/#sobre" },
+    { label: "Nossa História", href: "/historia" },
+    { label: "Projetos", href: "/#projetos" },
+    { label: "Acervo", href: "/#acervo" },
+    { label: "Contato", href: "/#contato" },
+  ];
 
   return (
     <footer id="contato" className="relative py-16 md:py-20 bg-on-surface" aria-label="Rodapé">
@@ -26,8 +35,12 @@ export default async function Footer() {
           <div className="md:col-span-3">
             <h4 className="font-semibold text-surface/80 text-sm mb-4 uppercase tracking-wider">Navegação</h4>
             <ul className="flex flex-col gap-2">
-              {["Sobre", "Projetos", "Acervo", "Contato"].map((item) => (
-                <li key={item}><a href={`#${item.toLowerCase()}`} className="text-surface/50 hover:text-secondary text-sm transition-colors">{item}</a></li>
+              {navLinks.map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="text-surface/50 hover:text-secondary text-sm transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -51,7 +64,7 @@ export default async function Footer() {
           </div>
         </div>
         <div className="pt-8 border-t border-surface/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-surface/40 text-xs">&copy; {new Date().getFullYear()} Filhos de Obaluaiê. Ancestral Contemporary Heritage.</p>
+          <p className="text-surface/40 text-xs">&copy; {new Date().getFullYear()} Filhos de Obaluaiê. Preservando a memória e a cultura afro-brasileira.</p>
           <div className="flex items-center gap-4 text-surface/30 text-xs">
             <span>Desenvolvido com respeito à ancestralidade.</span>
             <span>•</span>
