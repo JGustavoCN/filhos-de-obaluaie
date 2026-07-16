@@ -3,7 +3,6 @@ import EventCard from '@/components/cards/EventCard';
 import { EventoProps } from '@/components/cards/types';
 
 export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoProps[] }) {
-  if (!oficinas || oficinas.length === 0) return null;
 
   return (
     <section id="projetos" className="relative py-20 md:py-28" aria-labelledby="projects-heading">
@@ -25,13 +24,19 @@ export default function ProjectsSection({ oficinas = [] }: { oficinas?: EventoPr
         </div>
 
         {/* Grid de Cards utilizando o EventCard Tipado */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 stagger-children">
-          {oficinas.map((project) => (
-            <div key={project.id ?? project._id} className="h-full">
-              <EventCard data={project} />
-            </div>
-          ))}
-        </div>
+        {(!oficinas || oficinas.length === 0) ? (
+          <div className="text-center py-12 bg-surface/50 rounded-2xl border border-outline/10">
+            <p className="text-on-surface-light text-lg">Nenhum projeto social disponível no momento.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 stagger-children">
+            {oficinas.map((project) => (
+              <div key={project.id ?? project._id} className="h-full">
+                <EventCard data={project} />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Botão Inferior */}
         <div className="mt-12 flex justify-center">

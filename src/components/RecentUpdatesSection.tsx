@@ -7,8 +7,7 @@ interface RecentUpdatesSectionProps {
   updates: EventoProps[];
 }
 
-export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionProps) {
-  if (!updates || updates.length === 0) return null;
+export default function RecentUpdatesSection({ updates = [] }: RecentUpdatesSectionProps) {
 
   return (
     <section id="atualizacoes" className="relative py-20 md:py-28" aria-labelledby="updates-heading">
@@ -27,11 +26,17 @@ export default function RecentUpdatesSection({ updates }: RecentUpdatesSectionPr
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {updates.map((item) => (
-            <EventCard key={item._id} data={item} />
-          ))}
-        </div>
+        {(!updates || updates.length === 0) ? (
+          <div className="text-center py-12 bg-surface/50 rounded-2xl border border-outline/10">
+            <p className="text-on-surface-light text-lg">Nenhuma atualização recente no momento.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {updates.map((item) => (
+              <EventCard key={item.id ?? item._id} data={item} />
+            ))}
+          </div>
+        )}
 
         <div className="mt-12 text-center">
           <Link

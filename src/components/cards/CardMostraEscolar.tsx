@@ -46,7 +46,7 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
             <div className="w-10 h-10 rounded-full bg-[var(--color-primary-container)] flex items-center justify-center text-[var(--color-primary)] shadow-sm">
               <MaskIcon className="w-5 h-5" />
             </div>
-            {data.titulo}
+            {data.titulo || 'Mostra Cultural'}
           </h3>
 
           {/* Escolas com cores alternadas (Paleta Intercalada) */}

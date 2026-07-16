@@ -45,7 +45,7 @@ export default function CardOficina({ data }: { data: EventoProps }) {
         {/* Área descritiva com fundo semi-transparente */}
         <div className="p-6 flex flex-col flex-1 bg-[var(--glass-bg)] backdrop-blur-sm">
           <h3 className="text-2xl font-headline font-bold text-[var(--color-on-surface)] mb-3 group-hover:text-[var(--color-primary)] transition-colors leading-tight">
-            {data.titulo}
+            {data.titulo || 'Oficina'}
           </h3>
 
           {data.resumo && (

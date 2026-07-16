@@ -31,7 +31,7 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
         </span>
         
         <h3 className="text-2xl font-headline font-bold text-[var(--color-on-surface)] mb-4 text-center">
-          {data.titulo}
+          {data.titulo || 'Celebração'}
         </h3>
         
         {/* Lista COMPLETA de Aniversariantes com a classe global .custom-scrollbar */}

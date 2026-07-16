@@ -28,7 +28,7 @@ export default function CardEventoExterno({ data }: { data: EventoProps }) {
         </div>
         
         <h3 className="text-xl md:text-2xl font-headline font-bold text-[var(--color-on-surface)] leading-snug">
-          {data.titulo}
+          {data.titulo || 'Evento Externo'}
         </h3>
       </div>
       

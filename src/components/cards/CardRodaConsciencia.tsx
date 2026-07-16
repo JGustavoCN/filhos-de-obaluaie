@@ -37,7 +37,7 @@ export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
 
       <div className="px-6 flex flex-col flex-1 relative z-10 mt-3">
         <h3 className="text-xl sm:text-2xl font-headline font-bold text-[var(--color-on-surface)] leading-tight mb-5 drop-shadow-sm">
-          {data.titulo}
+          {data.titulo || 'Roda da Consciência'}
         </h3>
 
         {/* Quote/Resumo - Estilizado como citação oral */}

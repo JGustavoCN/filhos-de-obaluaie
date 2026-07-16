@@ -9,7 +9,6 @@ interface ArchiveSectionProps {
 }
 
 export default function ArchiveSection({ documentos = [], externos = [] }: ArchiveSectionProps) {
-  if ((!documentos || documentos.length === 0) && (!externos || externos.length === 0)) return null;
 
   return (
     <section id="acervo" className="relative py-20 md:py-28" aria-labelledby="archive-heading">
@@ -53,9 +52,13 @@ export default function ArchiveSection({ documentos = [], externos = [] }: Archi
               Acervo Documental
             </h3>
             <div className="flex flex-col gap-3 max-h-[640px] overflow-y-auto pr-1 custom-scrollbar">
-              {documentos.map((doc, i) => (
-                <CardDocumento key={doc.id ?? doc._id ?? i} data={doc} />
-              ))}
+              {documentos.length === 0 ? (
+                <p className="text-on-surface-light text-sm italic">Nenhum documento disponível.</p>
+              ) : (
+                documentos.map((doc, i) => (
+                  <CardDocumento key={doc.id ?? doc._id ?? i} data={doc} />
+                ))
+              )}
             </div>
           </div>
         </div>

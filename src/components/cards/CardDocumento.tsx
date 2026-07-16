@@ -27,7 +27,7 @@ export default function CardDocumento({ data }: { data: EventoProps }) {
       </div>
       <div className="flex-1 min-w-0">
         <h4 className="font-bold text-[var(--color-on-surface)] truncate group-hover:text-[var(--color-primary)] transition-colors">
-          {data.titulo}
+          {data.titulo || 'Documento sem título'}
         </h4>
         <div className="meta-row mt-2">
           <span className="badge-tipo badge-documento">{documentoLabel}</span>

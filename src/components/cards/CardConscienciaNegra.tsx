@@ -28,7 +28,7 @@ export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
 
       <div className="p-6 flex flex-col flex-1 relative">
         <h3 className="text-2xl font-headline font-bold text-[var(--color-on-surface)] mb-3 group-hover:text-[var(--color-primary)] transition-colors leading-tight">
-          {data.titulo}
+          {data.titulo || 'Evento da Consciência Negra'}
         </h3>
         
         {data.resumo && <p className="text-[var(--color-on-surface-light)] text-sm mb-6 flex-1 line-clamp-3 leading-relaxed opacity-90">{data.resumo}</p>}
