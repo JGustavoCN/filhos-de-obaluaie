@@ -4,7 +4,12 @@ import { defineQuery } from "next-sanity";
 export const HOME_PAGE_QUERY = defineQuery(`
   {
     "institucional": *[_type == "homePage"][0] {
-      heroTitulo, heroSubtitulo, tituloSessaoDestaque, institucionalTitulo, institucionalTexto, citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto,
+      heroTitulo, heroSubtitulo, tituloSessaoDestaque,
+      "imagemHeroDesktop": imagemHeroDesktop.asset->url,
+      "imagemHeroMobile": imagemHeroMobile.asset->url,
+      institucionalTitulo, institucionalTexto,
+      "institucionalImagem": institucionalImagem.asset->url,
+      citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto, ctaBotaoTexto, ctaBotaoLink,
       "heroEvento": eventoDestaque->{
         _id, _type, titulo, "slug": slug.current, resumo, local,
         dataEvento, dataInicio, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),
@@ -73,7 +78,8 @@ export const CONTEUDO_POR_SLUG_QUERY = defineQuery(`
       aniversariantes, mesReferencia, anoReferencia, mestreConvidado, "fotoMestre": fotoMestre{ "url": asset->url, alt },
       origemMestre, temaRoda, abertoAoPublico, edicao, edicaoRomano, subtemaPrincipal, mestresConvidados, escolasParticipantes, parceiros, gruposConvidados,
       quantidadeAlunos, organizador, tipoParticipacao, subtipoOficina, oficineiro, horarios, faixaEtaria, vagas, inscricoesAbertas,
-      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, linkExterno, categoriaNoticia, videoUrl, driveUrl
+      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, dataVigencia, linkExterno,
+      linkEvento, categoriaNoticia, videoUrl, driveUrl
   }
 `);
 
@@ -83,6 +89,30 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     instagram,
     endereco,
     seoDescription,
-    menuLinks
+    "seoImage": seoImage.asset->url
+  }
+`);
+
+export const SITEMAP_QUERY = defineQuery(`
+  *[
+    _type in [
+      "noticia",
+      "documento",
+      "rodaAniversariantes",
+      "encontroConscienciaNegra",
+      "rodaConsciencia",
+      "mostraCultural",
+      "oficina",
+      "eventoExterno"
+    ] && defined(slug.current) && slug.current != ""
+  ] {
+    _type,
+    "slug": slug.current,
+    "lastModified": select(
+      _type == "encontroConscienciaNegra" => coalesce(dataInicio, _updatedAt),
+      _type in ["documento", "noticia"] => coalesce(dataPublicacao, _updatedAt),
+      _type == "oficina" => _updatedAt,
+      coalesce(dataEvento, _updatedAt)
+    )
   }
 `);

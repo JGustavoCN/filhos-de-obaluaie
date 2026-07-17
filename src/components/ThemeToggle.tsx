@@ -111,10 +111,15 @@ export default function ThemeToggle({ id = "theme-toggle" }: { id?: string } = {
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
     const initial = stored ?? "system";
-    
-    setTheme(initial);
-    setMounted(true);
+
     applyTheme(initial);
+
+    const frame = window.requestAnimationFrame(() => {
+      setTheme(initial);
+      setMounted(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   /* Escutar mudanças do SO quando theme === "system" */

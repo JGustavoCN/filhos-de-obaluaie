@@ -1,9 +1,18 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { client } from '@/sanity/client';
 import { CONTEUDO_POR_TIPO_QUERY } from '@/sanity/queries';
 import EventCard from '@/components/cards/EventCard';
 import Navbar from '@/components/Navbar';
-import type { EventoProps, SanityDocumentType } from '@/components/cards/types';
+import type { SanityDocumentType } from '@/components/cards/types';
+import {
+  absoluteUrl,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OPEN_GRAPH_IMAGE,
+  SITE_NAME,
+} from '@/lib/seo';
+import { normalizeSanityEvento } from '@/sanity/normalizeEvento';
+import { getSiteSettings } from '@/sanity/seo';
 
 /**
  * Mapeamento de slug de URL para _type do Sanity.
@@ -43,32 +52,79 @@ const TITULO_POR_TIPO: Record<SanityDocumentType, string> = {
   noticia:                  'Notícias e Comunicados',
 }
 
+type CategoriaPageProps = {
+  params: Promise<{ tipo: string }>
+}
+
+function resolveSanityType(slugTipo: string): string {
+  return URL_SLUG_TO_SANITY_TYPE[slugTipo] ??
+    slugTipo.replace(/-([a-z])/g, (_: string, char: string) => char.toUpperCase());
+}
+
+function isSanityDocumentType(tipo: string): tipo is SanityDocumentType {
+  return tipo in TITULO_POR_TIPO;
+}
+
+function getCategoryTitle(slugTipo: string, tipoSanity: string): string {
+  if (isSanityDocumentType(tipoSanity)) {
+    return TITULO_POR_TIPO[tipoSanity];
+  }
+
+  return slugTipo
+    .replace(/-/g, ' ')
+    .replace(/^./, (firstLetter) => firstLetter.toUpperCase());
+}
+
+export async function generateMetadata({
+  params,
+}: CategoriaPageProps): Promise<Metadata> {
+  const { tipo: slugTipo } = await params;
+  const tipoSanity = resolveSanityType(slugTipo);
+  const categoryTitle = getCategoryTitle(slugTipo, tipoSanity);
+  const siteSettings = await getSiteSettings();
+  const title = `${categoryTitle} | ${SITE_NAME}`;
+  const description = siteSettings?.seoDescription?.trim() || DEFAULT_DESCRIPTION;
+  const canonical = absoluteUrl(`/tipo/${encodeURIComponent(slugTipo)}`);
+  const image = absoluteUrl(
+    siteSettings?.seoImage || DEFAULT_OPEN_GRAPH_IMAGE,
+  );
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: SITE_NAME,
+      locale: 'pt_BR',
+      type: 'website',
+      images: [{ url: image, alt: SITE_NAME }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
+
 export default async function CategoriaPage({
   params,
-}: {
-  params: Promise<{ tipo: string }>
-}) {
+}: CategoriaPageProps) {
   const resolvedParams = await params;
   const slugTipo = resolvedParams.tipo;
 
   // Tenta mapear pelo dicionário; fallback: toCamelCase genérico
-  const tipoSanity: string =
-    URL_SLUG_TO_SANITY_TYPE[slugTipo] ??
-    slugTipo.replace(/-([a-z])/g, (_: string, c: string) => c.toUpperCase());
+  const tipoSanity = resolveSanityType(slugTipo);
 
   const conteudos = await client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: tipoSanity });
 
-  // Normaliza imagemCapa de objeto para string
-  const normalizados: EventoProps[] = (conteudos ?? []).map((item: Record<string, unknown>) => ({
-    ...item as unknown as EventoProps,
-    imagemCapa: typeof item?.imagemCapa === 'object' && item?.imagemCapa !== null ? (item.imagemCapa as { url?: string }).url ?? undefined : item?.imagemCapa as string ?? undefined,
-    galeria: Array.isArray(item?.galeria) ? item.galeria.map((g) => typeof g === 'object' && g !== null ? (g as { url?: string }).url ?? '' : g as string) : [],
-    fotoMestre: typeof item?.fotoMestre === 'object' && item?.fotoMestre !== null ? (item.fotoMestre as { url?: string }).url ?? undefined : item?.fotoMestre as string ?? undefined,
-  }));
+  const normalizados = (conteudos ?? []).map(normalizeSanityEvento);
 
-  const tituloPagina =
-    TITULO_POR_TIPO[tipoSanity as SanityDocumentType] ??
-    slugTipo.replace(/-/g, ' ')
+  const tituloPagina = getCategoryTitle(slugTipo, tipoSanity)
 
   return (
     <>
@@ -86,7 +142,7 @@ export default async function CategoriaPage({
 
         {normalizados.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
-            {normalizados.map((item: EventoProps) => (
+            {normalizados.map((item) => (
               <EventCard key={item._id} data={item} />
             ))}
           </div>

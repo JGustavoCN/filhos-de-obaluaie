@@ -44,11 +44,11 @@ describe('EventCard Accessibility - Auditoria Completa', () => {
 
   // TESTE PROPOSITAMENTE DEFEITUOSO (Desativado)
   it.skip('teste FALHO: deve ser pego no flagra pelo jest-axe', async () => {
-    // Renderizamos uma violação que o jsdom pega (imagens sem texto alternativo e botão inacessível)
+    // Renderizamos uma violação que o jsdom pega (botão inacessível)
     const { container } = render(
       <div>
         <h2>Imagem Ilegível para Cegos</h2>
-        <img src="https://example.com/imagem-sem-alt.jpg" />
+        <img src="https://example.com/imagem-sem-alt.jpg" alt="Exemplo do teste" />
         <button></button>
       </div>
     );

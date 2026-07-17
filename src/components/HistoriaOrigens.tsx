@@ -13,7 +13,7 @@ export default function HistoriaOrigens() {
             Das Raízes Banto a <span className="text-primary">Sergipe</span>
           </h2>
           <p className="text-lg text-on-surface/80 leading-relaxed">
-            A história da capoeira remonta às raízes africanas, especialmente aos povos de origem banto que foram escravizados e trazidos ao Brasil. Nas senzalas, ruas e quilombos, as "capoeiras" (áreas de mato ralo) tornaram-se o palco onde a dança camuflava o treinamento de defesa e resistência, misturando o jogo de corpo com a luta pela liberdade.
+            A história da capoeira remonta às raízes africanas, especialmente aos povos de origem banto que foram escravizados e trazidos ao Brasil. Nas senzalas, ruas e quilombos, as &quot;capoeiras&quot; (áreas de mato ralo) tornaram-se o palco onde a dança camuflava o treinamento de defesa e resistência, misturando o jogo de corpo com a luta pela liberdade.
           </p>
           <p className="text-lg text-on-surface/80 leading-relaxed">
             Vista como ameaça, a capoeiragem foi duramente reprimida, sendo até criminalizada pelo Código Penal de 1890. Apenas a partir da década de 1930 a repressão oficial foi atenuada, abrindo espaço para a consolidação das vertentes <strong>Angola</strong> (marcada pela astúcia e movimentos precisos de Mestre Pastinha) e <strong>Regional</strong> (com o jogo rápido e alto introduzido por Mestre Bimba).

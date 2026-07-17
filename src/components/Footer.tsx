@@ -9,7 +9,6 @@ export default async function Footer() {
   const endereco = settings?.endereco || "Bairro Santa Rita, Tobias Barreto — Sergipe, Brasil.";
   const instagram = settings?.instagram || "https://instagram.com/filhosdeobaluaie";
   const telefone = settings?.telefone || "(79) 99999-9999";
-  const facebook = settings?.facebook;
 
   const navLinks = [
     { label: "Sobre", href: "/#sobre" },
@@ -52,13 +51,6 @@ export default async function Footer() {
                   Instagram
                 </a>
               </li>
-              {facebook && (
-                <li>
-                  <a href={facebook} target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition-colors">
-                    Facebook
-                  </a>
-                </li>
-              )}
               <li>{telefone}</li>
             </ul>
           </div>

@@ -12,12 +12,12 @@ export default function HistoriaMestres() {
             As Raízes de <span className="text-on-surface opacity-90 underline decoration-primary decoration-4 underline-offset-8">Nossos Mestres</span>
           </h2>
           <p className="text-lg md:text-xl text-on-surface max-w-3xl mx-auto mb-8 font-medium">
-            Nossa história não seria possível sem os grandes responsáveis por ensinar a disciplina, o respeito e a arte. Antes de nos chamarmos "Filhos de Obaluaiê", o grupo nasceu como "Berimbau de Ouro".
+            Nossa história não seria possível sem os grandes responsáveis por ensinar a disciplina, o respeito e a arte. Antes de nos chamarmos &quot;Filhos de Obaluaiê&quot;, o grupo nasceu como &quot;Berimbau de Ouro&quot;.
           </p>
           <div className="max-w-4xl mx-auto bg-surface-container border-l-4 border-l-primary p-6 md:p-8 rounded-r-2xl text-left shadow-sm mb-12">
             <h4 className="font-[var(--font-headline)] text-2xl font-bold text-on-surface mb-3">O que significa Obaluaiê?</h4>
             <p className="text-on-surface text-lg leading-relaxed">
-              A transição do nome não foi meramente estética; ela marcou nossa identidade negra afro-brasileira de forma definitiva. <strong>Obaluaiê</strong> é uma palavra de matriz iorubá que significa "Rei ou Dono da Terra". Ele é o orixá reverenciado como o <em>médico dos pobres</em> e curador dos enfermos. O nome foi adotado pelo Mestre Bahia como uma eterna homenagem ao seu mentor, Mestre Zezinho, cujos ensinamentos sempre visaram a cura e a proteção da comunidade.
+              A transição do nome não foi meramente estética; ela marcou nossa identidade negra afro-brasileira de forma definitiva. <strong>Obaluaiê</strong> é uma palavra de matriz iorubá que significa &quot;Rei ou Dono da Terra&quot;. Ele é o orixá reverenciado como o <em>médico dos pobres</em> e curador dos enfermos. O nome foi adotado pelo Mestre Bahia como uma eterna homenagem ao seu mentor, Mestre Zezinho, cujos ensinamentos sempre visaram a cura e a proteção da comunidade.
             </p>
           </div>
         </div>
@@ -33,7 +33,7 @@ export default function HistoriaMestres() {
             <div className="p-6 md:p-8">
               <div className="inline-block px-3 py-1 bg-surface-container-high text-on-surface text-sm font-bold rounded-sm mb-4 border border-outline/20">1987</div>
               <p className="text-on-surface text-base md:text-lg leading-relaxed">
-                Antônio Jorge da Conceição, o Mestre Nhô, trouxe os primeiros ensinamentos de capoeira a Tobias Barreto. Funcionário público oriundo de Aracaju, notou a falta de esporte e abriu a "Academia J.J. Modelagem Física", plantando a primeira semente local no grupo "Novos Irmãos".
+                Antônio Jorge da Conceição, o Mestre Nhô, trouxe os primeiros ensinamentos de capoeira a Tobias Barreto. Funcionário público oriundo de Aracaju, notou a falta de esporte e abriu a &quot;Academia J.J. Modelagem Física&quot;, plantando a primeira semente local no grupo &quot;Novos Irmãos&quot;.
               </p>
             </div>
           </div>
@@ -48,7 +48,7 @@ export default function HistoriaMestres() {
             <div className="p-6 md:p-8">
               <div className="inline-block px-3 py-1 bg-surface-container-high text-on-surface text-sm font-bold rounded-sm mb-4 border border-outline/20">1994 - São Paulo</div>
               <p className="text-on-surface text-base md:text-lg leading-relaxed">
-                José Alípio Pureza, o saudoso Mestre Zezinho, acolheu Josafá no bairro do Glicério (SP). Sob sua orientação espiritual, a capoeira tornou-se "Cultura de Paz", resgatando jovens das ruas. 
+                José Alípio Pureza, o saudoso Mestre Zezinho, acolheu Josafá no bairro do Glicério (SP). Sob sua orientação espiritual, a capoeira tornou-se &quot;Cultura de Paz&quot;, resgatando jovens das ruas.
               </p>
             </div>
           </div>

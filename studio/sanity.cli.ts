@@ -5,6 +5,18 @@ export default defineCliConfig({
     projectId: '1lha6jrn',
     dataset: 'production'
   },
+  schemaExtraction: {
+    enabled: true,
+    workspace: 'development',
+    path: 'schema.json',
+  },
+  typegen: {
+    enabled: true,
+    path: '../src/**/*.{ts,tsx}',
+    schema: 'schema.json',
+    generates: '../src/sanity/sanity.types.ts',
+    overloadClientMethods: true,
+  },
   deployment: {
     /**
      * Enable auto-updates for studios.
