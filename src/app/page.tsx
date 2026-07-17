@@ -9,44 +9,10 @@ import ArchiveSection from "@/components/ArchiveSection";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import EventCard from "@/components/cards/EventCard";
-import type { EventoProps } from "@/components/cards/types";
-
-// Tipagem local da HomePage
-interface HomePageData {
-  heroTitulo?: string;
-  heroSubtitulo?: string;
-  heroEvento?: EventoProps;
-  institucionalTitulo?: string;
-  institucionalTexto?: any;
-  citacaoTexto?: string;
-  citacaoAutor?: string;
-  estatisticas?: Array<{ rotulo: string; valor: string }>;
-  ctaTitulo?: string;
-  ctaTexto?: string;
-}
-
-// Normalizador local simples (já que o backend retorna tudo certinho agora)
-const normalizeItem = (item: any): EventoProps => {
-  return {
-    ...item,
-    imagemCapa: typeof item?.imagemCapa === 'object' && item?.imagemCapa !== null ? item.imagemCapa.url : item?.imagemCapa,
-    galeria: Array.isArray(item?.galeria) ? item.galeria.map((g: any) => typeof g === 'object' && g !== null ? g.url : g) : [],
-    fotoMestre: typeof item?.fotoMestre === 'object' && item?.fotoMestre !== null ? item.fotoMestre.url : item?.fotoMestre,
-  };
-};
-
-interface PageData {
-  institucional: HomePageData;
-  noticias: EventoProps[];
-  oficinas: EventoProps[];
-  agenda: EventoProps[];
-  documentos: EventoProps[];
-  externos: EventoProps[];
-  recentUpdates: EventoProps[];
-}
+import { normalizeSanityEvento } from "@/sanity/normalizeEvento";
 
 export default async function Home() {
-  const data = await client.fetch<PageData>(HOME_PAGE_QUERY);
+  const data = await client.fetch(HOME_PAGE_QUERY);
 
   if (!data || !data.institucional) {
     return (
@@ -59,18 +25,29 @@ export default async function Home() {
     );
   }
 
-  // Normalização de dados
-  const oficinasNormalizadas = (data.oficinas || []).map(normalizeItem);
-  const agendaNormalizada = (data.agenda || []).map(normalizeItem);
-  const documentosNormalizados = (data.documentos || []).map(normalizeItem);
-  const externosNormalizados = (data.externos || []).map(normalizeItem);
-  const recentUpdatesNormalizados = (data.recentUpdates || []).map(normalizeItem);
-  const noticiasNormalizadas = (data.noticias || []).map(normalizeItem);
+  const institucional = data.institucional;
+  const oficinasNormalizadas = data.oficinas.map(normalizeSanityEvento);
+  const agendaNormalizada = data.agenda.map(normalizeSanityEvento);
+  const documentosNormalizados = data.documentos.map(normalizeSanityEvento);
+  const recentUpdatesNormalizados = data.recentUpdates.map(normalizeSanityEvento);
+  const noticiasNormalizadas = data.noticias.map(normalizeSanityEvento);
 
   const heroProps = {
-    heroTitulo: data.institucional.heroTitulo,
-    heroSubtitulo: data.institucional.heroSubtitulo,
-    heroEvento: data.institucional.heroEvento,
+    heroTitulo: institucional.heroTitulo ?? undefined,
+    heroSubtitulo: institucional.heroSubtitulo ?? undefined,
+    imagemHeroDesktop: institucional.imagemHeroDesktop ?? undefined,
+    imagemHeroMobile: institucional.imagemHeroMobile ?? undefined,
+  };
+
+  const aboutProps = {
+    institucionalTitulo: institucional.institucionalTitulo ?? undefined,
+    institucionalTexto: institucional.institucionalTexto ?? undefined,
+    institucionalImagem: institucional.institucionalImagem ?? undefined,
+    citacaoTexto: institucional.citacaoTexto ?? undefined,
+    citacaoAutor: institucional.citacaoAutor ?? undefined,
+    estatisticas: institucional.estatisticas?.flatMap(({ valor, rotulo }) =>
+      valor && rotulo ? [{ valor, rotulo }] : [],
+    ),
   };
 
   return (
@@ -78,10 +55,10 @@ export default async function Home() {
       <Navbar />
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
-        <HeroSection data={heroProps as any} />
+        <HeroSection data={heroProps} />
         
         {/* SOBRE (AboutSection) */}
-        <AboutSection data={data.institucional} />
+        <AboutSection data={aboutProps} />
         <XaxaraDivider />
 
         {/* FEED DO TERREIRO (RecentUpdatesSection) */}

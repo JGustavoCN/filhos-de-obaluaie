@@ -4,8 +4,13 @@ import { defineQuery } from "next-sanity";
 export const HOME_PAGE_QUERY = defineQuery(`
   {
     "institucional": *[_type == "homePage"][0] {
-      heroTitulo, heroSubtitulo, institucionalTitulo, institucionalTexto, citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto,
-      "heroEvento": *[_type in ["noticia", "oficina", "rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno", "encontroConscienciaNegra", "documento"] && destaqueNaHome == true] | order(_updatedAt desc)[0] {
+      heroTitulo, heroSubtitulo,
+      "imagemHeroDesktop": imagemHeroDesktop.asset->url,
+      "imagemHeroMobile": imagemHeroMobile.asset->url,
+      institucionalTitulo, institucionalTexto,
+      "institucionalImagem": institucionalImagem.asset->url,
+      citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto, ctaBotaoTexto, ctaBotaoLink,
+      "heroEvento": *[_type in ["rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno", "encontroConscienciaNegra"] && destaqueNaHome == true] | order(_updatedAt desc)[0] {
         _id, _type, titulo, "slug": slug.current, resumo, local,
         dataEvento, dataInicio, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),
         "imagemCapa": imagemCapa{ "url": asset->url, alt },
@@ -42,7 +47,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
     },
 
     "documentos": *[_type == "documento"] | order(dataPublicacao desc)[0...3] {
-      _id, _type, titulo, "slug": slug.current, resumo, dataPublicacao, categoriaDocumento, subtipoDocumento, linkExterno, tamanhoArquivo, "arquivo": arquivo.asset->url, "imagemCapa": imagemCapa{ "url": asset->url, alt }
+      _id, _type, titulo, "slug": slug.current, resumo, dataPublicacao, subtipoDocumento, linkExterno, tamanhoArquivo, "arquivo": arquivo.asset->url, "imagemCapa": imagemCapa{ "url": asset->url, alt }
     },
     
     "externos": *[_type == "eventoExterno"] | order(dataEvento desc)[0...2] {
@@ -73,7 +78,8 @@ export const CONTEUDO_POR_SLUG_QUERY = defineQuery(`
       aniversariantes, mesReferencia, anoReferencia, mestreConvidado, "fotoMestre": fotoMestre{ "url": asset->url, alt },
       origemMestre, temaRoda, abertoAoPublico, edicao, edicaoRomano, subtemaPrincipal, mestresConvidados, escolasParticipantes, parceiros, gruposConvidados,
       quantidadeAlunos, organizador, tipoParticipacao, subtipoOficina, oficineiro, horarios, faixaEtaria, vagas, inscricoesAbertas,
-      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, linkExterno, categoriaNoticia, videoUrl, driveUrl
+      subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, dataVigencia, linkExterno,
+      linkEvento, categoriaNoticia, videoUrl, driveUrl
   }
 `);
 
@@ -83,6 +89,30 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     instagram,
     endereco,
     seoDescription,
-    menuLinks
+    "seoImage": seoImage.asset->url
+  }
+`);
+
+export const SITEMAP_QUERY = defineQuery(`
+  *[
+    _type in [
+      "noticia",
+      "documento",
+      "rodaAniversariantes",
+      "encontroConscienciaNegra",
+      "rodaConsciencia",
+      "mostraCultural",
+      "oficina",
+      "eventoExterno"
+    ] && defined(slug.current) && slug.current != ""
+  ] {
+    _type,
+    "slug": slug.current,
+    "lastModified": select(
+      _type == "encontroConscienciaNegra" => coalesce(dataInicio, _updatedAt),
+      _type in ["documento", "noticia"] => coalesce(dataPublicacao, _updatedAt),
+      _type == "oficina" => _updatedAt,
+      coalesce(dataEvento, _updatedAt)
+    )
   }
 `);
