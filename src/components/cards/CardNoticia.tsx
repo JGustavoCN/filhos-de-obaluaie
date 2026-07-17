@@ -4,16 +4,20 @@ import { NewsIcon, CalendarIcon } from './icons';
 import { formatDate } from '@/lib/formatDate';
 
 export default function CardNoticia({ data }: { data: EventoProps }) {
-  const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=400&q=80";
-
   return (
     <div className="glass-card overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:border-[var(--color-primary)]">
       <div className="w-full aspect-[4/3] overflow-hidden bg-[var(--color-surface-container-high)]">
-        <img 
-          src={imgCapa} 
-          alt={data.titulo} 
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-        />
+        {data.imagemCapa ? (
+          <img
+            src={data.imagemCapa}
+            alt={data.titulo}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div aria-hidden="true" className="flex h-full w-full items-center justify-center text-[var(--color-primary)]">
+            <NewsIcon className="h-14 w-14 opacity-60" />
+          </div>
+        )}
       </div>
       
       <div className="p-5 flex flex-col flex-1">

@@ -17,7 +17,7 @@ Atualmente, o Sanity está configurado para pedir os seguintes dados:
 - **Mídias Externas:** Links para Drive/Vídeo.
 
 ### Frontend (`CardAniversario.tsx`)
-- **Imagens:** O card exibe a `imagemCapa` de forma circular, bem centralizada no topo (`w-24 h-24 rounded-full`). Se o Sanity não enviar foto, ele usa um fallback do Unsplash.
+- **Imagens:** O card exibe a `imagemCapa` de forma circular, bem centralizada no topo (`w-24 h-24 rounded-full`). Se o Sanity não enviar foto, ele usa um fallback neutro com ícone.
 - **Listagem de Nomes:** Os nomes dos aniversariantes são exibidos em pequenos blocos ("pills") dentro de uma caixa semi-transparente. Esta caixa possui rolagem vertical (`overflow-y-auto max-h-[110px] custom-scrollbar`) para comportar dezenas de nomes sem "quebrar" o tamanho do card.
 - **Background Animado:** Usa a classe global `.animate-gradient-festivo` (um gradiente que se move sutilmente) e um ícone de Bolo Gigante como marca d'água de fundo rotacionando.
 
@@ -27,7 +27,7 @@ Atualmente, o Sanity está configurado para pedir os seguintes dados:
 
 Para que o evento funcione de forma perfeita no dia a dia do Centro Cultural, precisamos definir as seguintes questões (Por favor, responda a cada uma delas):
 
-1. **Fallback de Imagem:** Atualmente, se vocês não subirem uma foto da festa, o card mostra uma imagem genérica da internet (Unsplash). Devemos criar uma arte digital fixa com a logo do "Filhos de Obaluaiê" para aniversários e usar como imagem padrão?
+1. **Fallback de Imagem:** Quando não há foto cadastrada, o card preserva o espaço visual com um ícone neutro e não carrega imagens externas.
 2. **Tempo do Cadastro (Antes vs. Depois):** Vocês cadastram a roda *antes* de acontecer (para convidar as pessoas) ou *depois* (como um registro com as fotos do que rolou)? Se for antes, a imagem de capa nunca será a foto da festa real. Como procedemos?
 3. **Quantidade de Aniversariantes:** O card suporta rolar a lista de nomes, mas colocar 40 nomes ali seria exaustivo para ler. Existe uma média de aniversariantes por mês? Precisamos limitar a exibição para "Mostrar apenas os primeiros 10 e um botão 'Ver todos'"?
 4. **Obrigatoriedade de Nomes:** O Sanity atualmente obriga (`validation: Rule.min(1)`) ter pelo menos 1 aniversariante cadastrado para salvar o documento. Devemos manter isso obrigatório ou permitir criar um evento de aniversário sem listar os nomes?

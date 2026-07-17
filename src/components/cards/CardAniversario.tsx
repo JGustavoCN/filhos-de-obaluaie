@@ -4,7 +4,6 @@ import { PartyIcon, CalendarIcon, CakeIcon } from './icons';
 import { formatDateShort, formatMonthYear } from '@/lib/formatDate';
 
 export default function CardAniversario({ data }: { data: EventoProps }) {
-  const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=400&q=80";
   const aniversariantes = data.aniversariantes || [];
 
   return (
@@ -22,7 +21,13 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
         
         {/* Avatar Centralizado no Topo */}
         <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden shrink-0 border-4 border-white dark:border-[var(--color-surface)] shadow-xl mb-4 transition-transform duration-500 group-hover:scale-110">
-          <img src={imgCapa} alt={data.titulo} className="w-full h-full object-cover" />
+          {data.imagemCapa ? (
+            <img src={data.imagemCapa} alt={data.titulo} className="w-full h-full object-cover" />
+          ) : (
+            <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-[var(--color-surface-container-high)] text-[var(--color-primary)]">
+              <CakeIcon className="h-10 w-10" />
+            </div>
+          )}
         </div>
 
         {/* Badge Desacoplado */}
@@ -59,7 +64,10 @@ export default function CardAniversario({ data }: { data: EventoProps }) {
         <div className="meta-row mt-auto w-full justify-center">
           {(data.mesReferencia || data.anoReferencia) && (
             <span className="meta-tag">
-              {formatMonthYear(data.mesReferencia, data.anoReferencia)}
+              {formatMonthYear(
+                data.mesReferencia ?? undefined,
+                data.anoReferencia ?? undefined,
+              )}
             </span>
           )}
           {(data.dataCard ?? data.dataEvento) && (

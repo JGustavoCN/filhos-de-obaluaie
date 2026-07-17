@@ -161,7 +161,6 @@ export default async function DetalhePage({
     notFound();
   }
 
-  const imagemCapaUrl = imageUrl(conteudo.imagemCapa)
   const dataPrincipal = getDataPrincipal(conteudo)
   const tipoLabel = labelByType[conteudo._type] ?? conteudo._type ?? 'Registro'
   const tipoBadgeClass = badgeClassByType[conteudo._type] ?? 'badge-memoria'
@@ -171,15 +170,19 @@ export default async function DetalhePage({
       alt: imageAlt(foto, `Registro ${idx + 1}`),
     }))
     .filter((foto) => foto.url)
+  const fotoMestreUrl = conteudo._type === 'rodaConsciencia'
+    ? imageUrl(conteudo.fotoMestre)
+    : ''
+  const imagemPrincipalUrl = imageUrl(conteudo.imagemCapa) || fotoMestreUrl || galeriaFotos[0]?.url || ''
 
   return (
     <main className="min-h-screen bg-surface text-on-surface">
       <Navbar />
       {/* CABEÇALHO HERO - COM A IMAGEM DE CAPA DE FUNDO */}
       <section className="relative w-full h-[50vh] min-h-[400px] flex items-end">
-        {imagemCapaUrl && (
+        {imagemPrincipalUrl && (
           <img
-            src={imagemCapaUrl}
+            src={imagemPrincipalUrl}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 z-0 h-full w-full object-cover"
@@ -188,7 +191,7 @@ export default async function DetalhePage({
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-surface via-surface/90 to-transparent" />
         
         <div className="relative z-20 max-w-4xl mx-auto w-full px-6 pb-12 pt-24">
-          <div className={imagemCapaUrl ? 'glass-card p-5 md:p-8' : ''}>
+          <div className={imagemPrincipalUrl ? 'glass-card p-5 md:p-8' : ''}>
             <div className="meta-row mb-4">
               <span className={`badge-tipo ${tipoBadgeClass}`}>
                 {tipoLabel}

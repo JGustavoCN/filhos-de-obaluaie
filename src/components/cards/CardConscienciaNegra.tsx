@@ -1,18 +1,22 @@
 import React from 'react';
 import { EventoProps } from './types';
-import { CalendarIcon, LocationIcon } from './icons';
+import { CalendarIcon, LocationIcon, MaskIcon } from './icons';
 import { formatDateShort, toRoman } from '@/lib/formatDate';
 
 export default function CardConscienciaNegra({ data }: { data: EventoProps }) {
-  const imgCapa = data.imagemCapa || "https://images.unsplash.com/photo-1531123897727-8f129e1bfd8c?auto=format&fit=crop&w=800&q=80";
-
   return (
     <div className="bg-[var(--color-surface)] rounded-2xl overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl border border-[var(--color-outline)]/20">
       <div className="relative w-full aspect-video overflow-hidden">
-        <img src={imgCapa} alt={data.titulo} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+        {data.imagemCapa ? (
+          <img src={data.imagemCapa} alt={data.titulo} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+        ) : (
+          <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-[var(--color-surface-container-high)] text-[var(--color-primary)]">
+            <MaskIcon className="h-14 w-14 opacity-60" />
+          </div>
+        )}
         
         {/* Overlay gradient apenas sutil embaixo para sustentar a badge, sem sujar a foto toda */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+        {data.imagemCapa && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>}
         
         <div className="absolute bottom-4 left-5 z-10 flex flex-wrap items-center gap-2">
           <span className="badge-tipo badge-evento">

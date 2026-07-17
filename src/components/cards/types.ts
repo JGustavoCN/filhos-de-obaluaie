@@ -37,70 +37,70 @@ export interface EventoProps {
 
   // ── Campos base (presentes em todos os schemas) ───────────────
   titulo: string
-  slug?: string | { current: string }
-  resumo?: string
-  imagemCapa?: string
-  galeria?: string[]
+  slug?: string | { current: string } | null
+  resumo?: string | null
+  imagemCapa?: string | null
+  galeria?: (string | null)[] | null
   body?: unknown
 
   // ── Datas (ISO 8601 string — usar formatDate() para exibição) ─
-  dataEvento?: string    // rodaAniversariantes, rodaConsciencia, mostraCultural, eventoExterno
-  dataInicio?: string    // encontroConscienciaNegra
-  dataFim?: string       // encontroConscienciaNegra
-  dataPublicacao?: string // documento, noticia
-  dataVigencia?: string  // documento
-  dataCard?: string      // Campo normalizado via coalesce(dataEvento, dataInicio, dataPublicacao) no GROQ
+  dataEvento?: string | null    // rodaAniversariantes, rodaConsciencia, mostraCultural, eventoExterno
+  dataInicio?: string | null    // encontroConscienciaNegra
+  dataFim?: string | null       // encontroConscienciaNegra
+  dataPublicacao?: string | null // documento, noticia
+  dataVigencia?: string | null  // documento
+  dataCard?: string | null      // Campo normalizado via coalesce(dataEvento, dataInicio, dataPublicacao) no GROQ
 
   // ── Local ─────────────────────────────────────────────────────
-  local?: string
+  local?: string | null
 
   // ── rodaAniversariantes ───────────────────────────────────────
-  mesReferencia?: string
-  anoReferencia?: number
-  aniversariantes?: string[]
+  mesReferencia?: string | null
+  anoReferencia?: number | null
+  aniversariantes?: string[] | null
 
   // ── encontroConscienciaNegra ──────────────────────────────────
-  edicao?: number
-  edicaoRomano?: string
-  subtemaPrincipal?: string
-  mestresConvidados?: string[]
-  gruposConvidados?: string[]
-  parceiros?: string[]
+  edicao?: number | null
+  edicaoRomano?: string | null
+  subtemaPrincipal?: string | null
+  mestresConvidados?: string[] | null
+  gruposConvidados?: string[] | null
+  parceiros?: string[] | null
 
   // ── rodaConsciencia ───────────────────────────────────────────
-  mestreConvidado?: string
-  fotoMestre?: string
-  origemMestre?: string
-  temaRoda?: string
-  abertoAoPublico?: boolean
+  mestreConvidado?: string | null
+  fotoMestre?: string | null
+  origemMestre?: string | null
+  temaRoda?: string | null
+  abertoAoPublico?: boolean | null
 
   // ── mostraCultural ────────────────────────────────────────────
-  escolasParticipantes?: string[]
-  quantidadeAlunos?: number
+  escolasParticipantes?: string[] | null
+  quantidadeAlunos?: number | null
 
   // ── oficina ───────────────────────────────────────────────────
-  subtipoOficina?: 'capoeira' | 'percussao' | 'danca-teatro'
-  oficineiro?: string
-  horarios?: string
-  faixaEtaria?: string
-  vagas?: number
-  inscricoesAbertas?: boolean
+  subtipoOficina?: 'capoeira' | 'percussao' | 'danca-teatro' | null
+  oficineiro?: string | null
+  horarios?: string | null
+  faixaEtaria?: string | null
+  vagas?: number | null
+  inscricoesAbertas?: boolean | null
 
   // ── eventoExterno ─────────────────────────────────────────────
-  organizador?: string
-  tipoParticipacao?: 'apresentacao' | 'palestra' | 'exposicao' | 'parceria' | 'oficina-externa'
-  linkEvento?: string
+  organizador?: string | null
+  tipoParticipacao?: 'apresentacao' | 'palestra' | 'exposicao' | 'parceria' | 'oficina-externa' | null
+  linkEvento?: string | null
 
   // ── documento ─────────────────────────────────────────────────
-  subtipoDocumento?: 'edital' | 'relatorio' | 'estatuto' | 'ata' | 'convenio' | 'plano-trabalho' | 'prestacao-contas'
-  arquivo?: string
-  tamanhoArquivo?: string
-  linkExterno?: string
+  subtipoDocumento?: 'edital' | 'relatorio' | 'estatuto' | 'ata' | 'convenio' | 'plano-trabalho' | 'prestacao-contas' | null
+  arquivo?: string | null
+  tamanhoArquivo?: string | null
+  linkExterno?: string | null
 
   // ── noticia ───────────────────────────────────────────────────
-  categoriaNoticia?: 'comunicado' | 'convite' | 'registro' | 'novidade' | 'edital-inscricao'
+  categoriaNoticia?: 'comunicado' | 'convite' | 'registro' | 'novidade' | 'edital-inscricao' | null
 
   // ── Mídias externas (compartilhadas por eventos, oficinas, mostras) ──
-  videoUrl?: string
-  driveUrl?: string
+  videoUrl?: string | null
+  driveUrl?: string | null
 }

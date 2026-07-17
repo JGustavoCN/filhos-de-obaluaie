@@ -10,7 +10,6 @@ export const eventosMock: EventoProps[] = [
       titulo: "Aniversariantes de Julho",
       resumo: "Vamos celebrar a vida de nossa comunidade com muita roda, bolo e alegria. Traga sua família!",
       dataEvento: "25/07/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1583166614297-a97b68d5cead?q=80&w=1315&auto=format&fit=crop",
       aniversariantes: ["Mestre Zé", "João Pedro", "Maria Eduarda", "Aline Santos", "Roberto Carlos", "Juliana Silva", "José", "Mario", "Ana", "Carlos", "Edward", "Rodrigo", "Fernando", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus", "Lucas", "Gabriel", "Rafael", "Pedro", "Mateus"]
     },
     {
@@ -21,7 +20,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "20/11/2026",
       local: "Centro Cultural / Praça Central",
       edicao: 17,
-      imagemCapa: "https://plus.unsplash.com/premium_photo-1710380789847-c76ce5427347?q=80&w=687&auto=format&fit=crop"
     },
     {
       id: "3",
@@ -30,7 +28,6 @@ export const eventosMock: EventoProps[] = [
       resumo: "Nesta Roda-Consciência focada no Jogo de Angola, receberemos o Mestre Cobra Mansa para uma jornada de autoconhecimento e conexão histórica. Exploraremos como os fundamentos, a musicalidade e a vadiagem da capoeira atuam há séculos como instrumentos de resistência, libertação e cura.",
       dataEvento: "15/09/2026",
       mestreConvidado: "Mestre Cobra Mansa",
-      imagemCapa: "https://images.unsplash.com/photo-1570158268183-d296b2892211?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       id: "4",
@@ -39,7 +36,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "12/12/2026",
       local: "Quadra da Escola Municipal",
       escolasParticipantes: ["EM Iraildes", "EM Nicodemos", "EM Telma"],
-      imagemCapa: "https://images.unsplash.com/photo-1521493959102-bdd6677fdd81?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       id: "5",
@@ -49,7 +45,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "Segundas e Quartas, 18h",
       local: "Crianças de 8 a 14 anos",
       subtipoOficina: "percussao",
-      imagemCapa: "https://images.unsplash.com/photo-1440451185281-11ff5853ce0a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "6",
@@ -59,7 +54,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "Terças e Quintas, 19h",
       local: "Jovens e Adultos",
       subtipoOficina: "capoeira",
-      imagemCapa: "https://images.unsplash.com/photo-1515657834497-26509e295154?q=80&w=723&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "7",
@@ -68,7 +62,6 @@ export const eventosMock: EventoProps[] = [
       resumo: "Apresentação Musical",
       dataEvento: "10/08/2026",
       local: "Praça do Cruzeiro",
-      imagemCapa: "https://images.unsplash.com/photo-1571417800906-5a5058dbd45d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "8",
@@ -76,7 +69,6 @@ export const eventosMock: EventoProps[] = [
       titulo: "Inscrições abertas para as oficinas de 2027",
       resumo: "Não perca o prazo para garantir sua vaga nas oficinas de percussão, capoeira e teatro. Vagas limitadas para novos alunos.",
       dataEvento: "01/12/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1665400808116-f0e6339b7e9a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0"
     },
     {
       id: "9",
@@ -85,7 +77,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "15/01/2026",
       tamanhoArquivo: "2.4 MB",
       arquivo: "#",
-      imagemCapa: "https://images.unsplash.com/photo-1519635451045-a41d4361d495?q=80&w=675&auto=format&fit=crop"
     },
     {
       id: "10",
@@ -94,7 +85,6 @@ export const eventosMock: EventoProps[] = [
       dataEvento: "10/02/2026",
       tamanhoArquivo: "5.1 MB",
       arquivo: "#",
-      imagemCapa: "https://images.unsplash.com/photo-1518601794912-1af91724e528?q=80&w=764&auto=format&fit=crop"
     },
     {
       id: "11",
@@ -102,7 +92,6 @@ export const eventosMock: EventoProps[] = [
       titulo: "Terreiro inaugura nova biblioteca",
       resumo: "Um novo espaço de leitura comunitária voltado para obras sobre cultura afro, romance e poesia negra.",
       dataEvento: "12/08/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1170&auto=format&fit=crop"
     },
     {
       id: "12",
@@ -110,7 +99,6 @@ export const eventosMock: EventoProps[] = [
       titulo: "Doação de Cestas Básicas",
       resumo: "No último fim de semana, a campanha solidária arrecadou toneladas de alimentos para as famílias da comunidade.",
       dataEvento: "05/08/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1170&auto=format&fit=crop"
     },
     {
       id: "13",
@@ -118,7 +106,6 @@ export const eventosMock: EventoProps[] = [
       titulo: "Batizado da Capoeira Angola",
       resumo: "Dia de graduação e troca de cordões para os nossos novos capoeiristas.",
       dataEvento: "22/10/2026",
-      imagemCapa: "https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?q=80&w=687&auto=format&fit=crop"
     }
 ];
 

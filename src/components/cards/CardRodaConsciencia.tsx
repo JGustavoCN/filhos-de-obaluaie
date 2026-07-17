@@ -4,21 +4,26 @@ import { BerimbauIcon, CalendarIcon } from './icons';
 import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardRodaConsciencia({ data }: { data: EventoProps }) {
-  // Prioriza a foto do mestre, senão usa a capa, senão uma imagem de capoeira genérica
-  const imgFinal = data.fotoMestre || data.imagemCapa || "https://images.unsplash.com/photo-1506869640319-fea1a2ab8e9c?auto=format&fit=crop&w=800&q=80";
+  const imagemPrincipal = data.imagemCapa || data.fotoMestre;
 
   return (
     <div className="bg-[var(--color-surface)] flex flex-col md:flex-row h-full relative overflow-hidden group border border-[var(--color-outline)]/20 rounded-2xl transition-all duration-500 hover:shadow-xl hover:-translate-y-1">
       
       {/* Lado Esquerdo / Topo: Foto Principal */}
       <div className="relative w-full md:w-2/5 md:min-w-[40%] h-64 md:h-auto overflow-hidden shrink-0">
-        <img 
-          src={imgFinal} 
-          alt={data.mestreConvidado || data.titulo} 
-          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
-        />
+        {imagemPrincipal ? (
+          <img
+            src={imagemPrincipal}
+            alt={data.mestreConvidado || data.titulo}
+            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          />
+        ) : (
+          <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-[var(--color-surface-container-high)] text-[var(--color-primary)]">
+            <BerimbauIcon className="h-20 w-20 opacity-40" />
+          </div>
+        )}
         {/* Gradiente escuro para garantir leitura caso haja textos sobrepostos futuramente e dar profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/60 md:from-black/40 via-transparent to-transparent opacity-80 md:opacity-100"></div>
+        {imagemPrincipal && <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/60 md:from-black/40 via-transparent to-transparent opacity-80 md:opacity-100"></div>}
         
         {/* Badge posicionada em cima da imagem */}
         <div className="absolute top-5 left-5 z-10">

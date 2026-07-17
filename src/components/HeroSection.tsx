@@ -9,8 +9,8 @@ export interface HeroProps {
 
 export default function HeroSection({ data }: { data?: HeroProps }) {
   // Fallbacks para as imagens
-  const desktopImage = data?.imagemHeroDesktop || "/assets/images/hero-banner-main.png";
-  const mobileImage = data?.imagemHeroMobile || "/assets/images/hero-banner-mobile.png";
+  const desktopImage = data?.imagemHeroDesktop || "/images/capoeira-movement.png";
+  const mobileImage = data?.imagemHeroMobile || "/images/capoeira-movement.png";
   // Fallbacks para textos do Hero
   const heroLabel = "Desde 2005 · Tobias Barreto/SE";
   const heroTitulo = data?.heroTitulo || "Filhos de\nObaluaiê";

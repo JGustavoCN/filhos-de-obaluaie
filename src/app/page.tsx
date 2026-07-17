@@ -1,52 +1,19 @@
 import { client } from "@/sanity/client";
 import { HOME_PAGE_QUERY } from "@/sanity/queries";
 import HeroSection from "@/components/HeroSection";
+import type { HeroProps } from "@/components/HeroSection";
 import XaxaraDivider from "@/components/XaxaraDivider";
 import AboutSection from "@/components/AboutSection";
+import type { InstitucionalProps } from "@/components/AboutSection";
 import RecentUpdatesSection from "@/components/RecentUpdatesSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ArchiveSection from "@/components/ArchiveSection";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import EventCard from "@/components/cards/EventCard";
-import type { EventoProps } from "@/components/cards/types";
-
-// Tipagem local da HomePage
-interface HomePageData {
-  heroTitulo?: string;
-  heroSubtitulo?: string;
-  heroEvento?: EventoProps;
-  institucionalTitulo?: string;
-  institucionalTexto?: any;
-  citacaoTexto?: string;
-  citacaoAutor?: string;
-  estatisticas?: Array<{ rotulo: string; valor: string }>;
-  ctaTitulo?: string;
-  ctaTexto?: string;
-}
-
-// Normalizador local simples (já que o backend retorna tudo certinho agora)
-const normalizeItem = (item: any): EventoProps => {
-  return {
-    ...item,
-    imagemCapa: typeof item?.imagemCapa === 'object' && item?.imagemCapa !== null ? item.imagemCapa.url : item?.imagemCapa,
-    galeria: Array.isArray(item?.galeria) ? item.galeria.map((g: any) => typeof g === 'object' && g !== null ? g.url : g) : [],
-    fotoMestre: typeof item?.fotoMestre === 'object' && item?.fotoMestre !== null ? item.fotoMestre.url : item?.fotoMestre,
-  };
-};
-
-interface PageData {
-  institucional: HomePageData;
-  noticias: EventoProps[];
-  oficinas: EventoProps[];
-  agenda: EventoProps[];
-  documentos: EventoProps[];
-  externos: EventoProps[];
-  recentUpdates: EventoProps[];
-}
 
 export default async function Home() {
-  const data = await client.fetch<PageData>(HOME_PAGE_QUERY);
+  const data = await client.fetch(HOME_PAGE_QUERY);
 
   if (!data || !data.institucional) {
     return (
@@ -59,18 +26,24 @@ export default async function Home() {
     );
   }
 
-  // Normalização de dados
-  const oficinasNormalizadas = (data.oficinas || []).map(normalizeItem);
-  const agendaNormalizada = (data.agenda || []).map(normalizeItem);
-  const documentosNormalizados = (data.documentos || []).map(normalizeItem);
-  const externosNormalizados = (data.externos || []).map(normalizeItem);
-  const recentUpdatesNormalizados = (data.recentUpdates || []).map(normalizeItem);
-  const noticiasNormalizadas = (data.noticias || []).map(normalizeItem);
+  const heroProps: HeroProps = {
+    heroTitulo: data.institucional.heroTitulo ?? undefined,
+    heroSubtitulo: data.institucional.heroSubtitulo ?? undefined,
+    imagemHeroDesktop: data.institucional.imagemHeroDesktop ?? undefined,
+    imagemHeroMobile: data.institucional.imagemHeroMobile ?? undefined,
+  };
 
-  const heroProps = {
-    heroTitulo: data.institucional.heroTitulo,
-    heroSubtitulo: data.institucional.heroSubtitulo,
-    heroEvento: data.institucional.heroEvento,
+  const aboutProps: InstitucionalProps = {
+    institucionalTitulo: data.institucional.institucionalTitulo ?? undefined,
+    institucionalTexto: data.institucional.institucionalTexto ?? undefined,
+    institucionalImagem: data.institucional.institucionalImagem ?? undefined,
+    citacaoTexto: data.institucional.citacaoTexto ?? undefined,
+    citacaoAutor: data.institucional.citacaoAutor ?? undefined,
+    estatisticas: data.institucional.estatisticas?.flatMap((estatistica) =>
+      estatistica.valor && estatistica.rotulo
+        ? [{ valor: estatistica.valor, rotulo: estatistica.rotulo }]
+        : [],
+    ),
   };
 
   return (
@@ -78,14 +51,14 @@ export default async function Home() {
       <Navbar />
       <main className="flex-1 w-full">
         {/* HERO SECTION */}
-        <HeroSection data={heroProps as any} />
+        <HeroSection data={heroProps} />
         
         {/* SOBRE (AboutSection) */}
-        <AboutSection data={data.institucional} />
+        <AboutSection data={aboutProps} />
         <XaxaraDivider />
 
         {/* FEED DO TERREIRO (RecentUpdatesSection) */}
-        <RecentUpdatesSection updates={recentUpdatesNormalizados} />
+        <RecentUpdatesSection updates={data.recentUpdates} />
         <XaxaraDivider />
 
         {/* MURAL DE NOTÍCIAS */}
@@ -97,7 +70,7 @@ export default async function Home() {
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {noticiasNormalizadas.map((noticia) => (
+            {data.noticias.map((noticia) => (
               <EventCard key={noticia._id} data={noticia} />
             ))}
           </div>
@@ -105,7 +78,7 @@ export default async function Home() {
         <XaxaraDivider />
 
         {/* OFICINAS (ProjectsSection) */}
-        <ProjectsSection oficinas={oficinasNormalizadas} />
+        <ProjectsSection oficinas={data.oficinas} />
         <XaxaraDivider />
 
         {/* AGENDA COMPLETA */}
@@ -117,7 +90,7 @@ export default async function Home() {
             </span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {agendaNormalizada.map((item) => (
+            {data.agenda.map((item) => (
               <EventCard key={item._id} data={item} />
             ))}
           </div>
@@ -125,7 +98,7 @@ export default async function Home() {
         <XaxaraDivider />
 
         {/* ACERVO (ArchiveSection) */}
-        <ArchiveSection documentos={documentosNormalizados} />
+        <ArchiveSection documentos={data.documentos} />
       </main>
 
       <Footer />

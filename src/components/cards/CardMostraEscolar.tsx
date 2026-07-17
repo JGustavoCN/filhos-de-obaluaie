@@ -4,8 +4,10 @@ import { MaskIcon, CalendarIcon, LocationIcon } from './icons';
 import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardMostraEscolar({ data }: { data: EventoProps }) {
-  const capaUrl = data.imagemCapa || "";
-  const fotosMock = data.galeria ? data.galeria.slice(0, 3) : [];
+  const fotosGaleria = (data.galeria ?? [])
+    .filter((foto): foto is string => Boolean(foto))
+    .slice(0, 3);
+  const capaUrl = data.imagemCapa || fotosGaleria[0];
 
   // Rotações para as "polaroids"
   const rotations = ["-rotate-6", "rotate-2", "-rotate-3"];
@@ -18,14 +20,20 @@ export default function CardMostraEscolar({ data }: { data: EventoProps }) {
       <div className="relative z-10 flex flex-col h-full">
         {/* Capa Principal Hero (Maior para ver mais da foto) */}
         <div className="relative w-full h-64 sm:h-72 overflow-hidden shadow-inner">
-          <img src={capaUrl} alt="" className="w-full h-full object-cover" />
+          {capaUrl ? (
+            <img src={capaUrl} alt="" aria-hidden="true" className="w-full h-full object-cover" />
+          ) : (
+            <div aria-hidden="true" className="flex h-full w-full items-center justify-center bg-[var(--color-surface-container-high)] text-[var(--color-primary)]">
+              <MaskIcon className="h-16 w-16 opacity-60" />
+            </div>
+          )}
           {/* Gradiente sutil só para dar acabamento na base da foto */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
         </div>
         
         {/* Mosaico de fotos tipo Polaroids - Sobrepondo a base da capa de forma inteligente */}
         <div className="flex justify-center gap-3 sm:gap-4 -mt-12 mb-5 px-2 z-20">
-          {fotosMock.map((foto, i) => (
+          {fotosGaleria.map((foto, i) => (
             <div 
               key={i} 
               className={`relative w-24 h-24 sm:w-28 sm:h-28 aspect-square rounded-md overflow-hidden bg-white p-1.5 shadow-lg transition-all duration-500 hover:scale-125 ${rotations[i]} hover:rotate-0 hover:z-30 cursor-pointer`}

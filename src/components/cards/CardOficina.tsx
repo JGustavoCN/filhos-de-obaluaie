@@ -12,18 +12,21 @@ export default function CardOficina({ data }: { data: EventoProps }) {
       ? MaskIcon
       : BerimbauIcon;
 
-  const fallbackImg = 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=1200&auto=format&fit=crop';
-  const imgSrc = data.imagemCapa || fallbackImg;
-
   return (
     <div className={`${frameClass} relative overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl h-full min-h-[420px]`}>
       {/* Foto de fundo — fica ATRÁS da moldura 9-slice */}
-      <img
-        src={imgSrc}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-[var(--radius-card)]"
-      />
+      {data.imagemCapa ? (
+        <img
+          src={data.imagemCapa}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 rounded-[var(--radius-card)]"
+        />
+      ) : (
+        <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center rounded-[var(--radius-card)] bg-[var(--color-surface-container-high)] text-[var(--color-primary)]">
+          <Icone className="h-24 w-24 opacity-20" />
+        </div>
+      )}
 
       {/* Conteúdo sobre a foto */}
       <div className="relative z-10 flex flex-col h-full">
