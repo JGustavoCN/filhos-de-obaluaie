@@ -3,6 +3,7 @@ import { HOME_PAGE_QUERY } from "@/sanity/queries";
 import HeroSection from "@/components/HeroSection";
 import XaxaraDivider from "@/components/XaxaraDivider";
 import AboutSection from "@/components/AboutSection";
+import FeaturedEventSection from "@/components/FeaturedEventSection";
 import RecentUpdatesSection from "@/components/RecentUpdatesSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ArchiveSection from "@/components/ArchiveSection";
@@ -10,11 +11,13 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import EventCard from "@/components/cards/EventCard";
 import type { EventoProps } from "@/components/cards/types";
+import MasonryItem from "@/components/MasonryItem";
 
 // Tipagem local da HomePage
 interface HomePageData {
   heroTitulo?: string;
   heroSubtitulo?: string;
+  tituloSessaoDestaque?: string;
   heroEvento?: EventoProps;
   institucionalTitulo?: string;
   institucionalTexto?: any;
@@ -84,6 +87,17 @@ export default async function Home() {
         <AboutSection data={data.institucional} />
         <XaxaraDivider />
 
+        {/* DESTAQUE PRINCIPAL */}
+        {data.institucional.heroEvento && (
+          <>
+            <FeaturedEventSection 
+              evento={data.institucional.heroEvento as any} 
+              tituloSessao={data.institucional.tituloSessaoDestaque} 
+            />
+            <XaxaraDivider />
+          </>
+        )}
+
         {/* FEED DO TERREIRO (RecentUpdatesSection) */}
         <RecentUpdatesSection updates={recentUpdatesNormalizados} />
         <XaxaraDivider />
@@ -116,16 +130,21 @@ export default async function Home() {
               Próximos Eventos
             </span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {agendaNormalizada.map((item) => (
-              <EventCard key={item._id} data={item} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-[10px] gap-x-6 grid-flow-row-dense">
+            {agendaNormalizada.map((item) => {
+              const isFeatureCard = item._type === 'oficina' || item._type === 'encontroConscienciaNegra' || item._type === 'rodaConsciencia' || item._type === 'eventoExterno';
+              return (
+                <MasonryItem key={item._id} className={isFeatureCard ? 'md:col-span-2' : ''}>
+                  <EventCard data={item} />
+                </MasonryItem>
+              );
+            })}
           </div>
         </section>
         <XaxaraDivider />
 
         {/* ACERVO (ArchiveSection) */}
-        <ArchiveSection documentos={documentosNormalizados} />
+        <ArchiveSection documentos={documentosNormalizados} externos={externosNormalizados} />
       </main>
 
       <Footer />

@@ -1,17 +1,29 @@
 import Image from "next/image";
+import Link from "next/link";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export interface HeroProps {
   heroTitulo?: string;
   heroSubtitulo?: string;
   imagemHeroDesktop?: string;
   imagemHeroMobile?: string;
+  heroEvento?: {
+    titulo: string;
+    slug: string;
+    imagemCapa?: { url: string; alt?: string };
+    dataCard?: string;
+  };
 }
 
 export default function HeroSection({ data }: { data?: HeroProps }) {
-  // Fallbacks para as imagens
+  const heroEvento = data?.heroEvento;
+
+  // Imagens estritamente institucionais
   const desktopImage = data?.imagemHeroDesktop || "/assets/images/hero-banner-main.png";
   const mobileImage = data?.imagemHeroMobile || "/assets/images/hero-banner-mobile.png";
-  // Fallbacks para textos do Hero
+  
+  // Textos estritamente institucionais
   const heroLabel = "Desde 2005 · Tobias Barreto/SE";
   const heroTitulo = data?.heroTitulo || "Filhos de\nObaluaiê";
   const heroSubtitulo = data?.heroSubtitulo || "Centro Cultural de Capoeira e Expressões Afro-Brasileiras.\nUm solo sagrado de resistência, arte e ancestralidade.";
@@ -33,7 +45,7 @@ export default function HeroSection({ data }: { data?: HeroProps }) {
           sizes="100vw"
         />
         {/* Gradient overlay to ensure text readability against the image */}
-        <div className="absolute inset-0 bg-gradient-to-b from-surface/60 via-surface/80 to-surface" />
+        <div className="absolute inset-0 bg-gradient-to-b from-surface/70 via-surface/80 to-surface" />
       </div>
 
       {/* Decorative background tonal shift (Desktop) */}
@@ -55,7 +67,7 @@ export default function HeroSection({ data }: { data?: HeroProps }) {
 
           <h1 className="font-[var(--font-headline)] min-w-0 text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold text-on-surface leading-[1.05] md:leading-[0.95] tracking-tight text-shadow-sm">
             {heroTitulo.split('\n').map((linha: string, idx: number, arr: string[]) => (
-              <span key={idx} className={idx === arr.length - 1 && arr.length > 1 ? "underline decoration-primary decoration-4 underline-offset-8 sm:ml-0 ml-2" : ""}>
+              <span key={idx} className={idx === arr.length - 1 && arr.length > 1 ? "underline decoration-primary decoration-4 underline-offset-8 sm:ml-0 ml-2 block sm:inline" : "block sm:inline"}>
                 {linha}
                 {idx < arr.length - 1 && <br className="hidden sm:block" />}
               </span>
@@ -67,21 +79,40 @@ export default function HeroSection({ data }: { data?: HeroProps }) {
           </p>
 
           {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 mt-2 w-full sm:w-auto">
-            <a
-              id="cta-historia"
-              href="#sobre"
-              className="w-full sm:w-auto text-center px-8 py-3.5 bg-primary text-on-primary font-semibold rounded-pill spring-transition hover:bg-primary-hover hover:shadow-[0_8px_32px_rgba(140,58,42,0.2)]"
-            >
-              Conheça Nossa História
-            </a>
-            <a
-              id="cta-projetos"
-              href="#projetos"
-              className="w-full sm:w-auto text-center px-8 py-3.5 border border-primary/20 lg:border-secondary text-on-surface bg-surface/50 lg:bg-transparent backdrop-blur-sm font-semibold rounded-pill spring-transition hover:bg-secondary/10"
-            >
-              Projetos Sociais
-            </a>
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 mt-2 w-full sm:w-auto relative z-20">
+            {heroEvento ? (
+              <>
+                <a
+                  href="#destaque"
+                  className="w-full sm:w-auto text-center px-8 py-3.5 bg-primary text-on-primary font-semibold rounded-pill spring-transition hover:bg-primary-hover hover:shadow-[0_8px_32px_rgba(140,58,42,0.2)]"
+                >
+                  Veja o Evento em Destaque
+                </a>
+                <a
+                  href="#projetos"
+                  className="w-full sm:w-auto text-center px-8 py-3.5 border border-primary/20 lg:border-secondary text-on-surface bg-surface/50 lg:bg-transparent backdrop-blur-sm font-semibold rounded-pill spring-transition hover:bg-secondary/10"
+                >
+                  Projetos Sociais
+                </a>
+              </>
+            ) : (
+              <>
+                <a
+                  id="cta-historia"
+                  href="#sobre"
+                  className="w-full sm:w-auto text-center px-8 py-3.5 bg-primary text-on-primary font-semibold rounded-pill spring-transition hover:bg-primary-hover hover:shadow-[0_8px_32px_rgba(140,58,42,0.2)]"
+                >
+                  Conheça Nossa História
+                </a>
+                <a
+                  id="cta-projetos"
+                  href="#projetos"
+                  className="w-full sm:w-auto text-center px-8 py-3.5 border border-primary/20 lg:border-secondary text-on-surface bg-surface/50 lg:bg-transparent backdrop-blur-sm font-semibold rounded-pill spring-transition hover:bg-secondary/10"
+                >
+                  Projetos Sociais
+                </a>
+              </>
+            )}
           </div>
 
           {/* Stats */}

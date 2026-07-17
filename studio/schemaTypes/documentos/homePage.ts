@@ -8,12 +8,38 @@ export const homePage = defineType({
   icon: HomeIcon,
   groups: [
     { name: 'hero', title: 'Hero Institucional' },
+    { name: 'destaque', title: 'Evento em Destaque' },
     { name: 'institucional', title: 'A Força do Centro' },
     { name: 'cta', title: 'CTA Final' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // ── Hero ──
+    // ── Destaque ──
+    defineField({
+      name: 'tituloSessaoDestaque',
+      title: 'Título da Seção de Destaque',
+      type: 'string',
+      group: 'destaque',
+      description: 'Ex: "Em Destaque", "Acontece Neste Mês", etc.',
+      initialValue: 'Em Destaque',
+    }),
+    defineField({
+      name: 'eventoDestaque',
+      title: 'Evento em Destaque',
+      type: 'reference',
+      group: 'destaque',
+      description: 'Selecione um evento ou notícia para destacar logo abaixo do Hero.',
+      to: [
+        { type: 'noticia' },
+        { type: 'oficina' },
+        { type: 'rodaAniversariantes' },
+        { type: 'rodaConsciencia' },
+        { type: 'mostraCultural' },
+        { type: 'eventoExterno' },
+        { type: 'encontroConscienciaNegra' }
+      ]
+    }),
     defineField({
       name: 'heroTitulo',
       title: 'Título do Hero',

@@ -4,8 +4,8 @@ import { defineQuery } from "next-sanity";
 export const HOME_PAGE_QUERY = defineQuery(`
   {
     "institucional": *[_type == "homePage"][0] {
-      heroTitulo, heroSubtitulo, institucionalTitulo, institucionalTexto, citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto,
-      "heroEvento": *[_type in ["noticia", "oficina", "rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno", "encontroConscienciaNegra", "documento"] && destaqueNaHome == true] | order(_updatedAt desc)[0] {
+      heroTitulo, heroSubtitulo, tituloSessaoDestaque, institucionalTitulo, institucionalTexto, citacaoTexto, citacaoAutor, estatisticas, ctaTitulo, ctaTexto,
+      "heroEvento": eventoDestaque->{
         _id, _type, titulo, "slug": slug.current, resumo, local,
         dataEvento, dataInicio, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),
         "imagemCapa": imagemCapa{ "url": asset->url, alt },
@@ -13,7 +13,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       }
     },
     
-    "noticias": *[_type == "noticia"] | order(dataPublicacao desc)[0...3] {
+    "noticias": *[_type == "noticia"] | order(prioridadeHome desc, dataPublicacao desc)[0...3] {
       _id, _type, titulo, "slug": slug.current, resumo, dataPublicacao, categoriaNoticia, "imagemCapa": imagemCapa{ "url": asset->url, alt }
     },
     
@@ -21,7 +21,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       _id, _type, titulo, "slug": slug.current, resumo, subtipoOficina, oficineiro, horarios, faixaEtaria, vagas, inscricoesAbertas, "imagemCapa": imagemCapa{ "url": asset->url, alt }
     },
 
-    "agenda": *[_type in ["encontroConscienciaNegra", "rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno"] && coalesce(dataEvento, dataInicio) >= now()] | order(prioridadeHome desc, coalesce(dataEvento, dataInicio) asc)[0...3] {
+    "agenda": *[_type in ["encontroConscienciaNegra", "rodaAniversariantes", "rodaConsciencia", "mostraCultural", "eventoExterno"] && coalesce(dataEvento, dataInicio) >= now()] | order(coalesce(dataEvento, dataInicio) asc, prioridadeHome desc)[0...4] {
       _id, _type, titulo, "slug": slug.current, resumo, local,
       dataEvento, dataInicio, "dataCard": coalesce(dataEvento, dataInicio),
       "imagemCapa": imagemCapa{ "url": asset->url, alt },
@@ -31,7 +31,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
     "recentUpdates": *[_type in [
       "noticia", "oficina", "rodaAniversariantes", "rodaConsciencia", 
       "mostraCultural", "eventoExterno", "encontroConscienciaNegra", "documento"
-    ]] | order(coalesce(dataEvento, dataInicio, dataPublicacao, _createdAt) desc)[0...4] {
+    ]] | order(prioridadeHome desc, coalesce(dataEvento, dataInicio, dataPublicacao, _createdAt) desc)[0...4] {
       _id, _type, titulo, "slug": slug.current, resumo, local,
       dataEvento, dataInicio, dataPublicacao, "dataCard": coalesce(dataEvento, dataInicio, dataPublicacao),
       "imagemCapa": imagemCapa{ "url": asset->url, alt },
@@ -41,11 +41,11 @@ export const HOME_PAGE_QUERY = defineQuery(`
       subtipoDocumento, "arquivo": arquivo.asset->url, tamanhoArquivo, linkExterno, categoriaNoticia, videoUrl, driveUrl
     },
 
-    "documentos": *[_type == "documento"] | order(dataPublicacao desc)[0...3] {
+    "documentos": *[_type == "documento"] | order(prioridadeHome desc, dataPublicacao desc)[0...3] {
       _id, _type, titulo, "slug": slug.current, resumo, dataPublicacao, categoriaDocumento, subtipoDocumento, linkExterno, tamanhoArquivo, "arquivo": arquivo.asset->url, "imagemCapa": imagemCapa{ "url": asset->url, alt }
     },
     
-    "externos": *[_type == "eventoExterno"] | order(dataEvento desc)[0...2] {
+    "externos": *[_type == "eventoExterno"] | order(prioridadeHome desc, dataEvento desc)[0...2] {
       _id, _type, titulo, "slug": slug.current, resumo, dataEvento, local, organizador, tipoParticipacao, "imagemCapa": imagemCapa{ "url": asset->url, alt }
     }
   }
