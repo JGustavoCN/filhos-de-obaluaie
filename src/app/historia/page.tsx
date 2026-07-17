@@ -6,6 +6,7 @@ import HistoriaEixos from "@/components/HistoriaEixos";
 import HistoriaEstrutura from "@/components/HistoriaEstrutura";
 import HistoriaEventos from "@/components/HistoriaEventos";
 import Navbar from "@/components/Navbar";
+import { historiaContent } from "@/content/historia";
 
 export default function HistoriaPage() {
   return (
@@ -38,8 +39,8 @@ export default function HistoriaPage() {
         <div className="flex-1 flex flex-col justify-center items-center w-full max-w-4xl z-20">
           <div className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 mb-6 md:mb-8 relative rounded-full overflow-hidden border-4 border-outline/20 shadow-2xl transition-transform duration-700 hover:scale-105">
             <Image
-              src="/logo.svg"
-              alt="Logo Filhos de Obaluaiê"
+              src={historiaContent.hero.logo.src}
+              alt={historiaContent.hero.logo.alt}
               fill
               className="object-cover"
               priority
@@ -49,22 +50,22 @@ export default function HistoriaPage() {
           <div className="flex items-center gap-3 mb-6">
             <span className="w-10 md:w-12 h-px bg-primary" />
             <span className="text-xs md:text-sm font-medium uppercase tracking-[0.3em] text-on-surface-light">
-              Dossiê Institucional
+              {historiaContent.hero.eyebrow}
             </span>
             <span className="w-10 md:w-12 h-px bg-primary" />
           </div>
           
           <h1 className="font-[var(--font-headline)] text-4xl md:text-6xl lg:text-7xl font-bold text-on-surface mb-6 md:mb-8 leading-tight">
-            O Corpo Fala, <span className="text-primary block md:inline">A Terra Sustenta</span>
+            {historiaContent.hero.titulo.prefix}<span className="text-primary block md:inline">{historiaContent.hero.titulo.highlight}</span>{historiaContent.hero.titulo.suffix}
           </h1>
           <p className="text-lg md:text-xl text-on-surface/80 max-w-3xl mx-auto font-medium leading-relaxed">
-            Da Capoeira — Patrimônio Cultural Imaterial que une corpo, música e mandinga — às demais artes afro-brasileiras: conheça o acervo completo da trajetória de resistência, acolhimento e cura que construímos em Tobias Barreto.
+            {historiaContent.hero.descricao}
           </p>
         </div>
 
         {/* Scroll Indicator no fluxo da página, garantindo folga */}
         <div className="flex flex-col items-center gap-3 z-30 mt-8 md:mt-12">
-          <span className="text-xs md:text-sm text-on-surface-light font-bold tracking-widest uppercase hidden md:block drop-shadow-sm">Role para descobrir</span>
+          <span className="text-xs md:text-sm text-on-surface-light font-bold tracking-widest uppercase hidden md:block drop-shadow-sm">{historiaContent.hero.scrollLabel}</span>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary drop-shadow-md animate-bounce">
             <path d="M12 5v14M19 12l-7 7-7-7" />
           </svg>
@@ -72,12 +73,12 @@ export default function HistoriaPage() {
       </section>
 
       {/* Seções Modulares em Encadeamento Único */}
-      <HistoriaOrigens />
-      <HistoriaLinhaDoTempo />
-      <HistoriaMestres />
-      <HistoriaEixos />
-      <HistoriaEstrutura />
-      <HistoriaEventos />
+      <HistoriaOrigens content={historiaContent.origem} />
+      <HistoriaLinhaDoTempo content={historiaContent.linhaDoTempo} />
+      <HistoriaMestres content={historiaContent.trajetoria} mestres={historiaContent.mestres} />
+      <HistoriaEixos content={historiaContent.linguagensCulturais} />
+      <HistoriaEstrutura content={historiaContent.legado} />
+      <HistoriaEventos content={historiaContent.eventos} />
       
     </main>
   );

@@ -99,21 +99,12 @@ export default async function RootLayout({
       className={`${syne.variable} ${dmSans.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <Script id="theme-script" strategy="beforeInteractive">
-          {`
-            (function() {
-              try {
-                var theme = localStorage.getItem('filhos-obaluaie-theme');
-                if (theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
-                }
-              } catch(e) {}
-            })();
-          `}
-        </Script>
-      </head>
       <body>
+        <Script
+          id="theme-script"
+          src="/theme-script.js"
+          strategy="beforeInteractive"
+        />
         {children}
         <SanityLive />
         <VisualEditing />

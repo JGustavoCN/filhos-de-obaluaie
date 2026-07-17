@@ -1,0 +1,445 @@
+{
+  "geradoEm": "2026-07-17T16:29:30.482Z",
+  "modo": "commit",
+  "sanity": {
+    "projectId": "1lha6jrn",
+    "dataset": "production",
+    "apiVersion": "2026-06-28"
+  },
+  "acervo": "C:\\Users\\rondley.santos_quero\\Desktop\\acervo-filhos-de-obaluaie\\rodas-aniversariantes",
+  "regras": {
+    "dataEventoVazio": "null",
+    "aniversariantes": "nunca autopreencher",
+    "pastasSemDados": "ignoradas",
+    "natureza": "memória histórica"
+  },
+  "documentos": [
+    {
+      "folder": "2025-08",
+      "_id": "roda-aniversariantes-2025-08",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Agosto de 2025",
+      "slug": "roda-dos-aniversariantes-de-agosto-de-2025",
+      "mesReferencia": "agosto",
+      "anoReferencia": 2025,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": null,
+      "galeria": [],
+      "camposVazios": [
+        "imagemCapa",
+        "galeria",
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": []
+    },
+    {
+      "folder": "2025-09",
+      "_id": "roda-aniversariantes-2025-09",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Setembro de 2025",
+      "slug": "roda-dos-aniversariantes-de-setembro-de-2025",
+      "mesReferencia": "setembro",
+      "anoReferencia": 2025,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.jpg",
+      "galeria": [
+        "imagens/capa.jpg",
+        "imagens/4criancas-de-costas-roda-de-capoeira.jpg",
+        "imagens/acrobacia-na-roda.jpg",
+        "imagens/criancas-jogando-capoeira.jpg",
+        "imagens/foto-da-roda-acontecendo.jpg",
+        "imagens/instrumentos-da-roda.jpg",
+        "imagens/roda-de-capoeira.jpg"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 3629621
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 3629621
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/4criancas-de-costas-roda-de-capoeira.jpg",
+          "bytes": 3207763
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/acrobacia-na-roda.jpg",
+          "bytes": 3702990
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/criancas-jogando-capoeira.jpg",
+          "bytes": 1886614
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/foto-da-roda-acontecendo.jpg",
+          "bytes": 3383513
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/instrumentos-da-roda.jpg",
+          "bytes": 2086537
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/roda-de-capoeira.jpg",
+          "bytes": 3359409
+        }
+      ]
+    },
+    {
+      "folder": "2025-10",
+      "_id": "roda-aniversariantes-2025-10",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Outubro de 2025",
+      "slug": "roda-dos-aniversariantes-de-outubro-de-2025",
+      "mesReferencia": "outubro",
+      "anoReferencia": 2025,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.JPEG",
+      "galeria": [
+        "imagens/capa.JPEG",
+        "imagens/capoeiristas-e-familiares-assistindo-a-roda.JPEG",
+        "imagens/raiz-fraca-n-sustenta-tempestade.JPEG",
+        "imagens/roda-antes-de-comecar.JPEG",
+        "imagens/roda-de-capoeira.JPEG",
+        "imagens/roda-meia-lua-de-compasso.JPEG",
+        "imagens/roda-visao-ampla.JPEG"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.JPEG",
+          "bytes": 1180173
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.JPEG",
+          "bytes": 1180173
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capoeiristas-e-familiares-assistindo-a-roda.JPEG",
+          "bytes": 1101586
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/raiz-fraca-n-sustenta-tempestade.JPEG",
+          "bytes": 827577
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/roda-antes-de-comecar.JPEG",
+          "bytes": 1277468
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/roda-de-capoeira.JPEG",
+          "bytes": 1260212
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/roda-meia-lua-de-compasso.JPEG",
+          "bytes": 908692
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/roda-visao-ampla.JPEG",
+          "bytes": 1233295
+        }
+      ]
+    },
+    {
+      "folder": "2025-12",
+      "_id": "roda-aniversariantes-2025-12",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Dezembro de 2025",
+      "slug": "roda-dos-aniversariantes-de-dezembro-de-2025",
+      "mesReferencia": "dezembro",
+      "anoReferencia": 2025,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.jpg",
+      "galeria": [
+        "imagens/capa.jpg",
+        "imagens/Nosso ultimo dia do ano! Muito obrigado a todos e a todas, esperamos por vocês no ano quem vem.  (2).jpg",
+        "imagens/pessoal-reunido-no-final-2.jpg",
+        "imagens/pessoal-reunido-no-final.jpg"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)",
+        "videoUrl"
+      ],
+      "avisos": [
+        "nome de arquivo problemático (espaços/acentos): Nosso ultimo dia do ano! Muito obrigado a todos e a todas, esperamos por vocês no ano quem vem.  (2).jpg",
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 217325
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 217325
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/Nosso ultimo dia do ano! Muito obrigado a todos e a todas, esperamos por vocês no ano quem vem.  (2).jpg",
+          "bytes": 204743
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/pessoal-reunido-no-final-2.jpg",
+          "bytes": 221138
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/pessoal-reunido-no-final.jpg",
+          "bytes": 217457
+        }
+      ]
+    },
+    {
+      "folder": "2026-01",
+      "_id": "roda-aniversariantes-2026-01",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Janeiro de 2026",
+      "slug": "roda-dos-aniversariantes-de-janeiro-de-2026",
+      "mesReferencia": "janeiro",
+      "anoReferencia": 2026,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.JPG",
+      "galeria": [
+        "imagens/capa.JPG",
+        "imagens/inicio-da-roda.JPG",
+        "imagens/miguel-escalando.JPG"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.JPG",
+          "bytes": 343147
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.JPG",
+          "bytes": 343147
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/inicio-da-roda.JPG",
+          "bytes": 253299
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/miguel-escalando.JPG",
+          "bytes": 239617
+        }
+      ]
+    },
+    {
+      "folder": "2026-02",
+      "_id": "roda-aniversariantes-2026-02",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Fevereiro de 2026",
+      "slug": "roda-dos-aniversariantes-de-fevereiro-de-2026",
+      "mesReferencia": "fevereiro",
+      "anoReferencia": 2026,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.png",
+      "galeria": [
+        "imagens/capa.png",
+        "imagens/acrobacia-na-roda.png"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.png",
+          "bytes": 2114168
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.png",
+          "bytes": 2114168
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/acrobacia-na-roda.png",
+          "bytes": 2071637
+        }
+      ]
+    },
+    {
+      "folder": "2026-03",
+      "_id": "roda-aniversariantes-2026-03",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Março de 2026",
+      "slug": "roda-dos-aniversariantes-de-marco-de-2026",
+      "mesReferencia": "marco",
+      "anoReferencia": 2026,
+      "dataEvento": null,
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.png",
+      "galeria": [
+        "imagens/capa.png",
+        "imagens/acrobacia-na-roda.png",
+        "imagens/ponte-na-roda.png"
+      ],
+      "camposVazios": [
+        "dataEvento (será null)",
+        "aniversariantes (mantido vazio)"
+      ],
+      "avisos": [
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.png",
+          "bytes": 2530668
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.png",
+          "bytes": 2530668
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/acrobacia-na-roda.png",
+          "bytes": 2440094
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/ponte-na-roda.png",
+          "bytes": 2687465
+        }
+      ]
+    },
+    {
+      "folder": "2026-05",
+      "_id": "roda-aniversariantes-2026-05",
+      "_type": "rodaAniversariantes",
+      "titulo": "Roda dos aniversariantes de Maio de 2026",
+      "slug": "roda-dos-aniversariantes-de-maio-de-2026",
+      "mesReferencia": "maio",
+      "anoReferencia": 2026,
+      "dataEvento": "2026-05-13T00:00:00.000Z",
+      "aniversariantes": [],
+      "imagemCapa": "imagens/capa.jpg",
+      "galeria": [
+        "imagens/capa.jpg",
+        "imagens/acrobacia-na-roda.jpg",
+        "imagens/alunos-descontraidos.jpeg",
+        "imagens/meia-lua.jpg",
+        "imagens/mestre-sininho-e-publico.jpg"
+      ],
+      "camposVazios": [
+        "aniversariantes (mantido vazio)",
+        "videoUrl"
+      ],
+      "avisos": [
+        "dataEvento: convertido de DD/MM/YYYY (hora não informada)",
+        "driveUrl é link de edição (role=writer) — prefira link de leitura"
+      ],
+      "imagens": [
+        {
+          "campo": "imagemCapa",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 1100776
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/capa.jpg",
+          "bytes": 1100776
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/acrobacia-na-roda.jpg",
+          "bytes": 4110180
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/alunos-descontraidos.jpeg",
+          "bytes": 1977711
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/meia-lua.jpg",
+          "bytes": 3941872
+        },
+        {
+          "campo": "galeria",
+          "arquivo": "imagens/mestre-sininho-e-publico.jpg",
+          "bytes": 3862273
+        }
+      ]
+    }
+  ],
+  "pastasIgnoradas": [
+    {
+      "folder": "2026-04",
+      "reason": "sem dados.json (pasta vazia) — não será importada"
+    },
+    {
+      "folder": "2026-06",
+      "reason": "sem dados.json (pasta vazia) — não será importada"
+    },
+    {
+      "folder": "2026-07",
+      "reason": "sem dados.json (pasta vazia) — não será importada"
+    },
+    {
+      "folder": "2026-08",
+      "reason": "sem dados.json (pasta vazia) — não será importada"
+    }
+  ],
+  "incompatibilidades": []
+}
