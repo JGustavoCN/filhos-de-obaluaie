@@ -20,6 +20,20 @@ export const encontroConscienciaNegra = defineType({
   icon: CalendarIcon,
   fields: [
     ...baseFields,
+    defineField({
+      name: 'destaqueNaHome',
+      title: 'Destacar na Home',
+      type: 'boolean',
+      description: 'Se marcado, este evento será exibido no topo da página inicial (Hero).',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'prioridadeHome',
+      title: 'Prioridade na Agenda da Home',
+      type: 'number',
+      description: 'Eventos com números maiores aparecem primeiro (0 é o padrão).',
+      initialValue: 0,
+    }),
 
     // ── Edição e Identificação ──────────────────────────────────
     defineField({

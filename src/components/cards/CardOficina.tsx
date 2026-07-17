@@ -16,7 +16,7 @@ export default function CardOficina({ data }: { data: EventoProps }) {
   const imgSrc = data.imagemCapa || fallbackImg;
 
   return (
-    <div className={`${frameClass} relative overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl h-full`}>
+    <div className={`${frameClass} relative overflow-hidden flex flex-col group spring-transition hover:-translate-y-2 hover:shadow-xl h-full min-h-[420px]`}>
       {/* Foto de fundo — fica ATRÁS da moldura 9-slice */}
       <img
         src={imgSrc}
@@ -45,7 +45,7 @@ export default function CardOficina({ data }: { data: EventoProps }) {
         {/* Área descritiva com fundo semi-transparente */}
         <div className="p-6 flex flex-col flex-1 bg-[var(--glass-bg)] backdrop-blur-sm">
           <h3 className="text-2xl font-headline font-bold text-[var(--color-on-surface)] mb-3 group-hover:text-[var(--color-primary)] transition-colors leading-tight">
-            {data.titulo}
+            {data.titulo || 'Oficina'}
           </h3>
 
           {data.resumo && (

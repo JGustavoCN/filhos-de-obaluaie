@@ -1,105 +1,25 @@
 import React from 'react';
-import { client } from '@/sanity/client';
-import { CONTEUDO_POR_SLUG_QUERY } from '@/sanity/queries';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PortableText } from 'next-sanity';
+import Navbar from '@/components/Navbar';
 import { CalendarIcon, LocationIcon } from '@/components/cards/icons';
 import { formatDate } from '@/lib/formatDate';
+import {
+  absoluteUrl,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OPEN_GRAPH_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+} from '@/lib/seo';
+import { getContentBySlug, getSiteSettings } from '@/sanity/seo';
+import type { CONTEUDO_POR_SLUG_QUERY_RESULT } from '@/sanity/sanity.types';
 
-type ImageField = string | { url?: string | null; alt?: string | null } | null | undefined
-type PortableTextValue = React.ComponentProps<typeof PortableText>['value']
-
-type BaseConteudo = {
-  _id: string;
-  titulo: string;
-  resumo?: string;
-  local?: string;
-  imagemCapa?: ImageField;
-  galeria?: ImageField[];
-  body?: PortableTextValue;
-  dataCard?: string;
+type ConteudoDetalhe = NonNullable<CONTEUDO_POR_SLUG_QUERY_RESULT>
+type ImageField = ConteudoDetalhe['imagemCapa']
+type DetalhePageProps = {
+  params: Promise<{ slug: string }>
 }
-
-type OficinaDetalhe = BaseConteudo & {
-  _type: 'oficina';
-  subtipoOficina?: string;
-  oficineiro?: string;
-  horarios?: string;
-  faixaEtaria?: string;
-  vagas?: number;
-  inscricoesAbertas?: boolean;
-}
-
-type RodaAniversariantesDetalhe = BaseConteudo & {
-  _type: 'rodaAniversariantes';
-  dataEvento?: string;
-  mesReferencia?: string;
-  anoReferencia?: number;
-  aniversariantes?: string[];
-}
-
-type RodaConscienciaDetalhe = BaseConteudo & {
-  _type: 'rodaConsciencia';
-  dataEvento?: string;
-  mestreConvidado?: string;
-  fotoMestre?: ImageField;
-  origemMestre?: string;
-  temaRoda?: string;
-  abertoAoPublico?: boolean;
-}
-
-type EncontroConscienciaNegraDetalhe = BaseConteudo & {
-  _type: 'encontroConscienciaNegra';
-  dataInicio?: string;
-  dataFim?: string;
-  edicao?: number;
-  edicaoRomano?: string;
-  subtemaPrincipal?: string;
-  mestresConvidados?: string[];
-  gruposConvidados?: string[];
-  parceiros?: string[];
-}
-
-type MostraCulturalDetalhe = BaseConteudo & {
-  _type: 'mostraCultural';
-  dataEvento?: string;
-  escolasParticipantes?: string[];
-  quantidadeAlunos?: number;
-}
-
-type EventoExternoDetalhe = BaseConteudo & {
-  _type: 'eventoExterno';
-  dataEvento?: string;
-  organizador?: string;
-  tipoParticipacao?: string;
-  linkEvento?: string;
-}
-
-type DocumentoDetalhe = BaseConteudo & {
-  _type: 'documento';
-  subtipoDocumento?: string;
-  dataPublicacao?: string;
-  dataVigencia?: string;
-  tamanhoArquivo?: string;
-  arquivo?: string;
-  linkExterno?: string;
-}
-
-type NoticiaDetalhe = BaseConteudo & {
-  _type: 'noticia';
-  categoriaNoticia?: string;
-  dataPublicacao?: string;
-}
-
-type ConteudoDetalhe = 
-  | OficinaDetalhe 
-  | RodaAniversariantesDetalhe 
-  | RodaConscienciaDetalhe 
-  | EncontroConscienciaNegraDetalhe 
-  | MostraCulturalDetalhe 
-  | EventoExternoDetalhe 
-  | DocumentoDetalhe 
-  | NoticiaDetalhe;
 
 const badgeClassByType: Record<string, string> = {
   rodaAniversariantes: 'badge-celebracao',
@@ -147,13 +67,67 @@ function getDataPrincipal(conteudo: ConteudoDetalhe): string | undefined {
   return undefined;
 }
 
+export async function generateMetadata({
+  params,
+}: DetalhePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const [conteudo, siteSettings] = await Promise.all([
+    getContentBySlug(slug),
+    getSiteSettings(),
+  ]);
+  const fallbackDescription =
+    siteSettings?.seoDescription?.trim() || DEFAULT_DESCRIPTION;
+  const canonical = absoluteUrl(`/conteudo/${encodeURIComponent(slug)}`);
+
+  if (!conteudo) {
+    return {
+      title: DEFAULT_TITLE,
+      description: fallbackDescription,
+      alternates: { canonical },
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const contentTitle = conteudo.titulo?.trim() ||
+    labelByType[conteudo._type] || SITE_NAME;
+  const title = conteudo.titulo?.trim()
+    ? `${contentTitle} | ${SITE_NAME}`
+    : DEFAULT_TITLE;
+  const description = conteudo.resumo?.trim() || fallbackDescription;
+  const image = absoluteUrl(
+    conteudo.imagemCapa?.url ||
+      siteSettings?.seoImage ||
+      DEFAULT_OPEN_GRAPH_IMAGE,
+  );
+  const imageAlt = conteudo.imagemCapa?.alt || contentTitle;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: SITE_NAME,
+      locale: 'pt_BR',
+      type: conteudo._type === 'noticia' ? 'article' : 'website',
+      images: [{ url: image, alt: imageAlt }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
+  };
+}
+
 export default async function DetalhePage({
   params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
+}: DetalhePageProps) {
   const resolvedParams = await params;
-  const conteudo = await client.fetch(CONTEUDO_POR_SLUG_QUERY, { slug: resolvedParams.slug }) as ConteudoDetalhe | null;
+  const conteudo = await getContentBySlug(resolvedParams.slug);
   
   if (!conteudo) {
     notFound();
@@ -172,6 +146,7 @@ export default async function DetalhePage({
 
   return (
     <main className="min-h-screen bg-surface text-on-surface">
+      <Navbar />
       {/* CABEÇALHO HERO - COM A IMAGEM DE CAPA DE FUNDO */}
       <section className="relative w-full h-[50vh] min-h-[400px] flex items-end">
         {imagemCapaUrl && (
@@ -184,7 +159,7 @@ export default async function DetalhePage({
         )}
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-surface via-surface/90 to-transparent" />
         
-        <div className="relative z-20 max-w-4xl mx-auto w-full px-6 pb-12">
+        <div className="relative z-20 max-w-4xl mx-auto w-full px-6 pb-12 pt-24">
           <div className={imagemCapaUrl ? 'glass-card p-5 md:p-8' : ''}>
             <div className="meta-row mb-4">
               <span className={`badge-tipo ${tipoBadgeClass}`}>

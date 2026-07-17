@@ -1,173 +1,156 @@
-import Navbar from "@/components/Navbar";
+import { client } from "@/sanity/client";
+import { HOME_PAGE_QUERY } from "@/sanity/queries";
 import HeroSection from "@/components/HeroSection";
 import XaxaraDivider from "@/components/XaxaraDivider";
 import AboutSection from "@/components/AboutSection";
+import FeaturedEventSection from "@/components/FeaturedEventSection";
+import RecentUpdatesSection from "@/components/RecentUpdatesSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ArchiveSection from "@/components/ArchiveSection";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import EventCard from "@/components/cards/EventCard";
-import Link from 'next/link';
-import { client } from "@/sanity/client";
 import type { EventoProps } from "@/components/cards/types";
-import {
-  HOME_HERO_QUERY,
-  HOME_NOTICIAS_QUERY,
-  SITE_SETTINGS_QUERY,
-  OFICINAS_QUERY,
-  DOCUMENTOS_QUERY,
-  CONTEUDO_POR_TIPO_QUERY,
-} from "@/sanity/queries";
+import MasonryItem from "@/components/MasonryItem";
+import { normalizeSanityEvento } from "@/sanity/normalizeEvento";
 
-// Helper para sub-seções da Agenda
-function EventSubSection({ title, items, href }: { title: string, items: EventoProps[], href: string }) {
-  if (!items || items.length === 0) return null;
-  return (
-    <div className="mb-12 last:mb-0">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <h3 className="text-2xl md:text-3xl font-bold text-on-surface border-l-4 border-primary pl-4">{title}</h3>
-        <Link href={href} className="text-primary text-sm font-bold uppercase tracking-wider hover:underline flex items-center gap-2">
-          Ver histórico <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8h8m0 0l-3-3m3 3l-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </Link>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {items.map((item) => (
-          <EventCard key={item._id} data={item} />
-        ))}
-      </div>
-    </div>
-  );
+// Tipagem local da HomePage
+interface HomePageData {
+  heroTitulo?: string;
+  heroSubtitulo?: string;
+  tituloSessaoDestaque?: string;
+  heroEvento?: EventoProps;
+  institucionalTitulo?: string;
+  institucionalTexto?: any;
+  citacaoTexto?: string;
+  citacaoAutor?: string;
+  estatisticas?: Array<{ rotulo: string; valor: string }>;
+  ctaTitulo?: string;
+  ctaTexto?: string;
+}
+
+interface PageData {
+  institucional: HomePageData;
+  noticias: EventoProps[];
+  oficinas: EventoProps[];
+  agenda: EventoProps[];
+  documentos: EventoProps[];
+  externos: EventoProps[];
+  recentUpdates: EventoProps[];
 }
 
 export default async function Home() {
-  // Buscas paralelas para máxima performance
-  const [
-    siteSettings,
-    heroEvent,
-    noticias,
-    oficinas,
-    documentos,
-    externos,
-    mostras,
-    encontros,
-    rodasConsciencia,
-    rodasAniversario
-  ] = await Promise.all([
-      client.fetch(SITE_SETTINGS_QUERY),
-      client.fetch(HOME_HERO_QUERY),
-      client.fetch(HOME_NOTICIAS_QUERY),
-      client.fetch(OFICINAS_QUERY),
-      client.fetch(DOCUMENTOS_QUERY),
-      client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "eventoExterno" }).then(res => res.slice(0, 2)),
-      client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "mostraCultural" }).then(res => res.slice(0, 2)),
-      client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "encontroConscienciaNegra" }).then(res => res.slice(0, 2)),
-      client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "rodaConsciencia" }).then(res => res.slice(0, 2)),
-      client.fetch(CONTEUDO_POR_TIPO_QUERY, { tipo: "rodaAniversariantes" }).then(res => res.slice(0, 2)),
-    ]);
+  const data = await client.fetch(HOME_PAGE_QUERY);
 
-  // Normaliza imagemCapa: a query retorna objeto { url, alt } mas os cards
-  // ainda esperam string em EventoProps.imagemCapa. Fazemos a normalização aqui.
-  const normalizeItem = (item: Record<string, unknown>): EventoProps => ({
-    ...item as unknown as EventoProps,
-    imagemCapa: typeof item?.imagemCapa === 'object' && item?.imagemCapa !== null ? (item.imagemCapa as { url?: string }).url ?? undefined : item?.imagemCapa as string ?? undefined,
-    galeria: Array.isArray(item?.galeria) ? item.galeria.map((g) => typeof g === 'object' && g !== null ? (g as { url?: string }).url ?? '' : g as string) : [],
-    fotoMestre: typeof item?.fotoMestre === 'object' && item?.fotoMestre !== null ? (item.fotoMestre as { url?: string }).url ?? undefined : item?.fotoMestre as string ?? undefined,
-  });
+  if (!data || !data.institucional) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-surface text-on-surface">
+        <h1 className="text-2xl font-bold">Conteúdo Institucional não encontrado.</h1>
+        <p className="mt-2 text-on-surface-variant">
+          Certifique-se de configurar a Página Inicial no Sanity Studio.
+        </p>
+      </main>
+    );
+  }
 
-  const heroNormalizado = heroEvent ? normalizeItem(heroEvent) : null;
-  const heroId = heroNormalizado?._id;
+  const institucional = data.institucional;
+  const oficinasNormalizadas: EventoProps[] = (data.oficinas || []).map(normalizeSanityEvento);
+  const agendaNormalizada: EventoProps[] = (data.agenda || []).map(normalizeSanityEvento);
+  const documentosNormalizados: EventoProps[] = (data.documentos || []).map(normalizeSanityEvento);
+  const recentUpdatesNormalizados: EventoProps[] = (data.recentUpdates || []).map(normalizeSanityEvento);
+  const noticiasNormalizadas: EventoProps[] = (data.noticias || []).map(normalizeSanityEvento);
+  const externosNormalizados: EventoProps[] = (data.externos || []).map(normalizeSanityEvento);
 
-  // Aplica normalização e remove duplicata do hero se estiver nas listas
-  const norm = (arr: any[]) => (arr || []).filter(item => item._id !== heroId).map(normalizeItem);
+  const heroProps = {
+    heroTitulo: institucional.heroTitulo ?? undefined,
+    heroSubtitulo: institucional.heroSubtitulo ?? undefined,
+    imagemHeroDesktop: institucional.imagemHeroDesktop ?? undefined,
+    imagemHeroMobile: institucional.imagemHeroMobile ?? undefined,
+  };
 
-  const noticiasNormalizadas = norm(noticias);
-  const oficinasNormalizadas = norm(oficinas);
-  const documentosNormalizados = norm(documentos);
-  const externosNormalizados = norm(externos);
-  const mostrasNormalizadas = norm(mostras);
-  const encontrosNormalizados = norm(encontros);
-  const rodasConscienciaNormalizadas = norm(rodasConsciencia);
-  const rodasAniversarioNormalizadas = norm(rodasAniversario);
-
-  const hasAnyEvent = 
-    mostrasNormalizadas.length > 0 || 
-    encontrosNormalizados.length > 0 || 
-    rodasConscienciaNormalizadas.length > 0 || 
-    rodasAniversarioNormalizadas.length > 0;
+  const aboutProps = {
+    institucionalTitulo: institucional.institucionalTitulo ?? undefined,
+    institucionalTexto: institucional.institucionalTexto ?? undefined,
+    institucionalImagem: institucional.institucionalImagem ?? undefined,
+    citacaoTexto: institucional.citacaoTexto ?? undefined,
+    citacaoAutor: institucional.citacaoAutor ?? undefined,
+    estatisticas: institucional.estatisticas?.flatMap(({ valor, rotulo }: { valor: string; rotulo: string }) =>
+      valor && rotulo ? [{ valor, rotulo }] : [],
+    ),
+  };
 
   return (
-    <>
-      <Navbar menuLinks={siteSettings?.menuLinks} />
-      <main>
-        <HeroSection />
+    <div className="flex flex-col w-full bg-surface">
+      <Navbar />
+      <main className="flex-1 w-full">
+        {/* HERO SECTION */}
+        <HeroSection data={heroProps} />
+        
+        {/* SOBRE (AboutSection) */}
+        <AboutSection data={aboutProps} />
+        <XaxaraDivider />
 
-        {/* Destaque Principal Dinâmico do Sanity */}
-        {heroNormalizado && (
-          <section className="relative z-20 -mt-16 md:mt-20 max-w-[1400px] mx-auto px-6 md:px-10 mb-20">
-            <EventCard data={heroNormalizado} />
-          </section>
+        {/* DESTAQUE PRINCIPAL */}
+        {data.institucional.heroEvento && (
+          <>
+            <FeaturedEventSection 
+              evento={data.institucional.heroEvento as any} 
+              tituloSessao={data.institucional.tituloSessaoDestaque} 
+            />
+            <XaxaraDivider />
+          </>
         )}
 
-        <AboutSection />
+        {/* FEED DO TERREIRO (RecentUpdatesSection) */}
+        <RecentUpdatesSection updates={recentUpdatesNormalizados} />
         <XaxaraDivider />
 
-        <ProjectsSection oficinas={oficinasNormalizadas} />
-        <XaxaraDivider />
-
-        {/* Mural da Comunidade: Notícias */}
-        <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* MURAL DE NOTÍCIAS */}
+        <section id="atualizacoes" className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex items-center gap-3 mb-10">
-            <span className="w-10 h-px bg-primary" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">Mural da Comunidade</span>
+            <span className="w-8 h-px bg-primary" />
+            <span className="text-[10px] md:text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">
+              Mural da Comunidade
+            </span>
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12">
-            <h2 className="font-[var(--font-headline)] text-4xl md:text-5xl font-bold text-on-surface">
-              Últimas <span className="text-primary block sm:inline">Notícias</span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {noticiasNormalizadas.map((noticia: EventoProps) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {noticiasNormalizadas.map((noticia) => (
               <EventCard key={noticia._id} data={noticia} />
             ))}
           </div>
-          {noticiasNormalizadas.length > 0 && (
-            <div className="mt-12 text-center">
-              <Link
-                href="/tipo/noticia"
-                className="inline-flex items-center gap-2 bg-transparent border-2 border-primary text-primary px-8 py-3 rounded-full font-medium hover:bg-primary hover:text-on-primary transition-colors"
-              >
-                Ler todas as notícias
-              </Link>
-            </div>
-          )}
         </section>
         <XaxaraDivider />
 
-        {/* Agenda e Eventos (Segmentados por Tipo) */}
-        <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10 bg-surface-container-low rounded-[3rem] my-10">
+        {/* OFICINAS (ProjectsSection) */}
+        <ProjectsSection oficinas={oficinasNormalizadas} />
+        <XaxaraDivider />
+
+        {/* AGENDA COMPLETA */}
+        <section id="agenda" className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex items-center gap-3 mb-10">
-            <span className="w-10 h-px bg-primary" />
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">Programação Cultural</span>
+            <span className="w-8 h-px bg-primary" />
+            <span className="text-[10px] md:text-xs font-medium uppercase tracking-[0.2em] text-on-surface-light">
+              Próximos Eventos
+            </span>
           </div>
-          <h2 className="font-[var(--font-headline)] text-4xl md:text-5xl font-bold text-on-surface mb-16">
-            Agenda & <span className="text-primary block sm:inline">Eventos</span>
-          </h2>
-          
-          <div className="flex flex-col gap-8 md:gap-12">
-            <EventSubSection title="Rodas da Consciência" items={rodasConscienciaNormalizadas} href="/tipo/rodaConsciencia" />
-            <EventSubSection title="Rodas de Aniversariantes" items={rodasAniversarioNormalizadas} href="/tipo/rodaAniversariantes" />
-            <EventSubSection title="Mostras Culturais Escolares" items={mostrasNormalizadas} href="/tipo/mostraCultural" />
-            <EventSubSection title="Encontros de Consciência Negra" items={encontrosNormalizados} href="/tipo/encontroConscienciaNegra" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 auto-rows-[10px] gap-x-6 grid-flow-row-dense">
+            {agendaNormalizada.map((item) => {
+              const isFeatureCard = item._type === 'oficina' || item._type === 'encontroConscienciaNegra' || item._type === 'rodaConsciencia' || item._type === 'eventoExterno';
+              return (
+                <MasonryItem key={item._id} className={isFeatureCard ? 'md:col-span-2' : ''}>
+                  <EventCard data={item} />
+                </MasonryItem>
+              );
+            })}
           </div>
-
-          {!hasAnyEvent && (
-            <p className="text-on-surface-light text-center py-12">Nenhuma atividade cultural cadastrada no momento.</p>
-          )}
         </section>
         <XaxaraDivider />
 
+        {/* ACERVO (ArchiveSection) */}
         <ArchiveSection documentos={documentosNormalizados} externos={externosNormalizados} />
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }

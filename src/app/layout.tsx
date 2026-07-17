@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import Script from "next/script";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OPEN_GRAPH_DESCRIPTION,
+  DEFAULT_OPEN_GRAPH_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo";
 import "./globals.css";
 
 const syne = Syne({
@@ -18,11 +26,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://filhos-de-obaluaie.vercel.app"),
-  title:
-    "Filhos de Obaluaiê — Centro Cultural de Capoeira e Expressões Afro-Brasileiras",
-  description:
-    "Plataforma institucional do Centro Cultural e de Capoeira Filhos de Obaluaiê, localizado em Tobias Barreto/SE. Portfólio de projetos sociais, acervo documental e registro de expressões afro-brasileiras como capoeira, maculelê, dança afro e samba de coco.",
+  metadataBase: SITE_URL,
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   keywords: [
     "centro cultural",
     "capoeira",
@@ -37,13 +43,22 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Centro Cultural Filhos de Obaluaiê" }],
   openGraph: {
-    title: "Filhos de Obaluaiê — Centro Cultural",
-    description:
-      "Resistência, arte e ancestralidade desde 2005. Capoeira, maculelê e expressões afro-brasileiras em Tobias Barreto/SE.",
-    url: "https://filhos-de-obaluaie.vercel.app",
-    siteName: "Filhos de Obaluaiê",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_OPEN_GRAPH_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
+    images: [{ url: DEFAULT_OPEN_GRAPH_IMAGE, alt: SITE_NAME }],
     type: "website",
     locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_OPEN_GRAPH_DESCRIPTION,
+    images: [DEFAULT_OPEN_GRAPH_IMAGE],
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

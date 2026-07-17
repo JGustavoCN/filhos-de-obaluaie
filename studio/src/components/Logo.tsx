@@ -1,6 +1,6 @@
-import React from 'react'
+import type {LogoProps} from 'sanity'
 
-export function Logo(props: any) {
+export function Logo(props: LogoProps) {
   // Apenas a renderização do logo principal na navbar superior (respirado e sem invadir o dropdown)
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px' }}>

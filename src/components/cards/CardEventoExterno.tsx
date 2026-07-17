@@ -5,46 +5,68 @@ import { formatDateShort } from '@/lib/formatDate';
 
 export default function CardEventoExterno({ data }: { data: EventoProps }) {
   return (
-    <div className="glass-card p-6 md:p-8 flex flex-col sm:flex-row gap-6 md:gap-8 items-start sm:items-center group transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg">
+    <div className="glass-card p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-start group transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg relative overflow-hidden bg-surface">
       
-      {/* Icon Area - Maior e com mais destaque */}
-      <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[var(--color-surface-container)] to-[var(--color-surface-container-high)] border-2 border-[var(--color-outline-variant)]/50 text-[var(--color-primary)] rounded-full flex items-center justify-center shrink-0 group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-105 group-hover:rotate-12">
-        <NetworkIcon className="w-8 h-8 md:w-10 md:h-10" />
+      {/* Image or Icon Area */}
+      <div className="shrink-0 w-full sm:w-24 sm:h-24">
+        {data.imagemCapa ? (
+          <div className="w-full h-40 sm:h-full rounded-xl overflow-hidden shadow-sm border border-[var(--color-surface-container-high)]">
+            <img 
+              src={data.imagemCapa} 
+              alt={data.titulo} 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+            />
+          </div>
+        ) : (
+          <div className="w-16 h-16 sm:w-full sm:h-full bg-gradient-to-br from-[var(--color-surface-container)] to-[var(--color-surface-container-high)] border border-[var(--color-outline-variant)]/50 text-[var(--color-primary)] rounded-full sm:rounded-xl flex items-center justify-center group-hover:bg-[var(--color-primary-container)] transition-all duration-500 shadow-sm group-hover:scale-105">
+            <NetworkIcon className="w-8 h-8 sm:w-10 sm:h-10 opacity-80" />
+          </div>
+        )}
       </div>
       
-      {/* Content Area - Respiro entre tags e título */}
-      <div className="flex-1 min-w-0 flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="badge-tipo badge-evento">
+      {/* Content Area */}
+      <div className="flex-1 min-w-0 flex flex-col h-full w-full">
+        <div className="flex flex-wrap items-center gap-1.5 mb-2">
+          <span className="bg-[var(--color-primary)] text-on-primary text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm">
              {data.tipoParticipacao
-               ? data.tipoParticipacao.charAt(0).toUpperCase() + data.tipoParticipacao.slice(1).replace('-', ' ')
-               : 'Participação Externa'}
+               ? data.tipoParticipacao.replace('-', ' ')
+               : 'Externa'}
           </span>
           {data.organizador && (
-            <span className="text-sm font-bold text-[var(--color-primary)] tracking-wide bg-[var(--color-primary-container)]/30 dark:bg-black/20 px-3 py-1 rounded-md">
+            <span className="text-[10px] font-bold text-[var(--color-primary)] tracking-wide bg-[var(--color-primary-container)]/30 px-2 py-0.5 rounded truncate max-w-[120px]">
               {data.organizador}
             </span>
           )}
         </div>
         
-        <h3 className="text-xl md:text-2xl font-headline font-bold text-[var(--color-on-surface)] leading-snug">
-          {data.titulo}
+        <h3 className="text-lg sm:text-xl font-headline font-bold text-[var(--color-on-surface)] leading-tight mb-2 group-hover:text-[var(--color-primary-hover)] transition-colors">
+          {data.titulo || 'Evento Externo'}
         </h3>
+
+        {/* Resumo */}
+        {data.resumo && (
+          <p className="text-[var(--color-on-surface-light)] text-sm leading-snug line-clamp-2 mb-3">
+            {data.resumo}
+          </p>
+        )}
+        
+        {/* Metadata Area alinhada ao fundo do conteúdo */}
+        <div className="mt-auto pt-3 flex flex-col gap-1.5 border-t border-[var(--color-outline-variant)]/50 w-full">
+          {(data.dataCard ?? data.dataEvento) && (
+            <span className="flex items-center gap-1.5 text-xs text-[var(--color-on-surface-variant)] font-medium">
+              <CalendarIcon /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
+            </span>
+          )}
+          
+          {data.local && (
+            <span className="flex items-center gap-1.5 text-xs text-[var(--color-on-surface-light)]">
+              <LocationIcon className="text-[var(--color-primary)] shrink-0 w-3.5 h-3.5" /> 
+              <span className="line-clamp-1">{data.local}</span>
+            </span>
+          )}
+        </div>
       </div>
       
-      {/* Metadata Area - Separação mais clara e estilizada */}
-      <div className="meta-row shrink-0 flex-col sm:items-end border-t sm:border-t-0 sm:border-l border-[var(--color-outline-variant)]/60 pt-5 sm:pt-0 sm:pl-6 md:pl-8 mt-2 sm:mt-0 w-full sm:w-auto">
-        
-        <span className="meta-date">
-          <CalendarIcon /> {formatDateShort(data.dataCard ?? data.dataEvento ?? '')}
-        </span>
-        
-        {data.local && (
-          <span className="meta-value sm:justify-end px-2">
-            <LocationIcon className="text-[var(--color-primary)]" /> {data.local}
-          </span>
-        )}
-      </div>
     </div>
   );
 }

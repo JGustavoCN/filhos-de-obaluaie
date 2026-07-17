@@ -27,7 +27,7 @@ export default function CardNoticia({ data }: { data: EventoProps }) {
         </div>
         
         <h3 className="text-xl font-headline font-bold text-[var(--color-on-surface)] mb-2 group-hover:text-[var(--color-primary-hover)] transition-colors">
-          {data.titulo}
+          {data.titulo || 'Notícia'}
         </h3>
         
         {data.resumo && (

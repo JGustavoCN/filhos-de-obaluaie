@@ -2,36 +2,35 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import EventCard from '../EventCard';
-import { EventoProps, EventoType } from '../types';
+import { EventoProps } from '../types';
 
 describe('EventCard Accessibility - Auditoria Completa', () => {
-  // Lista exata com todos os tipos disponíveis no EventCard
-  const tiposDeCards: EventoType[] = [
-    'aniversario',
-    'consciencia-negra',
-    'roda-consciencia',
-    'mostra-escolar',
+  // Lista exata com todos os tipos disponíveis no EventCard (agora usando _type)
+  const tiposDeCards: string[] = [
+    'rodaAniversariantes',
+    'encontroConscienciaNegra',
+    'rodaConsciencia',
+    'mostraCultural',
     'oficina',
-    'evento-externo',
+    'eventoExterno',
     'documento',
     'noticia'
   ];
 
   // Base padrão para gerar propriedades fictícias de sucesso
   const mockBaseData: Partial<EventoProps> = {
-    id: 'test-auto',
+    _id: 'test-auto',
     titulo: 'Título do Evento de Teste',
     resumo: 'Descrição simulada para forçar o preenchimento da tag e testar o contraste da cor do texto secundário.',
-    dataEvento: '10 Nov 2026',
+    dataEvento: '2026-11-10T14:00:00Z',
     local: 'Centro Cultural',
-    linkArquivo: '#',
-    tamanhoArquivo: '1MB'
+    arquivo: '#',
   };
 
   describe.each(tiposDeCards)('Scanner WCAG no tipo: %s', (tipo) => {
     it(`não deve possuir violações de acessibilidade visual no card ${tipo}`, async () => {
       // Mesclamos o tipo atual com os dados base
-      const mockData = { ...mockBaseData, tipo } as EventoProps;
+      const mockData = { ...mockBaseData, _type: tipo } as EventoProps;
 
       const { container } = render(<EventCard data={mockData} />);
       
@@ -45,11 +44,11 @@ describe('EventCard Accessibility - Auditoria Completa', () => {
 
   // TESTE PROPOSITAMENTE DEFEITUOSO (Desativado)
   it.skip('teste FALHO: deve ser pego no flagra pelo jest-axe', async () => {
-    // Renderizamos uma violação que o jsdom pega (imagens sem texto alternativo e botão inacessível)
+    // Renderizamos uma violação que o jsdom pega (botão inacessível)
     const { container } = render(
       <div>
         <h2>Imagem Ilegível para Cegos</h2>
-        <img src="https://example.com/imagem-sem-alt.jpg" />
+        <img src="https://example.com/imagem-sem-alt.jpg" alt="Exemplo do teste" />
         <button></button>
       </div>
     );
